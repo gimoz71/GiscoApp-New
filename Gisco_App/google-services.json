@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "991014087326",
+    "firebase_url": "https://giscoapp.firebaseio.com",
+    "project_id": "giscoapp",
+    "storage_bucket": "giscoapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:991014087326:android:7f6942539089f2c2",
+        "android_client_info": {
+          "package_name": "com.marte5.giscoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "991014087326-rom49saioc9rj44vjsgkd7bgaufgnhfk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrd2GNepJWvtn9m3YlSFIv53Nz_X-9dQ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "991014087326-rom49saioc9rj44vjsgkd7bgaufgnhfk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "991014087326-bqiotlpe1v3rrqrjhmgtueqb4iv87hrc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.marte5.giscoapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

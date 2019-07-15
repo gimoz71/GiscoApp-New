@@ -1,0 +1,55 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Elenco Osservazioni</ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="goToNuovaOsservazione()">
+                <ion-icon name="add"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-searchbar placeholder="Sito" (ionInput)="setSitoFiltro($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Protocollo" (ionInput)="setProtocolloFiltro($event)"></ion-searchbar>
+    <ion-item class="ion-filters">
+        <ion-label>Tipologia</ion-label>
+        <ion-select [(ngModel)]="tipologiaSelezionata" (ionChange)="setTipologiaFiltro()">
+            <ion-option *ngFor="let tipologia of listaTipologie" [value]="tipologia">
+                {{tipologia.tab_tipo_scadenza_desc}}
+            </ion-option>
+        </ion-select>
+    </ion-item>
+</ion-header>
+<ion-content >
+    <ion-list>
+        <ion-item *ngFor="let osservazione of listaOsservazioni" (click)="goToDetails(osservazione)" text-wrap no-padding>
+            <button no-lines ion-item no-margin clear>
+                <h2>{{(osservazione.att_protocollo)}} - {{osservazione.att_titolo}}</h2>
+                <p>{{osservazione.az_codice_interno}} {{osservazione.az_ragione_sociale}}</p>
+            </button>
+        </ion-item>
+    </ion-list>
+    <!--<ion-list *ngFor="let osservazione of listaOsservazioni" (click)="goToDetails(osservazione)">
+        <button no-lines ion-item color="light">Sito {{osservazione.az_codice_interno}} {{osservazione.az_ragione_sociale}}</button>
+        <ion-label>{{osservazione.attivita_key}}</ion-label>
+        <ion-item><p>Osservazione</p><ion-note item-end><p>{{osservazione.att_titolo}}</p></ion-note></ion-item>
+        <ion-item><p>Tipologia</p><ion-note item-end><p>{{osservazione.tab_tipo_scadenza_desc}}</p></ion-note></ion-item>
+        <ion-item><p>Data rilevazione</p><ion-note item-end><p>{{osservazione.data_segnalazione}}</p></ion-note></ion-item>
+        <ion-item><p>Stato</p><ion-note item-end><p>{{(osservazione.att_conclusa==='S'?"conclusa":"non conclusa")}}</p></ion-note></ion-item>
+        <ion-item><p>Protocollo</p><ion-note item-end><p>{{(osservazione.att_protocollo)}}</p></ion-note></ion-item>
+        <ion-item><p>N.C.</p><ion-note item-end><p>{{(osservazione.num_non_conformita_ris+osservazione.num_non_conformita_nonris===osservazione.num_non_conformita_chiuse ? "verde" : "rossa "+osservazione.num_non_conformita_nonris)}}</p></ion-note></ion-item>
+        <ion-item><p>Dispositivo</p><ion-note item-end><p>{{osservazione.att_dispositivo_key}}</p></ion-note></ion-item>
+    </ion-list>-->
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles"
+        loadingText="Caricamento Osservazioni...">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <button ion-button small item-end icon-start block (click)="goToNuovaOsservazione()">
+            <ion-icon name="add-circle" ios="ios-add-circle-outline"></ion-icon> Nuova Osservazione
+        </button>
+    </ion-toolbar>
+</ion-footer>

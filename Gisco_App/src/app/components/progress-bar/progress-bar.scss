@@ -1,0 +1,47 @@
+progress-bar {
+
+    .progress-outer {
+        width: 96%;
+        margin: 0 0 0 4%;
+        padding: 3px;
+        text-align: center;
+        background-color: #f4f4f4;
+        border: 1px solid #dcdcdc;
+        color: #fff;
+        border-radius: 20px;
+    }
+
+    .progress-inner {
+        min-width: 20%;
+        white-space: nowrap;
+        overflow: hidden;
+        padding: 2px 5px;
+        border-radius: 20px;
+        background-image: linear-gradient(map-get($colors, secondary), map-get($colors, primary));
+        font-size: 10px;
+    }
+
+    &.small {
+        .progress-outer {
+            width: 96%;
+            margin: 0 0 0 4%;
+            padding: 2px;
+            text-align: center;
+            background-color: #f4f4f4;
+            border: 1px solid #dcdcdc;
+            color: #fff;
+            border-radius: 20px;
+        }
+        .progress-inner {
+            min-width: 20%;
+            white-space: nowrap;
+            overflow: hidden;
+            padding: 2px 5px;
+            border-radius: 20px;
+            background-image: linear-gradient(map-get($colors, secondary), map-get($colors, primary));
+            font-size: 8px;
+            opacity: .8;
+        }
+    }
+
+}

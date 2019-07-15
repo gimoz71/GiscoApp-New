@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Elenco Dispositivi</ion-title>
+    </ion-navbar>
+    <ion-searchbar placeholder="campo libero" (ionInput)="getDispositivi($event)" debounce="1000"></ion-searchbar>
+    <ion-item class="ion-filters">
+        <ion-label>Tipologia</ion-label>
+        <ion-select [(ngModel)]="tipologiaSelezionata" (ionChange)="getDispositivi()">
+            <ion-option *ngFor="let tipologia of listaTipologie" [value]="tipologia">
+                {{tipologia.tab_tipo_dispositivo_desc}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item class="ion-filters">
+        <ion-label>Provincia</ion-label>
+        <ion-select [(ngModel)]="provinciaSelezionata" (ionChange)="getDispositivi()">
+            <ion-option *ngFor="let provincia of listaProvince" [value]="provincia">{{provincia.Descrizione}}</ion-option>
+        </ion-select>
+    </ion-item>
+</ion-header>
+<ion-content>
+   
+    <ion-list>
+        <ion-item *ngFor="let dispositivo of listaDispositivi" (click)="goToDetails($event, dispositivo)" text-wrap no-padding>
+            <button no-lines ion-item no-margin clear>
+                <h2>{{dispositivo.dis_titolo}}</h2>
+                <p>{{dispositivo.az_codice_interno}} - {{dispositivo.az_ragione_sociale}}<!--{{sito.indirizzo_completo}}--></p>
+            </button>
+            <!--<h3>
+               
+            </h3>
+            <p>
+                Codice {{dispositivo.az_codice_interno}}<br>
+                Sito{{dispositivo.az_ragione_sociale}}<br>
+                Tipologia{{dispositivo.tab_tipo_dispositivo_desc}}<br>
+                Scadenza aut. {{dispositivo.autorizzazione_scadenza}}<br>
+                Scadute {{dispositivo.attivita_situazione.att_scadute}}<br>
+                {{dispositivo.attivita_situazione.att_prossime}}<br>
+                {{dispositivo.attivita_situazione.att_future}}<br>-->
+                <!--stato
+            </p>-->
+        </ion-item>
+    </ion-list>
+</ion-content>

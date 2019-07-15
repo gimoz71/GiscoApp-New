@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-navbar hideBackButton>
+        <ion-buttons left>
+            <button (click)="back()" ion-button icon-left clear>
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-buttons end>
+            <div class="icon-section">
+                <i [ngClass]="icon" [ngStyle]="{'color' : color }"></i>
+            </div>
+        </ion-buttons>
+        <ion-title>Nuova Assegnazione</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-item>
+        <ion-label>Nominativo</ion-label>
+        <ionic-selectable item-content [(ngModel)]="nominativoSelezionato" [items]="listaNominativi" itemTextField="nomeCognome" [canSearch]="true" (onSearch)="nominativoChange($event)">
+        </ionic-selectable>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Responsabile</ion-label>
+        <ion-toggle [(ngModel)]="responsabile" [checked]="isResponsabile"></ion-toggle>
+    </ion-item>
+
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <button ion-button small item-end icon-start block (click)="salvaAssegnazione()">
+            <ion-icon name="contact"></ion-icon>Salva
+        </button>
+    </ion-toolbar>
+</ion-footer>

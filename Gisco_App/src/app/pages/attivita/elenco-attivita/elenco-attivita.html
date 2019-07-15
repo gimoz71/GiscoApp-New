@@ -1,0 +1,47 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Elenco Attivit&agrave;</ion-title>
+    </ion-navbar>
+    <ion-searchbar placeholder="Sito" (ionInput)="setSitoFiltro($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Protocollo" (ionInput)="setProtocolloFiltro($event)"></ion-searchbar>
+    <ion-item class="ion-filters">
+        <ion-label>Categoria</ion-label>
+        <ion-select [(ngModel)]="categoriaSelezionata" (ionChange)="setCategoriaFiltro()">
+            <ion-option *ngFor="let categoria of listaCategorie" [value]="categoria">
+                {{categoria.tab_tipo_attivita_desc}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item class="ion-filters">
+        <ion-label>Tipologia</ion-label>
+        <ion-select [(ngModel)]="tipologiaSelezionata" (ionChange)="setTipologiaFiltro()">
+            <ion-option *ngFor="let tipologia of listaTipologie" [value]="tipologia">
+                {{tipologia.tab_tipo_scadenza_desc}}</ion-option>
+        </ion-select>
+    </ion-item>
+</ion-header>
+<ion-content >
+    <ion-list>
+        <ion-item *ngFor="let attivita of listaAttivita" (click)="goToDetails(attivita)" text-wrap no-padding>
+            <button no-lines ion-item no-margin clear>
+                <h2>{{attivita.att_protocollo}} + {{attivita.att_titolo}}</h2>
+                <p>{{attivita.tab_tipo_scadenza_desc}}</p>
+            </button>
+        </ion-item>
+    </ion-list>
+    <!--<ion-list *ngFor="let attivita of listaAttivita" (click)="goToDetails(attivita)">
+        <button no-lines ion-item color="light">Sito {{attivita.az_ragione_sociale}}</button>
+        <ion-item><p>Titolo</p> <ion-note item-end><p>{{attivita.att_titolo}}</p></ion-note></ion-item>
+        <ion-item>Tipologia {{attivita.tab_tipo_scadenza_desc}}</ion-item>
+        <ion-item>Data scadenza {{attivita.att_data_scadenza}}</ion-item>
+        <ion-item>Stato {{(attivita.att_conclusa==='S'?"conclusa":"non conclusa")}}</ion-item>
+        <ion-item>dispositivo {{attivita.att_dispositivo_key}}</ion-item>
+        <ion-item> {{attivita.att_protocollo}}</ion-item>
+    </ion-list>-->
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles"
+        loadingText="Caricamento Attività...">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>

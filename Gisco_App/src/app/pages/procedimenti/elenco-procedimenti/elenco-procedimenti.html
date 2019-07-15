@@ -1,0 +1,47 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Elenco Procedimenti</ion-title>
+    </ion-navbar>
+    <ion-searchbar placeholder="Sito" (ionInput)="setSitoFiltro($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Titolo" (ionInput)="setTitoloFiltro($event)"></ion-searchbar>
+    <ion-item class="ion-filters">
+        <ion-label>Tipologia</ion-label>
+        <ion-select [(ngModel)]="tipologiaSelezionata" (ionChange)="setTipologiaFiltro()">
+            <ion-option *ngFor="let tipologia of listaTipologie" [value]="tipologia">
+                {{tipologia.tab_tipo_procedimento_desc}}</ion-option>
+        </ion-select>
+    </ion-item>
+</ion-header>
+<ion-content >
+    <ion-list>
+        <ion-item *ngFor="let procedimento of listaProcedimenti" (click)="goToDetails($event, procedimento)" text-wrap no-padding>
+            <button no-lines ion-item no-margin clear>
+                <h2>{{procedimento.pro_titolo}}</h2>
+                <p>{{procedimento.az_codice_interno}} - {{procedimento.az_ragione_sociale}}</p>
+            </button>
+        </ion-item>
+    </ion-list>
+    <!--<ion-list *ngFor="let procedimento of listaProcedimenti" (click)="goToDetails($event, procedimento)">
+        <button no-lines ion-item color="light">Sito {{procedimento.az_ragione_sociale}}</button>
+        <ion-item><p>Codice Sito</p> <ion-note item-end><p>{{procedimento.az_codice_interno}}</p></ion-note></ion-item>
+        <ion-item><p>Titolo procedimento</p> <ion-note item-end><p>{{procedimento.pro_titolo}}</p></ion-note></ion-item>
+        <ion-item><p>Data</p> <ion-note item-end><p>{{procedimento.pro_data_avvio}}</p></ion-note></ion-item>
+        <ion-item><p>Tipologia</p> <ion-note item-end><p>{{procedimento.tab_tipo_procedimento_desc}}</p></ion-note></ion-item>
+        <ion-item *ngIf="procedimento.pr_ottemperate>0"><p>Ottemperate</p> <ion-note item-end><p>{{procedimento.pr_ottemperate}}</p></ion-note></ion-item>
+        <ion-item *ngIf="procedimento.pr_vincolate>0"><p>Vincolate</p> <ion-note item-end><p>{{procedimento.pr_vincolate}}</p></ion-note></ion-item>
+        <ion-item *ngIf="procedimento.pr_senza_data>0"><p>Senza data</p> <ion-note item-end><p>{{procedimento.pr_senza_data}}</p></ion-note></ion-item>
+        <ion-item *ngIf="procedimento.pr_scadute>0"><p>Scadute</p> <ion-note item-end><p>{{procedimento.pr_scadute}}</p></ion-note></ion-item>
+        <ion-item *ngIf="procedimento.pr_in_scadenza>0"><p>In scadenza</p> <ion-note item-end><p>{{procedimento.pr_in_scadenza}}</p></ion-note></ion-item>
+        <ion-item *ngIf="procedimento.pr_prossime>0"><p>Prossime</p> <ion-note item-end><p>{{procedimento.pr_prossime}}</p></ion-note></ion-item>
+        <ion-item *ngIf="procedimento.comunicazioni>0"><p>Comunicazioni</p> <ion-note item-end><p>{{procedimento.comunicazioni}}</p></ion-note></ion-item>
+        <ion-item><p>stato</p> <ion-note item-end><p>{{procedimento.pro_chiuso}}</p></ion-note></ion-item>
+    </ion-list>-->
+
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Caricamento Procedimenti...">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+</ion-content>

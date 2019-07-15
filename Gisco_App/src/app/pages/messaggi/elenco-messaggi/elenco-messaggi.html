@@ -1,0 +1,103 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Messaggi</ion-title>
+    </ion-navbar>
+    <ion-searchbar (ionInput)="setMessaggiFiltro($event)"></ion-searchbar>
+</ion-header>
+<ion-content>
+
+    <ion-list>
+        <ion-item-sliding *ngFor="let mess of listaMessaggi">
+            <ion-item text-wrap (click)="goToDetails(mess)">
+                <ion-avatar item-start>
+                    <img src="../assets/imgs/thumb-user.png">
+                </ion-avatar>
+                <h3>{{mess.cognome_mit}} {{mess.nome_mit}}</h3>
+                <p class="anteprima_mess">{{mess.soggetto}}</p>
+                <p class="anteprima_mess"><small>{{mess.data}}</small></p>
+            </ion-item>
+            <ion-item-options side="left">
+                <button ion-button color="danger" (click)="deleteConfirm(mess)">
+                    <ion-icon name="trash"></ion-icon>
+                    Cestino
+                </button>
+            </ion-item-options>
+            <ion-item-options side="right">
+                <button ion-button color="secondary" *ngIf="mess.preferito==''" (click)="setStar(mess,'S')">
+                    <ion-icon name="star-outline"></ion-icon>
+                    Importante
+                </button>
+                <button ion-button color="secondary" *ngIf="mess.preferito=='N'" (click)="setStar(mess,'S')">
+                    <ion-icon name="star-outline"></ion-icon>
+                    Importante
+                </button>
+                <button ion-button color="secondary" *ngIf="mess.preferito=='S'" (click)="setStar(mess,'N')">
+                    <ion-icon name="star"></ion-icon>
+                    Importante
+                </button>
+                <button ion-button color="primary-lighter" (click)="goToDetails(mess)">
+                    <ion-icon name="eye"></ion-icon>
+                    Leggi
+                </button>
+            </ion-item-options>
+        </ion-item-sliding>
+
+        <!--<div class="card no-border card-large messaggi  hidden">
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <ion-item *ngFor="let mess of listaMessaggi" class="comm">
+                        <li class="list-group-item ">
+                            <div class=" item ">
+                                <ion-icon name="eye" [ngStyle]="{'color' : color }" (click)="goToDetails(mess)"></ion-icon>
+                                <ion-icon name="checkbox" [ngStyle]="{'color' : color }"></ion-icon>
+                                <ion-icon name="star-outline" [ngStyle]="{'color' : color }" *ngIf="mess.preferito==''" (click)="setStar(mess,'S')"></ion-icon>
+                                <ion-icon name="star-outline" [ngStyle]="{'color' : color }" *ngIf="mess.preferito=='N'" (click)="setStar(mess,'S')"></ion-icon>
+                                <ion-icon name="star" [ngStyle]="{'color' : color }" *ngIf="mess.preferito=='S'" (click)="setStar(mess,'N')"></ion-icon>
+                                <ion-icon name="trash" [ngStyle]="{'color' : color }" (click)="deleteConfirm(mess)"></ion-icon>
+                                <div class="user-small contact-small">
+                                    <img src="{{mess.url_avatar}}">
+                                </div>
+                            </div>
+                            <div class="brief" (click)="goToDetails(mess)">
+                                <h5 class="name ">{{mess.cognome_mit}} {{mess.nome_mit}}</h5>
+                                <p [ngStyle]="{'color' : color }" class="text ">{{mess.soggetto}}</p>
+                                <p [ngStyle]="{'color' : color }">{{mess.data}}</p>
+                                <i [ngStyle]="{'color' : color }" class="fa fa-mobile device"></i>
+                            </div>
+                        </li>
+                    </ion-item>
+                </ul>
+            </div>
+        </div>-->
+    </ion-list>
+
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Caricamento Messaggi...">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+</ion-content>
+<ion-footer>
+    <ion-grid>
+        <ion-row text-center>
+            <ion-col (click)="goToNuovoMessaggio()">
+                <ion-icon name="create" style="font-size: 2em;"></ion-icon><br>
+                Nuovo
+            </ion-col>
+            <ion-col (click)="goToUscitaMessaggi()">
+                <ion-icon name="send" style="font-size: 2em;"></ion-icon><br>
+                Uscita
+            </ion-col>
+            <ion-col (click)="goToImportantiMessaggi()">
+                <ion-icon name="star" style="font-size: 2em;"></ion-icon><br>
+                Importanti
+            </ion-col>
+            <ion-col (click)="goToCestinoMessaggio()">
+                <ion-icon name="trash" style="font-size: 2em;"></ion-icon><br>
+                Cestino
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-footer>

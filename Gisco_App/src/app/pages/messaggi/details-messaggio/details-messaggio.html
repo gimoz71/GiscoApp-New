@@ -1,0 +1,56 @@
+<ion-header>
+    <ion-navbar hideBackButton>
+        <ion-buttons left>
+            <button (click)="back()" ion-button icon-left clear>
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-buttons end>
+            <div class="icon-section">
+                <i [ngClass]="icon" [ngStyle]="{'color' : color }"></i>
+            </div>
+        </ion-buttons>
+        <ion-title>Messaggio</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+        <ion-card-header padding text-wrap>
+            {{mess.soggetto}}
+        </ion-card-header>
+        <ion-card-content padding>
+            <p>Mittente: {{mess.nome_mit}} {{mess.cognome_mit}}</p>
+            <hr>
+            <p>Destinatario: {{mess.nome_des}} {{mess.cognome_des}}</p>
+            <hr>
+            <h2>{{mess.descrizione}} {{mess.messaggio}}</h2>
+            <img src="{{mess.nw_immagine}}">
+            
+        </ion-card-content>
+    </ion-card>
+</ion-content>
+<ion-footer *ngIf="!messagioCestino">
+    <ion-grid >
+        <ion-row text-center>
+            <ion-col>
+                <ion-icon name="undo" (click)="reply(mess)" style="font-size: 2em;"></ion-icon><br>
+                Rispondi
+            </ion-col>
+            <ion-col>
+                <ion-icon name="redo" (click)="inoltro(mess)" style="font-size: 2em;"></ion-icon><br>
+                Inoltra
+            </ion-col>
+            <ion-col>
+                <ion-icon name="trash" (click)="deleteConfirm(mess)" style="font-size: 2em;"></ion-icon><br>
+                Elimina
+            </ion-col>
+            <ion-col *ngIf="!onlyNotImportant">
+                <ion-icon name="star-outline" *ngIf="mess.preferito==''" (click)="setStar(mess,'S')" style="font-size: 2em;"></ion-icon>
+                <ion-icon name="star-outline" *ngIf="mess.preferito=='N'" (click)="setStar(mess,'S')" style="font-size: 2em;"></ion-icon>
+                <ion-icon name="star" *ngIf="mess.preferito=='S'" (click)="setStar(mess,'N')" style="font-size: 2em;"></ion-icon>
+                Preferito
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-footer>

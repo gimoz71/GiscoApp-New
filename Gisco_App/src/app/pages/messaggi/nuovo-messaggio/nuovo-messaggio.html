@@ -1,0 +1,45 @@
+<ion-header>
+    <ion-navbar hideBackButton>
+        <ion-buttons left>
+            <button (click)="back()" ion-button icon-left clear>
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-buttons end>
+            <div class="icon-section">
+                <i [ngClass]="icon" [ngStyle]="{'color' : color }"></i>
+            </div>
+        </ion-buttons>
+        <ion-title>Nuovo Messaggio</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-item>
+        <ion-label>Destinatario</ion-label>
+        <ionic-selectable item-content [(ngModel)]="destinatarioSelezionato" [items]="listaDestinatari" itemTextField="nomeCognome" [canSearch]="true" (onSearch)="destinatarioChange($event)">
+        </ionic-selectable>
+    </ion-item>
+    <ion-item>
+        <ion-label>Per conoscenza</ion-label>
+        <ionic-selectable item-content [(ngModel)]="conoscenzeSelezionate" [items]="listaDestinatari" itemTextField="nomeCognome" [canSearch]="true" [isMultiple]="true" (onSearch)="conoscenzaChange($event)">
+        </ionic-selectable>
+    </ion-item>
+
+    <ion-item>
+        <ion-label stacked>Oggetto</ion-label>
+        <ion-input [(ngModel)]="oggetto" text-left></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label stacked>Messaggio</ion-label>
+        <ion-textarea [(ngModel)]="messaggio" text-left></ion-textarea>
+    </ion-item>
+
+</ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <button ion-button small item-end icon-start block (click)="inviaMessaggio()">
+            <ion-icon name="add-circle" ios="ios-add-circle-outline"></ion-icon> Invia messaggio
+        </button>
+    </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,274 @@
+<ion-header>
+    <ion-navbar hideBackButton>
+        <ion-buttons left>
+            <button (click)="back()" ion-button icon-left clear>
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-buttons end>
+            <div class="icon-section">
+                <i [ngClass]="icon" [ngStyle]="{'color' : color }"></i>
+            </div>
+        </ion-buttons>
+        <ion-title>Sito</ion-title>
+    </ion-navbar>
+    <ion-segment [(ngModel)]="whichPage" color="primary-lighter">
+        <ion-segment-button value="Sito" checked (ionSelect)="segmentSitoClicked($event)">
+            <ion-icon name="locate"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="Catastale" (ionSelect)="segmentCatastaleClicked($event)">
+            <ion-icon name="albums"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="Procedimenti" (ionSelect)="segmentProcedimentiClicked($event)">
+            <ion-icon name="list"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="Grafico" (ionSelect)="segmentGraficoClicked($event)">
+            <ion-icon name="pie"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="Mappa" (ionSelect)="segmentMappaClicked($event)">
+            <ion-icon name="pin"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="Immagini" (ionSelect)="segmentImmaginiClicked($event)">
+            <ion-icon name="images"></ion-icon>
+        </ion-segment-button>
+    </ion-segment>
+</ion-header>
+
+<ion-content>
+    <div [ngSwitch]="whichPage">
+        <ion-list *ngSwitchCase="'Sito'">
+            <ion-item color="primary-lighter" class="ion-section-title">
+                Sito
+            </ion-item>
+            <div *ngIf="selectedSito">
+                <ion-list-header text-wrap>
+                    <h3>{{selectedSito.az_ragione_sociale}}</h3>
+                </ion-list-header>
+                <ion-item text-wrap>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Codice</p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{selectedSito.az_codice_interno}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Indirizzo</p>
+                            </ion-col>
+                            <ion-col  col-8 text-right>
+                            <p>{{selectedSito.indirizzo_completo}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Cliente </p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{selectedSito.gruppo_desc}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Estensione </p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{selectedSito.az_estensione}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Note </p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{selectedSito.az_note}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Responsabile </p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{selectedSito.az_responsabile_desc}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+            </div>
+        </ion-list>
+
+        <ion-list *ngSwitchCase="'Catastale'">
+            <ion-item color="primary-lighter" class="ion-section-title">
+                <ion-label>Catastale</ion-label>
+            </ion-item>
+            <div *ngIf="catastale.length === 0">
+                <ion-item>
+                    <p>Nessun elemento catastale</p>
+                </ion-item>
+            </div>
+            <div *ngFor="let c of catastale">
+                <ion-item text-wrap>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Settore </p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{c.azc_settore}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Descrizione </p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{c.azc_desc}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Tipo proprietà </p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{c.tab_tipo_proprieta_desc}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Stato proprietà </p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{c.azc_settore}}</p>
+                                <p>{{c.tab_stato_proprieta_desc}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+            </div>
+        </ion-list>
+
+        <ion-list *ngSwitchCase="'Procedimenti'">
+            <ion-item color="primary-lighter" class="ion-section-title">
+                <ion-label>Procedimenti</ion-label>
+            </ion-item>
+            <div *ngIf="procedimenti.length === 0">
+                <ion-item>
+                    <p>Nessuna procedimento</p>
+                </ion-item>
+            </div>
+            <div *ngFor="let procedimento of procedimenti">
+                <ion-list-header text-wrap>
+                    <h3>{{procedimento.pro_titolo}}</h3>
+                </ion-list-header>
+                <ion-item text-wrap>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Stato propriet&agrave; </p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{xxx}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Tipo </p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{xxx}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-icon name="alert" color="danger" item-start></ion-icon>
+                    Scadute
+                    <ion-badge item-end color="danger">{{procedimento.pr_scadute}}</ion-badge>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-icon name="time" color="alert" item-start></ion-icon>
+                    In scadenza
+                    <ion-badge item-end color="alert">{{procedimento.pr_in_scadenza}}</ion-badge>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-icon name="information-circle" color="future" item-start></ion-icon>
+                    Future
+                    <ion-badge item-end color="future">{{procedimento.pr_prossime}}</ion-badge>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-icon name="help-circle" color="no-date" item-start></ion-icon>
+                    Senza data
+                    <ion-badge item-end color="no-date">{{procedimento.pr_senza_data}}</ion-badge>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-icon name="time" color="vincolate" item-start></ion-icon>
+                    Vincolate
+                    <ion-badge item-end color="vincolate">{{procedimento.pr_vincolate}}</ion-badge>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-icon name="checkmark-circle" color="done" item-start></ion-icon>
+                    Ottemperate
+                    <ion-badge item-end color="done">{{procedimento.pr_ottemperate}}</ion-badge>
+                </ion-item>
+            </div>
+        </ion-list>
+        <ion-list *ngSwitchCase="'Grafico'">
+            <ion-item color="primary-lighter" class="ion-section-title">
+                <ion-label>Grafico Torta</ion-label>
+            </ion-item>
+            <ion-item text-wrap>
+                <canvas #graficoCiccio></canvas>
+            </ion-item>
+        </ion-list>
+        <ion-list *ngSwitchCase="'Mappa'">
+            <ion-item color="primary-lighter" class="ion-section-title">
+                <ion-label>Mappa</ion-label>
+            </ion-item>
+            <map-component [mapModel]="mapModel" *ngIf="showMap" (onMarkerClicked)="markerClicked($event)"></map-component>
+        </ion-list>
+        <ion-list *ngSwitchCase="'Immagini'">
+            <ion-item color="primary-lighter" class="ion-section-title">
+                Immagini
+            </ion-item>
+        </ion-list>
+    </div>
+
+</ion-content>

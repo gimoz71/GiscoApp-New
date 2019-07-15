@@ -1,0 +1,34 @@
+<ion-content class="bg-dark login" padding>
+  <form (ngSubmit)="login()" #registerForm="ngForm" class="container">
+    <div class="card card-transp card-login mx-auto mt-5">
+        <ion-row class="card-header">
+            <ion-col>
+              <div class="logo">Gisco</div>
+            </ion-col>
+          </ion-row>
+          <ion-row class="card-body">
+            <ion-col>
+              <ion-list inset>
+                <div class="form-group">
+                  <input class="form-control" type="text" placeholder="Email" name="email" [(ngModel)]="username" required/>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" type="password" placeholder="Password" name="password" [(ngModel)]="password" required/>  
+                </div>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+        <ion-row>
+          <ion-col>
+            <span class="switch switch-lg">
+              <input type="checkbox" class="switch" id="switch-id">
+              <label for="switch-id">Salva</label>
+            </span>
+          </ion-col>
+          <ion-col>
+            <button ion-button class="btn btn-transparent btn-block" full type="submit" [disabled]="!registerForm.form.valid">Entra</button>
+          </ion-col>
+        </ion-row>
+    </div>
+  </form>
+</ion-content>

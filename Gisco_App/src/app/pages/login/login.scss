@@ -1,0 +1,349 @@
+$font-size-base: 1rem;
+$font-size-lg: ($font-size-base * 1.25);
+$font-size-sm: ($font-size-base * .875);
+$input-height: 2.375rem;
+$input-height-sm: 1.9375rem;
+$input-height-lg: 3rem;
+$input-btn-focus-width: .2rem;
+/* $custom-control-indicator-bg: #dee2e6;
+$custom-control-indicator-disabled-bg: #e9ecef; */
+$custom-control-indicator-bg: rgba(white, .15);
+$custom-control-indicator-disabled-bg: rgba(white, .75);
+$custom-control-description-disabled-color: #868e96;
+$theme-colors: (
+  'primary': rgba(white, .5)
+);
+
+//
+// These variables can be used to customize the switch component.
+//
+$switch-height: calc(#{$input-height} * .8) !default;
+$switch-height-sm: calc(#{$input-height-sm} * .8) !default;
+$switch-height-lg: calc(#{$input-height-lg} * .8) !default;
+/* $switch-border-radius: $switch-height !default; */
+$switch-border-radius: .5em !default;
+$switch-bg: $custom-control-indicator-bg !default;
+$switch-checked-bg: map-get($theme-colors, 'primary') !default;
+$switch-disabled-bg: $custom-control-indicator-disabled-bg !default;
+$switch-disabled-color: $custom-control-description-disabled-color !default;
+/* $switch-thumb-border-radius: 50% !default; */
+$switch-thumb-border-radius: .4em !default;
+$switch-thumb-padding: 2px !default;
+$switch-focus-box-shadow: 0 0 0 $input-btn-focus-width rgba(map-get($theme-colors, 'primary'), .25);
+$switch-transition: .2s all !default;
+
+.bg-dark {
+    background-color: #343a40 !important;
+  }
+
+.login { 
+    background-image: url(/assets/imgs/home.jpg); 
+    background-size: cover; 
+    background-position: center center; 
+    background-repeat: no-repeat; 
+    text-transform: uppercase; 
+}
+
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+.logo { 
+    font: 0/0 a; 
+    color: transparent; 
+    text-shadow: none; 
+    background-color: transparent; 
+    border: 0; 
+    background: url(/assets/imgs/logotipo.svg) no-repeat center center; 
+    height: 30px; 
+    width: auto; 
+    float: left; 
+    margin: 0;
+  }
+  
+.login .logo { 
+  font: 0/0 a; 
+  color: transparent; 
+  text-shadow: none; 
+  background-color: transparent; 
+  border: 0; 
+  background: url(/assets/imgs/logo-login.png) no-repeat center center; 
+  background-size: contain;
+  width: 100%; 
+  height: 120px; 
+}
+.card {
+  margin-top: 5em;
+}
+
+.card-header {
+  padding: 0;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+  
+.card-header:first-child {
+border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+}
+
+.card-header + .list-group .list-group-item:first-child {
+border-top: 0;
+}
+
+.card-header.small { 
+    padding: .3rem 1.25rem; }
+.card-header a { 
+    color: rgba(255, 255, 255, 0.75) !important; }
+.card-header a.disabled { 
+    color: #fff !important; cursor: default; }
+.card-header a.disabled:first-child { 
+    padding-left: 0; }
+.card-header a:hover { 
+    color: white !important; }
+.card-header .nav-link { 
+    padding: 0rem .7rem; }
+.card-header .nav-link.active { 
+    background-color: #fff; 
+    color: #666 !important; }
+
+.card-transp { 
+    background-color: rgba(255, 255, 255, 0); 
+    border-color: rgba(255, 255, 255, 0); 
+    color: #fff; }
+.card-transp .card-header { 
+    background-color: rgba(255, 255, 255, 0); 
+    border-color: rgba(255, 255, 255, 0) a;}
+.card-transp input { 
+    color: #fff; 
+    background-color: rgba(255, 255, 255, 0.2); 
+    border-color: white; }
+.card-transp input::-webkit-input-placeholder { 
+    color: #fff; }
+.card-transp input:-moz-placeholder { 
+    color: #fff; }
+.card-transp input::-moz-placeholder { 
+    color: #fff; }
+.card-transp input:-ms-input-placeholder { 
+    color: #fff; }
+
+.card-body {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem 0;
+    .list {
+      margin: 16px 0 0 0;
+    }
+}
+      
+.form-group {
+    margin-bottom: 1rem;
+  }
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 2rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+
+.form-control::-ms-expand {
+background-color: transparent;
+border: 0;
+}
+
+.form-control:focus {
+color: #495057;
+background-color: #fff;
+border-color: #80bdff;
+outline: 0;
+box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+
+.btn-transparent { 
+    background-color: rgba(255, 255, 255, 0); 
+    border: solid 1px white; 
+    color: #fff;
+    //text-shadow: 0px 0px 3px rgba(0,0,0,.5) !important;
+    box-shadow: none;
+  }
+.btn-transparent:hover { 
+    background-color: white !important; 
+    //color: #000;
+  }
+
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+    .btn-block + .btn-block {
+    margin-top: 0.5rem;
+}
+
+    input[type="submit"].btn-block,
+    input[type="reset"].btn-block,
+    input[type="button"].btn-block {
+    width: 100%;
+}
+  
+
+.switch {
+    font-size: $font-size-base;
+    position: relative;
+    margin-top: 10px !important;
+    display: inline-block;
+  
+    input {
+      position: absolute;
+      height: 1px;
+      width: 1px;
+      background: none;
+      border: 0;
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      overflow: hidden;
+      padding: 0;
+  
+      + label {
+        position: relative;
+        min-width: calc(#{$switch-height} * 2);
+        border-radius: $switch-border-radius;
+        height: $switch-height;
+        line-height: $switch-height;
+        display: inline-block;
+        cursor: pointer;
+        outline: none;
+        user-select: none;
+        vertical-align: middle;
+        text-indent: calc(calc(#{$switch-height} * 2) + .5rem);
+      }
+  
+      + label::before,
+      + label::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: calc(#{$switch-height} * 2);
+        bottom: 0;
+        display: block;
+      }
+  
+      + label::before {
+        right: 0;
+        background-color: $switch-bg;
+        border-radius: $switch-border-radius;
+        transition: $switch-transition;
+          border: solid 1px #fff;
+      }
+  
+      + label::after {
+        top: $switch-thumb-padding;
+        left: $switch-thumb-padding;
+        width: calc(#{$switch-height} - calc(#{$switch-thumb-padding} * 2));
+        height: calc(#{$switch-height} - calc(#{$switch-thumb-padding} * 2));
+        border-radius: $switch-thumb-border-radius;
+        background-color: white;
+        transition: $switch-transition;
+      }
+  
+      &:checked + label::before {
+        background-color: $switch-checked-bg;
+      }
+  
+      &:checked + label::after {
+        margin-left: $switch-height;
+      }
+  
+      &:focus + label::before {
+        outline: none;
+        box-shadow: $switch-focus-box-shadow;
+      }
+  
+      &:disabled + label {
+        color: $switch-disabled-color;
+        cursor: not-allowed;
+      }
+  
+      &:disabled + label::before {
+        background-color: $switch-disabled-bg;
+      }
+    }
+  
+    // Small variation
+    &.switch-sm {
+      font-size: $font-size-sm;
+  
+      input {
+        + label {
+          min-width: calc(#{$switch-height-sm} * 2);
+          height: $switch-height-sm;
+          line-height: $switch-height-sm;
+          text-indent: calc(calc(#{$switch-height-sm} * 2) + .5rem);
+        }
+  
+        + label::before {
+          width: calc(#{$switch-height-sm} * 2);
+        }
+  
+        + label::after {
+          width: calc(#{$switch-height-sm} - calc(#{$switch-thumb-padding} * 2));
+          height: calc(#{$switch-height-sm} - calc(#{$switch-thumb-padding} * 2));
+        }
+  
+        &:checked + label::after {
+          margin-left: $switch-height-sm;
+        }
+      }
+    }
+  
+    // Large variation
+    &.switch-lg {
+      font-size: $font-size-lg;
+  
+      input {
+        + label {
+          min-width: calc(#{$switch-height-lg} * 2);
+          height: $switch-height-lg;
+          line-height: $switch-height-lg;
+          text-indent: calc(calc(#{$switch-height-lg} * 2) + .5rem);
+        }
+  
+        + label::before {
+          width: calc(#{$switch-height-lg} * 2);
+        }
+  
+        + label::after {
+          width: calc(#{$switch-height-lg} - calc(#{$switch-thumb-padding} * 2));
+          height: calc(#{$switch-height-lg} - calc(#{$switch-thumb-padding} * 2));
+        }
+  
+        &:checked + label::after {
+          margin-left: $switch-height-lg;
+        }
+      }
+    }
+  
+    + .switch {
+      margin-left: 1rem;
+    }
+  }
+  
+
+

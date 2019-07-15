@@ -1,0 +1,44 @@
+page-tipologie {
+    .icon-folder {
+        background-image: url(/assets/imgs/ios-folder-icon.png);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
+        height: 80px;
+        margin-bottom: 30px;
+        margin-top: 10px;
+        padding: 0;
+        ion-label {
+            bottom: -30px;
+            position: absolute;
+            text-align: center;
+            width: 100%;
+        }
+        ion-badge {
+            position: absolute;
+            top: 0px;
+            left: 15px;
+        }
+    }
+    .icon-document {
+        background-image: url(/assets/imgs/ios-doc-icon.png);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
+        height: 80px;
+        margin-bottom: 30px;
+        margin-top: 10px;
+        padding: 0;
+        ion-label {
+            bottom: -30px;
+            position: absolute;
+            text-align: center;
+            width: 100%;
+        }
+        ion-badge {
+            position: absolute;
+            top: 0px;
+            left: 15px;
+        }
+    }
+}

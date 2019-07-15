@@ -1,0 +1,53 @@
+<ion-header>
+    <ion-navbar hideBackButton>
+        <ion-buttons left>
+            <button (click)="back()" ion-button icon-left clear>
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title>Elenco Documenti</ion-title>
+    </ion-navbar>
+    <ion-buttons end>
+        <div class="icon-section">
+            <i [ngClass]="icon" [ngStyle]="{'color' : color }"></i>
+        </div>
+    </ion-buttons>
+    <ion-searchbar placeholder="campo libero Sito" (ionInput)="setSitoFiltro($event)"></ion-searchbar>
+    <ion-searchbar placeholder="campo libero Documento" (ionInput)="setDocumentoFiltro($event)"></ion-searchbar>
+</ion-header>
+<ion-content >
+    <ion-list>
+        <ion-item *ngFor="let documento of listaDocumenti" (click)="goToDocumento($event, documento)" text-wrap>
+            <ion-thumbnail item-start>
+                <img src="/assets/imgs/ios-doc-icon.png">
+            </ion-thumbnail>
+            <h3>{{documento.doc_titolo}}</h3>
+            <p><small>{{documento.tab_tipo_documento_desc}}</small></p>
+        </ion-item>
+    </ion-list>
+    <!--<ion-grid>
+        <ion-row>
+            <ion-col col-4 class="icon-document" *ngFor="let documento of listaDocumenti" (click)="goToDocumento($event, documento)">
+                <ion-label>{{documento.doc_titolo}}</ion-label>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-grid>
+        <ion-row>
+            <ion-col *ngFor="let documento of listaDocumenti" (click)="goToDocumento($event, documento)">
+                <ion-label>codice sito {{documento.az_codice_interno}}</ion-label>
+                <ion-label>Sito {{documento.az_ragione_sociale}}</ion-label>
+                <ion-label>Codice Documento {{documento.doc_codice}}</ion-label>
+                <ion-label>Documento {{documento.doc_titolo}}</ion-label>
+                <ion-label>Tipologia {{documento.tab_tipo_documento_desc}}</ion-label>
+                <ion-label>Data documento {{documento.doc_data}}</ion-label>
+                <ion-label>Versione {{documento.doc_versione}}</ion-label>
+            </ion-col>
+        </ion-row>
+    </ion-grid>-->
+
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Caricamento Documenti...">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+</ion-content>

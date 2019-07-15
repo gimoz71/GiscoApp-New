@@ -1,0 +1,7 @@
+{
+  "name": "allinapp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

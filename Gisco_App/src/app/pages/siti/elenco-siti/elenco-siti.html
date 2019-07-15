@@ -1,0 +1,38 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Elenco Siti</ion-title>
+    </ion-navbar>
+    <ion-searchbar placeholder="campo libero" (ionInput)="getSiti($event)" debounce="1000"></ion-searchbar>
+    <ion-item class="ion-filters">
+        <ion-label>Tipologia</ion-label>
+        <ion-select [(ngModel)]="tipologiaSelezionata" (ionChange)="getSiti()">
+            <ion-option *ngFor="let tipologia of listaTipologie" [value]="tipologia">
+                {{tipologia.tab_tipologia_sito_desc}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item class="ion-filters">
+        <ion-label>Provincia</ion-label>
+        <ion-select [(ngModel)]="provinciaSelezionata" (ionChange)="getSiti()">
+            <ion-option *ngFor="let provincia of listaProvince" [value]="provincia">{{provincia.Descrizione}}
+            </ion-option>
+        </ion-select>
+    </ion-item>
+</ion-header>
+<ion-content >
+    
+    <ion-list>
+        <ion-item *ngFor="let sito of listaSiti" (click)="goToDetails($event, sito)" text-wrap no-padding>
+            <button no-lines ion-item no-margin clear>
+                <h2>{{sito.az_codice_interno}} - {{sito.az_ragione_sociale}}</h2>
+                <p>{{sito.indirizzo_completo}}</p>
+            </button>
+            <!--<ion-item><p>Tipologia</p> <ion-note item-end><p>{{sito.tab_tipologia_sito_desc}}</p></ion-note></ion-item>-->
+            <!--<p>{{sito.indirizzo_completo}}</p>-->
+            <!--<ion-item><p>Cliente</p> <ion-note item-end><p>{{sito.gr_ragione_sociale}}</p></ion-note></ion-item>
+            <ion-item *ngIf="sito.prescrizioni_count>0">icona {{sito.prescrizioni_count}}</ion-item>-->
+        </ion-item>
+    </ion-list>
+</ion-content>

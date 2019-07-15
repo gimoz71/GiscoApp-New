@@ -1,0 +1,52 @@
+<!-- <ion-header *ngIf="showMenu()">
+	<ion-navbar align-title="center">
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title (click)="goToHome()">GISCO APP</ion-title>
+      </ion-navbar>
+</ion-header>
+
+<ion-menu [content]="mycontent">
+    <ion-content>
+      <ion-list>
+        <ion-item (click)="logOut()"> LogOut </ion-item>
+        <ion-item menuClose detail-none>Close Menu</ion-item>
+        <ion-item (click)="goToListaSiti()">Lista Siti</ion-item>
+        <ion-item (click)="goToMappaSiti()">Mappa Siti</ion-item>
+        <ion-item (click)="goToListaDispositivi()">Lista Dispositivi</ion-item>
+        <ion-item (click)="goToMappaDispositivi()">Mappa Dispositivi</ion-item>
+        <ion-item (click)="goToChat()">Chat</ion-item>
+        <ion-item (click)="goToDocumenti()">Documenti</ion-item>
+        <ion-item (click)="goToMessaggi()">Messaggi</ion-item>
+        <ion-item (click)="goToProfilo()">Profilo</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+<ion-nav #mycontent [root]="rootPage"></ion-nav> -->
+<ion-menu [content]="content">
+
+  <ion-header >
+    <ion-toolbar primary-darker>
+      <!--<ion-title>Menu</ion-title>-->
+      <img src="assets/imgs/logo-gisco.png" style="padding:20px 120px 0 0">
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        <ion-icon name="{{p.icon}}" item-left></ion-icon>
+        {{p.title}}
+    </button>
+    <button ion-item (click)="logOut()">
+        <ion-icon name="log-out" item-left></ion-icon>
+        logout
+      </button>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

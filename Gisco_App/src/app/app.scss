@@ -1,0 +1,127 @@
+// http://ionicframework.com/docs/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+
+
+.card {
+    margin-top: 12px !important;
+}
+
+.menu-inner {
+    .toolbar {
+        padding: 0 !important;
+    }
+    .toolbar-content, .toolbar-background {
+        background-color: $primary;
+        padding: 6px;
+    }
+    .content {
+        background: none;
+        color: #fff;
+    }
+
+  .item {
+        border: none !important;
+        background: none;
+        .item-inner {
+            border: none !important;
+            color:rgba(255,255,255,1);
+            font-size: .9em;
+            
+        }
+        .icon {
+            font-size: 1.2em;
+            line-height: 1.5em;
+            margin: 0 5px 0 0;
+            border: none !important;
+            color: $tertiary;
+            
+        }
+    }
+}
+
+.ios, .md, .wp {
+    ion-header {
+      //background-color: map-get($colors, secondary);
+    }
+    ion-footer {
+      background-color: map-get($colors, primary-lighter);
+      color: white;
+    }
+
+    ion-navbar {
+      background-color: map-get($colors, primary);
+      *{
+            color: #fff !important;
+        }
+    }
+    
+    .ion-section-title {
+        //background-color: map-get($colors, primary);
+        //color: #fff;
+        border: none !important;
+        .item-inner {
+            border: none !important;
+        }
+    }
+
+    ion-searchbar {
+      background-color: map-get($colors, primary-lighter);
+    }
+    .ion-filters {
+      background-color: map-get($colors, primary-lighter);
+      *{
+      color: #fff !important;
+      }
+      font-size: 1em;
+        .item-inner {
+            border: none !important;
+        }
+    }
+
+    .toolbar-background {
+      background-color: map-get($colors, primary-lighter);
+    }
+    .toolbar-title, .bar-button-default {
+      color: white;
+    }
+    .segment-button {
+        height: 4rem;
+        line-height: 5rem;
+        border-top: 0;
+        //border-bottom: 0;
+        &:first-of-type {
+            border-radius: 0;
+            border-left: 0;
+        }
+        &:last-of-type {
+            border-radius: 0;
+            border-right: 0;
+        }
+    }
+
+    textarea, input:not(.searchbar-input){
+        background-color: rgba(0,0,0,.02) !important;
+        padding: 4px;
+        font-size: 14px;
+    }
+
+}
+
+.anteprima_mess {
+    padding-top: .5em;
+    font-size: .75em;
+}

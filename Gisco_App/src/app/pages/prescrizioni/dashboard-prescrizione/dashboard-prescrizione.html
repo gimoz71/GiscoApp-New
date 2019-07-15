@@ -1,0 +1,81 @@
+<!--
+  Generated template for the DashboardSitoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar hideBackButton>
+    <ion-buttons left>
+      <button (click)="back()" ion-button icon-left clear>
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <div class="icon-section">
+        <i [ngClass]="icon" [ngStyle]="{'color' : color }"></i>
+      </div>
+    </ion-buttons>
+    <ion-title>Prescrizione</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div padding>
+    <ion-segment [(ngModel)]="whichPage">
+      <ion-segment-button value="Prescrizione" checked (ionSelect)="segmentPrescrizioneClicked($event)">
+        <ion-label>Prescrizione</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="Allegati" (ionSelect)="segmentAllegatiClicked($event)">
+        <ion-label>Allegati</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="Attività" (ionSelect)="segmentAttivitaClicked($event)">
+        <ion-label>Attività Collegate</ion-label>
+      </ion-segment-button>
+      <!-- <ion-segment-button value="Proroghe" (ionSelect)="segmentProrogheClicked($event)">
+        <ion-label>Proroghe</ion-label>
+      </ion-segment-button> -->
+    </ion-segment>
+  </div>
+
+  <div [ngSwitch]="whichPage">
+    <ion-list *ngSwitchCase="'Prescrizione'">
+      <ion-item>
+        <h3 text-center *ngIf="selectedPrescrizione">
+          <p>sito {{selectedPrescrizione.az_ragione_sociale}}</p>
+          <p>comunicazione {{comunicazioneTitolo}}</p>
+          <p>Descrizione {{selectedPrescrizione.pre_descrizione}}</p>
+          <p>data {{selectedPrescrizione.pre_data_emissione}}</p>
+          <p>tipo {{selectedPrescrizione.tab_tipo_prescrizione_desc}}</p>
+          <p>ente controllo {{selectedPrescrizione.ec_nominativo}}</p>
+          <p>vincolata {{selectedPrescrizione.pre_vincolata}}</p>
+          <p>pre_capo_terzi {{selectedPrescrizione.pre_capo_terzi}}</p>
+          <p>pre_di_rilevanza {{selectedPrescrizione.pre_di_rilevanza}}</p>
+          <p>data scadenza {{selectedPrescrizione.pre_data_scadenza}}</p>
+          <p>data realizzazione {{selectedPrescrizione.pre_data_realizzazione}}</p>
+          <p>note {{selectedPrescrizione.pre_note}}</p>
+        </h3>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngSwitchCase="'Allegati'">
+      <ion-item *ngFor="let f of selectedPrescrizione.pre_files">
+        {{f.prf_file}}
+      </ion-item>
+    </ion-list>
+    <ion-list *ngSwitchCase="'Attività'">
+      <ion-item *ngFor="let a of selectedPrescrizione.pre_attivita">
+        titolo {{a.titolo}}
+        tipologia {{a.tipologia}}
+        fine {{a.fine}}
+        stato {{a.stato}}
+      </ion-item>
+    </ion-list>
+    <ion-list *ngSwitchCase="'Proroghe'">
+      <ion-item>
+        pluto
+      </ion-item>
+    </ion-list>
+  </div>
+
+</ion-content>

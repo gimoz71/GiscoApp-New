@@ -1,0 +1,63 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>profilo</ion-title>
+    </ion-navbar>
+  </ion-header>
+  <ion-content>
+    <div class="userData text-center">
+      <div class="user-bigger mx-auto  mb-3 addBook ">
+        <img (click)="presentActionSheet()" src={{profilo.url_avatar}}>
+      </div>
+      <h5 class="name">{{profilo.nome}} {{profilo.cognome}}</h5>
+      <p class="role">{{profilo.ruolo_aziendale}}</p>
+      <table class="roleInfo mx-auto">
+        <tr>
+          <td class="text-left">
+            N° interno
+          </td>
+          <td class="text-right">
+            {{profilo.matricola}}
+          </td>
+        </tr>
+        <tr>
+          <td class="text-left">
+            Ruolo aziendale
+          </td>
+          <td class="text-right">
+            {{profilo.ruolo_aziendale}}
+          </td>
+        </tr>
+        <tr>
+          <td class="text-left">
+            Mansione
+          </td>
+          <td class="text-right">
+            {{profilo.ruolo_aziendale}}
+          </td>
+        </tr>
+      </table>
+      <table class="contacts mt-5 mb-5 mx-auto">
+        <tr>
+          <td class="text-left">
+            <ion-icon name="call"></ion-icon>
+          </td>
+          <td class="text-right">
+            <span>{{profilo.telefono}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="text-left">
+            <ion-icon name="mail"></ion-icon>
+  
+          </td>
+          <td class="text-right">
+            {{profilo.email}}
+          </td>
+        </tr>
+      </table>
+      <button ion-button (click) ="changePassword()">Cambia Password</button>
+    </div>
+  </ion-content>

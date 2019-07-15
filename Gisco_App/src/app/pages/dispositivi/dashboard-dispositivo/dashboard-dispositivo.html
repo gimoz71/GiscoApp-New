@@ -1,0 +1,219 @@
+<ion-header>
+    <ion-navbar hideBackButton>
+        <ion-buttons left>
+            <button (click)="back()" ion-button icon-left clear>
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-buttons end>
+            <div class="icon-section">
+                <i [ngClass]="icon" [ngStyle]="{'color' : color }"></i>
+            </div>
+        </ion-buttons>
+        <ion-title>Dispositivo</ion-title>
+    </ion-navbar>
+    <ion-segment [(ngModel)]="whichPage" color="primary-lighter">
+        <ion-segment-button value="Dispositivo" checked (ionSelect)="segmentDispositivoClicked($event)">
+            <ion-icon name="information-circle"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="Titolarita" (ionSelect)="segmentTitolaritaClicked($event)">
+            <ion-icon name="logo-buffer"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="Autorizzazioni" (ionSelect)="segmentAutorizzazioniClicked($event)">
+            <ion-icon name="checkmark-circle"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="Mappa" (ionSelect)="segmentMappaClicked($event)">
+            <ion-icon name="pin"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="Immagini" (ionSelect)="segmentImmaginiClicked($event)">
+            <ion-icon name="images"></ion-icon>
+        </ion-segment-button>
+    </ion-segment>
+</ion-header>
+<ion-content>
+    <div *ngIf="selectedDispositivo" [ngSwitch]="whichPage">
+        <ion-list *ngSwitchCase="'Dispositivo'">
+            <ion-item color="primary-lighter" class="ion-section-title">
+                <ion-label>Dispositivo</ion-label>
+            </ion-item>
+            <ion-list-header text-wrap>
+                <h3>
+                    {{selectedDispositivo.dis_titolo}}
+                </h3>
+            </ion-list-header>
+            <ion-item text-wrap>
+                <ion-grid no-padding>
+                    <ion-row>
+                        <ion-col>
+                            <p>Codice </p>
+                        </ion-col>
+                        <ion-col col-8 text-right>
+                            <p>{{selectedDispositivo.az_codice_interno}}</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+            <ion-item text-wrap>
+                <ion-grid no-padding>
+                    <ion-row>
+                        <ion-col>
+                            <p>Sito </p>
+                        </ion-col>
+                        <ion-col col-8 text-right>
+                            <p>{{selectedDispositivo.az_ragione_sociale}}</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+            <ion-item text-wrap>
+                <ion-grid no-padding>
+                    <ion-row>
+                        <ion-col>
+                            <p>Tipologia </p>
+                        </ion-col>
+                        <ion-col col-8 text-right>
+                            <p>{{selectedDispositivo.tab_tipo_dispositivo_desc}}</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+            <ion-item text-wrap>
+                <ion-grid no-padding>
+                    <ion-row>
+                        <ion-col>
+                            <p>Gestore </p>
+                        </ion-col>
+                        <ion-col col-8 text-right>
+                            <p>{{selectedDispositivo.dis_gestore_desc}}</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+            <ion-item text-wrap>
+                <ion-grid no-padding>
+                    <ion-row>
+                        <ion-col>
+                            <p>Data attivazione </p>
+                        </ion-col>
+                        <ion-col col-8 text-right>
+                            <p>{{selectedDispositivo.dis_data_attivazione}}</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+            <ion-item text-wrap>
+                <ion-grid no-padding>
+                    <ion-row>
+                        <ion-col>
+                            <p>Data disattivazione </p>
+                        </ion-col>
+                        <ion-col col-8 text-right>
+                            <p>{{selectedDispositivo.dis_data_disattivazione}}</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+            <ion-item text-wrap>
+                <ion-grid no-padding>
+                    <ion-row>
+                        <ion-col>
+                            <p>Note </p>
+                        </ion-col>
+                        <ion-col col-8 text-right>
+                            <p>{{selectedDispositivo.dis_descrizione}}</p>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+        </ion-list>
+        <ion-list *ngSwitchCase="'Titolarita'">
+            <ion-item color="primary-lighter" class="ion-section-title">
+                <ion-label>{{ titolarita.count }}Titolarit&agrave;</ion-label>
+            </ion-item>
+            <div *ngIf="titolarita.length === 0">
+                <ion-item>
+                    <p>Nessuna titolarit&agrave;</p>
+                </ion-item>
+            </div>
+            <div *ngFor="let t of titolarita">
+                <ion-item>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Ragione Sociale</p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                {{t.di_ragione_sociale}}
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Nominativo</p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{t.dp_nominativo}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>dal</p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{t.dis_da_data}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                    </ion-item>
+                <ion-item text-wrap>
+                <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>al</p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{t.dis_a_data}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+            </div>
+        </ion-list>
+        <ion-list *ngSwitchCase="'Autorizzazioni'">
+            <ion-item color="primary-lighter" class="ion-section-title">
+                <ion-label>Autorizzazioni</ion-label>
+            </ion-item>
+            <div *ngIf="autorizzazioni.length === 0">
+                <ion-item>
+                    <p>Nessuna autorizzazione</p>
+                </ion-item>
+            </div>
+            <div *ngFor="let autorizzazione of autorizzazioni">
+                <ion-item>
+                    {{ autorizzazione }}
+                </ion-item>
+            </div>
+        </ion-list>
+        <ion-list *ngSwitchCase="'Mappa'">
+            <ion-item color="primary-lighter" class="ion-section-title">
+                <ion-label>Mappa</ion-label>
+            </ion-item>
+            <map-component [mapModel]="mapModel" *ngIf="showMap" (onMarkerClicked)="markerClicked($event)"></map-component>
+        </ion-list>
+        <ion-list *ngSwitchCase="'Immagini'">
+            <ion-item color="primary-lighter" class="ion-section-title">
+                <ion-label>Immagini</ion-label>
+            </ion-item>
+            <ion-item text-wrap>
+            </ion-item>
+        </ion-list>
+    </div>
+
+</ion-content>
