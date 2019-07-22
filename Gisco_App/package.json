@@ -31,11 +31,11 @@
     "@ionic-native/status-bar": "4.6.0",
     "@ionic/storage": "^2.2.0",
     "chart.js": "^2.8.0",
-    "cordova-android": "7.0.0",
+    "cordova-android": "8.0.0",
     "cordova-ios": "4.5.5",
     "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-device": "^2.0.2",
-    "cordova-plugin-firebase": "git+https://github.com/dpa99c/cordova-plugin-firebase.git#GH-1057-April-05-android-build-issue",
+    "cordova-plugin-firebase": "^2.0.0",
     "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-googlemaps": "^2.6.2",
     "cordova-plugin-inappbrowser": "^3.0.0",
@@ -83,8 +83,8 @@
       "cordova-plugin-firebase": {}
     },
     "platforms": [
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }

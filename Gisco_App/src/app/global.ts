@@ -58,6 +58,7 @@ export const GlobalVariable = Object.freeze({
     OSSERVAZIONI_DELET_COMMENTO_KEYWORD: 'del_commento_osservazione',
 
     ATTIVITA_GET_ELENCO_KEYWORD: "get_elenco_attivita",///{token}/{from}/{to}/{categoria}/{tipo}/{sito}"
+    ATTIVITA_GET_MIE_ELENCO_KEYWORD: "get_mie_attivita",
     ATTIVITA_GET_CATEGORIE_KEYWORD:"get_categorie_attivita", //filtro attività nel elenco attività
     ATTIVITA_GET_TIPOLOGIE_KEYWORD:"get_tipologie_attivita", //filtro tipologie nel elenco attività
     ATTIVITA_GET_IMMAGINI_KEYWORD:"get_attivita_immagini",
@@ -73,6 +74,7 @@ export const GlobalVariable = Object.freeze({
     ATTIVITA_SALVA_COMMENTO_KEYWORD: 'put_commento_attivita',
     ATTIVITA_DELET_COMMENTO_KEYWORD: 'del_commento_attivita',
 
-
-
+    COMMON_GET_NOTIFICHE: 'get_notifiche',
+    COMMON_GET_PRESCRIZIONI_CHARTDATA: 'get_situazione_prescrizioni',
+    COMMON_GET_ATTIVITA_CHARTDATA: 'get_situazione_attivita',
 });

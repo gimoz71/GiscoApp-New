@@ -17,7 +17,7 @@ export class HttpService {
         console.log(url);
 
         let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        return this.http.get<Login.ws_Token>(url, { headers: headers });
+        return this.http.get<Login.ws_Token>(url + '/1', { headers: headers });
     }
 
     //questa operazione va solo se si è loggati

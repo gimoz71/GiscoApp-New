@@ -16,6 +16,11 @@ export class AttivitaService {
     }
 
 ///{token}/{from}/{to}/{categoria}/{tipo}/{sito}"
+    public getMieAttivita(token: string){
+        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.ATTIVITA_GET_MIE_ELENCO_KEYWORD
+            + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER, token);//protocollo
+    }
+
     public getListaAttivita(token: string, categoria: any, tipo_cod: any, sito_cod: string, prot_cod: string, from: number, to: number): Observable<Http.HttpResponse> {
         return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.ATTIVITA_GET_ELENCO_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER

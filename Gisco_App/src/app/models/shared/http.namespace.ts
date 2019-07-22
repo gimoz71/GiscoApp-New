@@ -9,6 +9,7 @@ import { Procedimento } from "../procedimento/procedimento.namespace";
 import { Comunicazione } from "../comunicazione/comunicazione.namespace";
 import { Osservazione } from "../osservazione/osservazione.namespace";
 import { Attivita } from "../attivita/attivita.namespace";
+import { Common } from "../common/common.namespace";
 
 export namespace Http {
     export class HttpResponse {
@@ -55,9 +56,15 @@ export namespace Http {
         public l_lista_commenti: Array<Osservazione.Commento>;
 
         public l_lista_attivita: Array<Attivita.Attivita>;
+        public l_lista_immagini_attivita: Array<Attivita.Immagine>;
         public attivita: Attivita.Attivita;
         public att_data_fine_effettiva: string;
         public att_data_inizio_effettiva: string;
         public att_descrizione: string;
+
+        public l_notifiche: Array<Common.NotificaList>;
+
+        public s_prescrizioni: Common.PrescrizioniChartData;
+        public l_attivita: Array<Common.AttivitaChartData>;
     }
 }

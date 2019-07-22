@@ -47,7 +47,6 @@ import { CartellePage } from './pages/documenti/cartelle/cartelle';
 import { ElencoDocumentiPage } from './pages/documenti/elenco-documenti/elenco-documenti';
 
 // #REGION - Components
-//import { ProgressBarComponent } from './components/progress-bar/progress-bar';
 
 // #REGION - Services
 import { HttpService } from './services/shared/http.service';
@@ -110,6 +109,7 @@ import { DashboardAttivitaPage } from './pages/attivita/dashboard-attivita/dashb
 import { AttivitaService } from './services/attivita/attivita.service';
 import { Firebase } from '@ionic-native/firebase';
 
+import { CommonService } from './services/shared/common.service';
 
 @NgModule({
   declarations: [
@@ -220,6 +220,7 @@ import { Firebase } from '@ionic-native/firebase';
     AttivitaService,
     DatePicker,
     Firebase,
+    CommonService,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ],
   exports: [
