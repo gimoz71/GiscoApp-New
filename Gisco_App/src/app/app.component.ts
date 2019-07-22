@@ -34,7 +34,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage = LoadingPage;//home
-  pages: Array<{ title: string, component: any }>;
+  pages: Array<{ title: string, component: any, icon: any }>;
   private pagineSenzaMenu: Array<string> = new Array("LoadingPage", "LoginPage");
 
   private numNotifiche_attivita = 0;
@@ -60,17 +60,17 @@ export class MyApp {
 
     // set our app's pages
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'Elenco Siti', component: ElencoSitiPage },
-      { title: 'Mappa Siti', component: MappaSitiPage },
-      { title: 'Elenco Dispositivi', component: ElencoDispositiviPage },
-      { title: 'Mappa Dispositivi', component: MappaDispositiviPage },
-      { title: 'Documenti', component: CartellePage },
-      { title: 'Messaggi', component: ElencoMessaggiPage },
-      { title: 'Procedimenti', component: ElencoProcedimentiPage },
-      { title: 'Osservazioni', component: ElencoOsservazioniPage },
-      { title: 'Attività', component: ElencoAttivitaPage },
-      { title: 'Profilo', component: DashboardProfiloPage },
+        { title: 'Home', component: 'HomePage', icon: 'home' },
+        { title: 'Elenco Siti', component: ElencoSitiPage, icon: 'locate' },
+        { title: 'Mappa Siti', component: MappaSitiPage, icon: 'navigate' },
+        { title: 'Elenco Dispositivi', component: ElencoDispositiviPage, icon: 'locate' },
+        { title: 'Mappa Dispositivi', component: MappaDispositiviPage, icon: 'navigate' },
+        { title: 'Documenti', component: CartellePage, icon: 'home' },
+        { title: 'Messaggi', component: ElencoMessaggiPage, icon: 'home' },
+        { title: 'Procedimenti', component: ElencoProcedimentiPage, icon: 'home' },
+        { title: 'Osservazioni', component: ElencoOsservazioniPage, icon: 'home' },
+        { title: 'Attività', component: ElencoAttivitaPage, icon: 'home' },
+        { title: 'Profilo', component: DashboardProfiloPage, icon: 'home' },
     ];
   }
 
