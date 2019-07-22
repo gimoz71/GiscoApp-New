@@ -164,6 +164,10 @@ export class HomePage{
                   backgroundColor: colors,
                   hoverBackgroundColor: colors
               }]
+          },
+          options: {
+              maintainAspectRatio: false,
+              aspectRatio: 1
           }
     
         });
