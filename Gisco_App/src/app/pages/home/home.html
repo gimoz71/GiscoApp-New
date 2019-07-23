@@ -6,11 +6,10 @@
 		<ion-title>Home</ion-title>
 	</ion-navbar>
 </ion-header>
-<button ion-button (click)="goToNuovaOsservazione()">Nuova Osservazione</button>
 <ion-content>
 	<ion-card>
-		<ion-card-header class="">
-			<ion-card-title>
+		<ion-card-header>
+			<ion-card-title padding>
 				Elenco Attività
 			</ion-card-title>
 		</ion-card-header>
@@ -25,17 +24,19 @@
 			</ion-list>
 		</ion-card-content>
 	</ion-card>
-	<ion-card class="">
-		<ion-card-header class="" *ngIf="prescrizioniChartVisible">
-			<ion-card-title>
+	<ion-card>
+		<ion-card-header *ngIf="prescrizioniChartVisible">
+			<ion-card-title padding>
 				Situazione Prescrizioni
 			</ion-card-title>
 		</ion-card-header>
 		<ion-card-content class="yellow-header" *ngIf="prescrizioniChartVisible">
 			<canvas #doughnutCanvas></canvas>
-		</ion-card-content>
-		<ion-card-header class=""  *ngIf="attivitaChartVisible">
-			<ion-card-title>
+        </ion-card-content>
+    </ion-card>
+    <ion-card>
+		<ion-card-header *ngIf="attivitaChartVisible">
+			<ion-card-title padding>
 				Situazione Attivita
 			</ion-card-title>
 		</ion-card-header>
