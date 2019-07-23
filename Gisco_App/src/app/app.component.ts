@@ -60,7 +60,7 @@ export class MyApp {
 
     // set our app's pages
     this.pages = [
-        { title: 'Home', component: 'HomePage', icon: 'home' },
+        { title: 'Home', component: HomePage, icon: 'home' },
         { title: 'Elenco Siti', component: ElencoSitiPage, icon: 'locate' },
         { title: 'Mappa Siti', component: MappaSitiPage, icon: 'navigate' },
         { title: 'Elenco Dispositivi', component: ElencoDispositiviPage, icon: 'locate' },
@@ -172,32 +172,32 @@ export class MyApp {
     switch(titolo){
       case "Attività": 
         if(this.numNotifiche_attivita > 0){
-          toReturn = '('+this.numNotifiche_attivita+')';
+          toReturn = this.numNotifiche_attivita;
         }
         break;
       case "Osservazioni": 
         if(this.numNotifiche_osservazioni > 0){
-          toReturn = '('+this.numNotifiche_osservazioni+')';
+          toReturn = this.numNotifiche_osservazioni;
         }
         break;
       case "Prescrizioni": 
         if(this.numNotifiche_prescrizioni > 0){
-          toReturn = '('+this.numNotifiche_prescrizioni+')';
+          toReturn = this.numNotifiche_prescrizioni;
         }
         break;
       case "Messaggi": 
         if(this.numNotifiche_messaggi > 0){
-          toReturn = '('+this.numNotifiche_messaggi+')';
+          toReturn = this.numNotifiche_messaggi;
         }
         break;
       case "Commenti Attivita": 
         if(this.numNotifiche_commenti_at > 0){
-          toReturn = '('+this.numNotifiche_commenti_at+')';
+          toReturn = this.numNotifiche_commenti_at;
         }
         break;
       case "Commenti Osservazioni": 
         if(this.numNotifiche_commenti_os > 0){
-          toReturn = '('+this.numNotifiche_commenti_os+')';
+          toReturn = this.numNotifiche_commenti_os;
         }
         break;
       default: 

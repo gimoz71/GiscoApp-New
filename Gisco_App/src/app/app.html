@@ -38,7 +38,7 @@
     <ion-list>
       <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
         <ion-icon name="{{p.icon}}" item-left></ion-icon>
-        {{p.title}} {{getNumeroNotifiche(p.title)}}
+        {{p.title}} <ion-badge color="secondary">{{getNumeroNotifiche(p.title)}}</ion-badge>
       </button>
       <button ion-item (click)="logOut()">
         <ion-icon name="logout" item-left></ion-icon>

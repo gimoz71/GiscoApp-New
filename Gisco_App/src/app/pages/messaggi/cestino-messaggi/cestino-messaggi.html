@@ -43,21 +43,7 @@
                 </button>
             </ion-item-options>
         </ion-item-sliding>
-        <ul class="comm hidden">
-            <li class="list-group-item " *ngFor="let mess of listaMessaggi">
-                <div class=" item ">
-                    <ion-icon name="eye" (click)="goToDetails(mess)"></ion-icon>
-                    <ion-icon name="close" (click)="deleteConfirm(mess)"></ion-icon>
-                    <ion-icon name="cloud-upload" (click)="ripristina(mess)"></ion-icon>
-                </div>
-                <div class="brief" (click)="goToDetails(mess)">
-                    <h5 class="name ">{{mess.cognome_mit}} {{mess.nome_mit}}</h5>
-                    <p [ngStyle]="{'color' : color }" class="text ">{{mess.soggetto}}</p>
-                    <p [ngStyle]="{'color' : color }">{{mess.data}}</p>
-                    <i [ngStyle]="{'color' : color }" class="fa fa-mobile device"></i>
-                </div>
-            </li>
-        </ul>
+        
     </ion-list>
     <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Caricamento Messaggi...">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>

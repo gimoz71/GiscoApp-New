@@ -95,6 +95,8 @@ export class HomePage{
           data: barChartData,
           options: {
               responsive: true,
+              maintainAspectRatio: false,
+              aspectRatio: 1,
               scales: {
                   xAxes: [{
                     barPercentage: 1,
