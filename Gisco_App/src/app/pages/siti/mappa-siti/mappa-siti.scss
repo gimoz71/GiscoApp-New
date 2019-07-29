@@ -1,6 +1,11 @@
 page-mappa-siti {
-    agm-map { /* Must bigger size than 100x100 pixels */
-        width: 100%;
+    agm-map {
+        position: absolute;
         height: 100vh;
+        top: -44px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: -10
     }
 }
