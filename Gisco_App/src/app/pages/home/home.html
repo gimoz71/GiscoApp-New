@@ -13,15 +13,23 @@
 				Elenco Attività
 			</ion-card-title>
 		</ion-card-header>
-		<ion-card-content>
-			<ion-list>
+		<ion-card-content no-padding>
+            <ion-list no-padding>
+                <ion-item *ngFor="let attivita of listaAttivita" (click)="goToDetails(attivita)" text-wrap no-padding>
+                    <button no-lines ion-item no-margin clear>
+                        <h3>{{attivita.att_protocollo}} + {{attivita.att_titolo}}</h3>
+                        <p>{{attivita.tab_tipo_scadenza_desc}}</p>
+                    </button>
+                </ion-item>
+            </ion-list>
+			<!--<ion-list>
 				<ion-item *ngFor="let attivita of listaAttivita" >
 					<ion-label>Sito {{attivita.az_codice_interno}} {{attivita.az_ragione_sociale}}</ion-label>
 					<ion-label>{{attivita.att_titolo}}</ion-label>
 					<ion-label>Data scadenza {{attivita.att_data_scadenza}}</ion-label>
 					<ion-label> {{attivita.att_protocollo}}</ion-label>
 				</ion-item>
-			</ion-list>
+			</ion-list>-->
 		</ion-card-content>
 	</ion-card>
 	<ion-card>
