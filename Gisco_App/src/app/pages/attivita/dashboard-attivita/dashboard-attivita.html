@@ -12,7 +12,8 @@
         </ion-buttons>
         <ion-title>Attività</ion-title>
     </ion-navbar>
-    <ion-segment [(ngModel)]="whichPage" (ionChange)="onSegmentChange()">
+    <!-- (ionChange)="onSegmentChange()" -->
+    <ion-segment [(ngModel)]="whichPage" >
         <ion-segment-button value="Attivita" checked (ionSelect)="segmentAttivitaClicked($event)">
             <ion-icon name="locate"></ion-icon>
             <ion-label>Dati Attività</ion-label>

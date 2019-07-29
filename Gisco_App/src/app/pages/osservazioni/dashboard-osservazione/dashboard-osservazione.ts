@@ -16,6 +16,7 @@ import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@io
 import { NuovaAssegnazionePage } from '../nuova-assegnazione/nuova-assegnazione';
 import { Camera, CameraOptions } from '@ionic-native/camera/';
 import { DashboardChiusuraPage } from '../dashboard-chiusura/dashboard-chiusura';
+import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 
 
 @Component({
@@ -34,12 +35,15 @@ export class DashboardOsservazionePage {
     public dispositivoSelezionato: Dispositivo.Dispositivo;
     private ws_Oss: Osservazione.ws_Osservazione;
     private selectedOsservazione: Osservazione.Osservazione;
-    private titolo: string;
-    private descrizione: string;
+    public titolo: string;
+    public descrizione: string;
+    public protocollo: string;
     private relativo: boolean;
     private options: GeolocationOptions;
     private currentPos: Geoposition;
     private whichPage: string;
+
+    public isInserimento: boolean;
 
     private listaAssegnazioni: Array<Osservazione.Assegnazione>;
     private listaImmagini: Array<Osservazione.Immagine>;
@@ -67,12 +71,18 @@ export class DashboardOsservazionePage {
         private alertCtrl: AlertController,
         private camera: Camera,
         private geolocation: Geolocation) {
-        this.selectedOsservazione = this.navParams.get("selectedOsservazione")
+        this.selectedOsservazione = this.navParams.get("selectedOsservazione");
+        if(this.selectedOsservazione === undefined){
+            this.isInserimento = true;
+        } else {
+            this.isInserimento = false;
+        }
         this.callbackReload = this.navParams.get("callbackReload")
 
         this.ws_Oss = new Osservazione.ws_Osservazione();
         this.whichPage = 'Osservazione';
         this.listaPersonalizzate = new Array<Osservazione.ProprietaPersonalizzata>();
+
     }
 
     ionViewDidLoad() {
@@ -154,6 +164,7 @@ export class DashboardOsservazionePage {
         this.tipologiaOssSelezionata = this.listaTipologieOss.find(tipo => tipo.tab_tipo_scadenza_cod === this.selectedOsservazione.att_tipo_scadenza_cod)
         this.titolo = this.selectedOsservazione.att_titolo;
         this.descrizione = this.selectedOsservazione.att_descrizione;
+        this.protocollo = this.selectedOsservazione.att_protocollo;
         this.dataRilevazione = this.selectedOsservazione.data_segnalazione;
         if (this.selectedOsservazione.att_dispositivo_key > 0) {
             this.relativo = true;
@@ -277,6 +288,7 @@ export class DashboardOsservazionePage {
                 if (this.titolo && this.titolo.trim() != "") {
                     this.ws_Oss.osservazione.att_titolo = this.titolo;
                     this.ws_Oss.osservazione.att_descrizione = this.descrizione;
+                    this.ws_Oss.osservazione.att_protocollo = this.protocollo;
                     if ((this.relativo && this.dispositivoSelezionato) || !this.relativo) {
                         if (this.relativo) {
                             this.ws_Oss.osservazione.dis_titolo = this.dispositivoSelezionato.dis_titolo;

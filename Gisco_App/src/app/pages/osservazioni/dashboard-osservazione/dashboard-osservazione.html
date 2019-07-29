@@ -43,10 +43,10 @@
                             {{tipologiaOss.tab_tipo_scadenza_desc}}</ion-option>
                     </ion-select>
                 </ion-item>
-                <ion-item>
+                <ion-item *ngIf="!isInserimento">
                     <ion-label>Protocollo</ion-label>
                     <ion-note item-end>
-                        <p>{{(selectedOsservazione.att_protocollo)}}</p>
+                        <p>{{(protocollo)}}</p>
                     </ion-note>
                 </ion-item>
                 <ion-item>
@@ -149,7 +149,7 @@
                 <ion-item *ngFor="let imm of listaImmagini">
                     <ion-item>
                         <img src="{{imm.img_url+imm.img_file}}">
-                        <button *ngIf="!conclusa" ion-button clear item-end(click)="goToEliminaImmagine(imm)">Elimina</button>
+                        <button *ngIf="!conclusa" ion-button clear item-end (click)="goToEliminaImmagine(imm)">Elimina</button>
                     </ion-item>
                 </ion-item>
             </ion-list>
