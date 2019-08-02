@@ -180,18 +180,20 @@
         <ion-grid *ngIf="selectedOsservazione">
             <ion-row text-center>
                 <ion-col   (click)="goToNuovaAssegnazione()">
-                    <ion-icon name="add-circle-outline" style="font-size: 2em;"></ion-icon><br>Nuova Assegnazione
+                    <ion-icon name="contact" style="font-size: 2em;"></ion-icon><br>Nuova Assegnazione
                 </ion-col>
             </ion-row>
         </ion-grid>
     </ion-toolbar>
-    <ion-toolbar *ngSwitchCase="'Immagini'">
-        <ion-grid *ngIf="selectedOsservazione && !conclusa">
-            <ion-row text-center>
-                <ion-col *ngIf="selectedOsservazione" (click)="presentImmagineActionSheet()">
-                    <ion-icon name="add-circle-outline" style="font-size: 2em;"></ion-icon><br>Nuova Immagine
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-    </ion-toolbar>
+    <div  *ngIf="selectedOsservazione && !conclusa">
+        <ion-toolbar *ngSwitchCase="'Immagini'">
+            <ion-grid>
+                <ion-row text-center>
+                    <ion-col *ngIf="selectedOsservazione" (click)="presentImmagineActionSheet()">
+                        <ion-icon name="add-circle-outline" style="font-size: 2em;"></ion-icon><br>Nuova Immagine
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-toolbar>
+    </div>
 </ion-footer>

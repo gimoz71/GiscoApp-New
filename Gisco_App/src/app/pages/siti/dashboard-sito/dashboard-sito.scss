@@ -2,4 +2,13 @@ page-dashboard-sito {
     .label-content{
         position: stacked;
     }
+    agm-map {
+        position: absolute;
+        height: 100vh;
+        top: -44px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: -10
+    }
 }
