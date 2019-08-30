@@ -19,7 +19,7 @@ import { DashboardProfiloPage } from './pages/profilo/dashboard-profilo';
 import { ElencoProcedimentiPage } from './pages/procedimenti/elenco-procedimenti/elenco-procedimenti';
 import { ElencoOsservazioniPage } from './pages/osservazioni/elenco-osservazioni/elenco-osservazioni';
 import { ElencoAttivitaPage } from './pages/attivita/elenco-attivita/elenco-attivita';
-import { Firebase } from '@ionic-native/firebase';
+import { Firebase } from '@ionic-native/firebase/ngx';
 
 import { CommonService } from './services/shared/common.service';
 import { StoreService} from './services/store/store.service';

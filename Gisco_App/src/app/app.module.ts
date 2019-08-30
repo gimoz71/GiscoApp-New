@@ -107,7 +107,7 @@ import { ElencoAttivitaModule } from './modules/attivita/elencoAttivita/elencoAt
 import { DashboardAttivitaModule } from './modules/attivita/dashboardAttivita/dashboardAttivita.module';
 import { DashboardAttivitaPage } from './pages/attivita/dashboard-attivita/dashboard-attivita';
 import { AttivitaService } from './services/attivita/attivita.service';
-import { Firebase } from '@ionic-native/firebase';
+import { Firebase } from '@ionic-native/firebase/ngx';
 
 import { CommonService } from './services/shared/common.service';
 
