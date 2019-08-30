@@ -16,7 +16,7 @@
 
 <ion-content>
     <ion-item>
-        <ion-label>Nominativo</ion-label>
+        <ion-label stacked>Nominativo</ion-label>
         <ionic-selectable item-content [(ngModel)]="nominativoSelezionato" [items]="listaNominativi" itemTextField="nomeCognome" [canSearch]="true" (onSearch)="nominativoChange($event)">
         </ionic-selectable>
     </ion-item>
@@ -29,8 +29,12 @@
 </ion-content>
 <ion-footer>
     <ion-toolbar>
-        <button ion-button small item-end icon-start block (click)="salvaAssegnazione()">
-            <ion-icon name="contact"></ion-icon>Salva
-        </button>
+        <ion-grid>
+            <ion-row text-center>
+                <ion-col (click)="salvaAssegnazione()">
+                    <ion-icon name="contact" style="font-size: 2em;"></ion-icon><br>Salva
+                </ion-col>
+            </ion-row>
+        </ion-grid>
     </ion-toolbar>
 </ion-footer>

@@ -14,6 +14,7 @@
             <ion-item text-wrap (click)="goToDetails(mess)">
                 <ion-avatar item-start>
                     <img src="../assets/imgs/thumb-user.png">
+                    <!--<img src="{{mess.url_avatar}}">-->
                 </ion-avatar>
                 <h3>{{mess.cognome_mit}} {{mess.nome_mit}}</h3>
                 <p class="anteprima_mess">{{mess.soggetto}}</p>
@@ -80,24 +81,26 @@
 
 </ion-content>
 <ion-footer>
-    <ion-grid>
-        <ion-row text-center>
-            <ion-col (click)="goToNuovoMessaggio()">
-                <ion-icon name="create" style="font-size: 2em;"></ion-icon><br>
-                Nuovo
-            </ion-col>
-            <ion-col (click)="goToUscitaMessaggi()">
-                <ion-icon name="send" style="font-size: 2em;"></ion-icon><br>
-                Uscita
-            </ion-col>
-            <ion-col (click)="goToImportantiMessaggi()">
-                <ion-icon name="star" style="font-size: 2em;"></ion-icon><br>
-                Importanti
-            </ion-col>
-            <ion-col (click)="goToCestinoMessaggio()">
-                <ion-icon name="trash" style="font-size: 2em;"></ion-icon><br>
-                Cestino
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+    <ion-toolbar>
+        <ion-grid>
+            <ion-row text-center>
+                <ion-col (click)="goToNuovoMessaggio()">
+                    <ion-icon name="create" style="font-size: 2em;"></ion-icon><br>
+                    Nuovo
+                </ion-col>
+                <ion-col (click)="goToUscitaMessaggi()">
+                    <ion-icon name="send" style="font-size: 2em;"></ion-icon><br>
+                    Uscita
+                </ion-col>
+                <ion-col (click)="goToImportantiMessaggi()">
+                    <ion-icon name="star" style="font-size: 2em;"></ion-icon><br>
+                    Importanti
+                </ion-col>
+                <ion-col (click)="goToCestinoMessaggio()">
+                    <ion-icon name="trash" style="font-size: 2em;"></ion-icon><br>
+                    Cestino
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
 </ion-footer>

@@ -1,0 +1,11 @@
+.comunicazioni ion-col{
+    border-bottom: solid 1px #efefef; 
+    padding: 10px;
+    &:first-of-type {
+        border-right: solid 1px #efefef;
+    }
+}
+.header-col ion-col  {
+    background-color: #efefef;
+    font-weight: 500
+}

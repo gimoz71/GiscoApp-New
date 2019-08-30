@@ -17,27 +17,35 @@
 <ion-content >
     <ion-card class="rounded-generic-card">
         <ion-card-header class="generic-card-header blue-header">
-            <p>{{selectedProcedimento.az_ragione_sociale}}</p>
-            <p>{{selectedProcedimento.pro_titolo}}</p>
-            <p>Numero di comunicazioni {{selectedProcedimento.stato_prescrizioni.comunicazioni}}</p>
-            <p>Numero di procedimenti {{procedimentiTot}}</p>
+            <ion-card-title padding text-wrap>
+            {{selectedProcedimento.az_ragione_sociale}}<br>
+            <hr>
+            <small>{{selectedProcedimento.pro_titolo}}</small>
+            </ion-card-title>
         </ion-card-header>
-        <ion-card-content class="yellow-header">
-            <ion-list>
+        <ion-card-content no-padding>
+            <ion-list class="comunicazioni">
                 <ion-row>
+                    <ion-col>
+                        <p style="margin-bottom: 5px">Numero di comunicazioni <ion-badge>{{selectedProcedimento.stato_prescrizioni.comunicazioni}}</ion-badge></p>
+                        
+                        <p>Numero di procedimenti <ion-badge>{{procedimentiTot}}</ion-badge></p>
+
+                    </ion-col>
+                </ion-row>
+                <ion-row class="header-col">
                     <ion-col>ingresso</ion-col>
                     <ion-col>uscita</ion-col>
                 </ion-row>
                 <ion-row *ngFor="let comunicazioni of listaComunicazioni">
-                    <ion-col *ngFor="let comunicazione of comunicazioni" (click)="goToDetails($event, comunicazione)">
-                        <ion-label *ngIf="comunicazione.comunicazioni_key != 0">{{comunicazione.com_titolo}}</ion-label>
-                        <ion-label *ngIf="comunicazione.comunicazioni_key != 0">{{comunicazione.tab_fase_procedimento_desc}}</ion-label>
+                    <ion-col *ngFor="let comunicazione of comunicazioni" (click)="goToDetails($event, comunicazione)" style="width: 50%;">
+                        <p *ngIf="comunicazione.comunicazioni_key != 0">{{comunicazione.com_titolo}}</p>
+                        <!-- <ion-label *ngIf="comunicazione.comunicazioni_key != 0">{{comunicazione.tab_fase_procedimento_desc}}</ion-label>
                         <ion-label *ngIf="comunicazione.comunicazioni_key != 0 && comunicazione.com_in_out==='O'">{{comunicazione.com_mittente }}</ion-label>
-                        <ion-label *ngIf="comunicazione.comunicazioni_key != 0 && comunicazione.com_in_out!='O'">{{comunicazione.com_destinatario}}</ion-label>
+                        <ion-label *ngIf="comunicazione.comunicazioni_key != 0 && comunicazione.com_in_out!='O'">{{comunicazione.com_destinatario}}</ion-label> -->
                     </ion-col>
                 </ion-row>
             </ion-list>
         </ion-card-content>
     </ion-card>
-
 </ion-content>

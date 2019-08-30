@@ -1,0 +1,91 @@
+.userData {
+  //background: #efefef;
+  padding-top: 7em;
+}
+
+.user-bigger { width: 100px; }
+.user-bigger img { border-radius: 50%; border: solid 6px #3FA397; width: 100%; }
+.user-bigger.dashed img { border-style: dashed; }
+.user-bigger.disabled img { border-color: #aaa; }
+
+.user-big { width: 60px; }
+.user-big img { border-radius: 50%; border: solid 4px #3FA397; width: 100%; }
+.user-big.dashed img { border-style: dashed; }
+.user-big.disabled img { border-color: #aaa; }
+
+.userData .name { font-size: 1.5em; line-height: 1em; font-weight: normal; color: #868e96; margin: 0; padding: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.userData .role { font-size: 1em;  color: #8EA7BD; margin: 5px;white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.addBook img { border-color: #8EA7BD; }
+
+.text-left {
+    text-align: left !important;
+}
+
+.text-right {
+    text-align: right !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.mx-auto {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.mt-5 {
+    margin-top: 3rem !important;
+}
+
+.mb-3 {
+    margin-bottom: 1rem !important;
+}
+
+.mb-5 {
+    margin-bottom: 3rem !important;
+}
+
+
+.marginleftimm{
+    margin-left: 8em;
+}
+
+.marginleftinfo{
+    margin-left: 3.8em;
+}
+
+.marginleftcom{
+    margin-left: 6em;
+}
+
+
+
+.roleInfo { width: 70%; }
+.roleInfo tr {border-bottom: solid 1px rgba(0, 0, 0, 0.05);}
+.roleInfo td { font-size: .85em !important; padding: 5px 0; }
+.roleInfo td:first-child { color: #adb5bd; }
+.roleInfo td:last-child { color: #868e96; font-weight: 600; }
+
+
+.contacts { width: 50%; }
+.contacts td { font-size: 1rem; padding: 5px 0; }
+.contacts td span { font-size: 1.2rem; }
+.contacts td img { height: 40px; padding-right: 30px; }
+.contacts td:first-child { font-size: 2rem; color: #adb5bd; }
+.contacts td:last-child { font-size: inherit; color: #868e96; font-weight: 600; }
+
+.btn-custom {
+    color: #fff;
+    padding: 10px 15px;
+    //background-color: #8EA7BD;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+
