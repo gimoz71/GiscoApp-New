@@ -51,7 +51,7 @@ export class ElencoOsservazioniPage {
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       if (val!==null){
       var tokenValue = val.token_value;
-      this.osservazioniService.getListaTipologieOsservazione(tokenValue).subscribe(r => {
+      this.osservazioniService.getListaTipologieOsservazione(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
         if (r.ErrorMessage.msg_code === 0) {
           console.log(r.ErrorMessage.msg_code);
           this.listaTipologie = r.l_lista_tipologie;
@@ -76,7 +76,7 @@ export class ElencoOsservazioniPage {
     }
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
-      this.osservazioniService.getListaOsservazioni(tokenValue, this.tipologiaSelezionata.tab_tipo_scadenza_cod, this.campoLiberoSito, this.campoLiberoProtocollo,
+      this.osservazioniService.getListaOsservazioni(this.storeService.getLocalServerUrl(), tokenValue, this.tipologiaSelezionata.tab_tipo_scadenza_cod, this.campoLiberoSito, this.campoLiberoProtocollo,
         this.numOsservazioni, this.numOsservazioni + 19).subscribe(r => {
           console.log('getOsservazioni');
           if (r.ErrorMessage.msg_code === 0) {

@@ -49,7 +49,7 @@ export class ElencoDispositiviPage {
         this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
             console.log(tokenValue);
-            this.dispositiviService.getListaDispositiviAll(tokenValue).subscribe(r => {
+            this.dispositiviService.getListaDispositiviAll(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
                 console.log('ionViewDidLoad getListaDispositivi');
                 if (r.ErrorMessage.msg_code === 0) {
                     console.log(r.ErrorMessage.msg_code);
@@ -58,7 +58,7 @@ export class ElencoDispositiviPage {
                 loading.dismiss();
             })
 
-            this.dispositiviService.getListaTipologieDispositivo(tokenValue).subscribe(r => {
+            this.dispositiviService.getListaTipologieDispositivo(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
                 if (r.ErrorMessage.msg_code === 0) {
                     console.log(r.ErrorMessage.msg_code);
                     this.listaTipologie = r.l_lista_tipologie;
@@ -66,7 +66,7 @@ export class ElencoDispositiviPage {
                 }
             })
 
-            this.dispositiviService.getListaProvinceDispositivo(tokenValue).subscribe(r => {
+            this.dispositiviService.getListaProvinceDispositivo(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
                 if (r.ErrorMessage.msg_code === 0) {
                     console.log(r.ErrorMessage.msg_code);
                     this.listaProvince = r.l_dropdown;
@@ -104,7 +104,7 @@ export class ElencoDispositiviPage {
         this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
 
-            this.dispositiviService.getListaDispositivi(tokenValue, this.tipologiaSelezionata.tab_tipo_dispositivo_cod, this.provinciaSelezionata.Codice, this.campoLibero).subscribe(r => {
+            this.dispositiviService.getListaDispositivi(this.storeService.getLocalServerUrl(), tokenValue, this.tipologiaSelezionata.tab_tipo_dispositivo_cod, this.provinciaSelezionata.Codice, this.campoLibero).subscribe(r => {
                 console.log('ionViewDidLoad getListaDispositivi');
                 if (r.ErrorMessage.msg_code === 0) {
                     console.log(r.ErrorMessage.msg_code);

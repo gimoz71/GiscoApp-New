@@ -41,7 +41,7 @@ export class TipologiePage {
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       console.log(tokenValue);
-      this.documentiService.getTipologiaDocumenti(tokenValue, this.selectedCartella.doc_foreign_type).subscribe(r => {
+      this.documentiService.getTipologiaDocumenti(this.storeService.getLocalServerUrl(), tokenValue, this.selectedCartella.doc_foreign_type).subscribe(r => {
         console.log('ionViewDidLoad getCartelle');
         if (r.ErrorMessage.msg_code === 0) {
           console.log(r.ErrorMessage.msg_code);

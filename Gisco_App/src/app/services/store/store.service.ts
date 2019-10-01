@@ -15,6 +15,8 @@ export class StoreService {
     private userData: Subject<Login.ws_Token> = new Subject<Login.ws_Token>();
     public userData$ = this.userData.asObservable();
 
+    private serverUrl: string;
+
     constructor(private storage: Storage, 
         private check: CheckService, 
         private login: LoginService) {
@@ -83,6 +85,44 @@ export class StoreService {
         return this.ud;
     };*/
 
+    public initizlizeServerUrl(): void {
+        if(this.serverUrl == null || this.serverUrl == "") {
+            this.storage.get("serverUrl").then((val: string) =>{
+                this.serverUrl = val;
+            })
+        }
+    }
+
+    public setServer(serverUrl: string): number {
+        console.log("setServerName");
+        this.serverUrl = serverUrl;
+        if(serverUrl != null){
+            this.storage.set("serverUrl", serverUrl).then((val) => {
+                console.log("salvata url del server");
+                this.serverUrl = serverUrl;
+            });
+        } else {
+            return -1
+        }
+        return 1;
+    }
+
+    public getServerUrl() {
+        return new Promise(resolve=>{
+            if(this.serverUrl == null) {
+                this.storage.get("serverUrl").then((val: string) =>{
+                    resolve(val);
+                })
+            } else {
+                resolve(this.serverUrl);
+            }
+        });
+    }
+
+    public getLocalServerUrl(): string {
+        return this.serverUrl;
+    }
+
     public setUserData(udata: Login.ws_Token): number {
         console.log("setUserData");
         this.ud = udata;
@@ -105,7 +145,7 @@ export class StoreService {
                     console.log(val);
                     if (val != null && val.ErrorMessage.msg_code == 0){
                         //controllo la validità del token
-                        this.check.checkToken(val.token_value).subscribe(
+                        this.check.checkToken(this.serverUrl, val.token_value).subscribe(
                             (r)=>{
                                 console.log(r);
                                 //token corretto lo invio
@@ -113,7 +153,7 @@ export class StoreService {
                                     resolve(val);
                                 }else{
                                     //token non corretto faccio il login
-                                    this.login.login(val.token_user, val.token_password).subscribe(
+                                    this.login.login(this.serverUrl, val.token_user, val.token_password).subscribe(
                                         (rl : Login.ws_Token)=>{
                                             console.log(rl);
                                                 console.log("log userdata 1");
@@ -134,7 +174,7 @@ export class StoreService {
                             }
                         )
                     }else{
-                        console.log ("login non riuscito 5");
+                        console.log ("login non riuscito");
                         this.setUserData(null);
                         this.ud = null;
                         //devo andare alla pagina del login
@@ -143,14 +183,14 @@ export class StoreService {
                   })
             } else {
                 //store service già inizializzato
-                this.check.checkToken(this.ud.token_value).subscribe(
+                this.check.checkToken(this.serverUrl, this.ud.token_value).subscribe(
                     //check sul token
                     (r: Login.ws_Token)=>{
                         //token valido lo invio
                         if (r.ErrorMessage.msg_code == 0){
                             resolve(this.ud);
                         }else{
-                            this.login.login(this.ud.token_user, this.ud.token_password).subscribe(
+                            this.login.login(this.serverUrl, this.ud.token_user, this.ud.token_password).subscribe(
                                 //token non valido faccio il login
                                (rl : Login.ws_Token)=>{
                                 console.log("log userdata 3");

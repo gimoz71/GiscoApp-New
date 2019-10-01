@@ -46,7 +46,7 @@ export class DashboardProcedimentoPage {
             var tokenValue = val.token_value;
             console.log(tokenValue);
             this.whichPage = 'Procedimento';
-            this.procedimentiService.getProcedimento(this.selectedProcedimento.com_procedimento_key, tokenValue).subscribe(r => {
+            this.procedimentiService.getProcedimento(this.storeService.getLocalServerUrl(), this.selectedProcedimento.com_procedimento_key, tokenValue).subscribe(r => {
                 console.log('ionViewDidLoad DashboardProcedimentoPage getProcedimento');
                 if (r.ErrorMessage.msg_code === 0) {
                     this.selectedProcedimento = r.procedimento;

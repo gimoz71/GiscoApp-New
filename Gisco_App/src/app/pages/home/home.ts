@@ -185,7 +185,7 @@ export class HomePage{
       loading.present();
     }
     //(token: string, categoria: any, tipo_cod: any, sito_cod: string, from: number, to: number)
-    this.attivitaService.getMieAttivita(tokenValue).subscribe(r => {
+    this.attivitaService.getMieAttivita(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
       console.log('getAttivita');
       if (r.ErrorMessage.msg_code === 0) {
         console.log(r.ErrorMessage.msg_code);

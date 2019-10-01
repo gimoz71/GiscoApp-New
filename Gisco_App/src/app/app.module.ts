@@ -3,8 +3,8 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { HttpClientModule } from '@angular/common/http';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { MyApp } from './app.component';
 import { IonicSelectableModule } from 'ionic-selectable';
 
@@ -24,7 +24,9 @@ import { CartelleModule } from './modules/documenti/cartelle/cartelle.module';
 import { AgmCoreModule } from '@agm/core';
 import { ElencoDocumentiModule } from './modules/documenti/elencoDocumenti/elencoDocumenti.module';
 
+
 // #REGION - Pages
+
 import { LoadingPage } from './pages/loading/loading';
 import { LoginPage } from './pages/login/login';
 import { HomePage } from './pages/home/home';
@@ -77,7 +79,7 @@ import { ImportantiMessaggiPage } from './pages/messaggi/importanti-messaggi/imp
 import { DashboardProfiloModule } from './modules/profilo/dashboardProfilo/dashboardProfilo.module';
 import { DashboardProfiloPage } from './pages/profilo/dashboard-profilo';
 import { ProfiloService } from './services/profilo/profilo.service';
-import { Camera } from '@ionic-native/camera/';
+import { Camera } from '@ionic-native/camera/ngx';
 import { ElencoProcedimentiModule } from './modules/procedimenti/elencoProcedimenti/elencoProcedimenti.modile';
 import { ElencoProcedimentiPage } from './pages/procedimenti/elenco-procedimenti/elenco-procedimenti';
 import { ProcedimentiService } from './services/procedimenti/procedimenti.service';
@@ -97,7 +99,7 @@ import { OsservazioniService } from './services/osservazioni/osservazioni.servic
 import { DashboardOsservazioneModule } from './modules/osservazioni/dashboardOsservazione/dashboardOsservazione.module';
 import { NuovaAssegnazioneModule } from './modules/osservazioni/nuovaAssegnazione/nuovaAssegnazione.module';
 import { NuovaAssegnazionePage } from './pages/osservazioni/nuova-assegnazione/nuova-assegnazione';
-import { Geolocation } from '@ionic-native/geolocation';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { DashboardOsservazionePage } from './pages/osservazioni/dashboard-osservazione/dashboard-osservazione';
 import { DashboardChiusuraModule } from './modules/osservazioni/dashboardChiusura/dashboardOsservazione.module';
 import { DashboardChiusuraPage } from './pages/osservazioni/dashboard-chiusura/dashboard-chiusura';
@@ -107,9 +109,22 @@ import { ElencoAttivitaModule } from './modules/attivita/elencoAttivita/elencoAt
 import { DashboardAttivitaModule } from './modules/attivita/dashboardAttivita/dashboardAttivita.module';
 import { DashboardAttivitaPage } from './pages/attivita/dashboard-attivita/dashboard-attivita';
 import { AttivitaService } from './services/attivita/attivita.service';
-import { Firebase } from '@ionic-native/firebase/ngx';
+import { AlertService } from './services/shared/alert.service';
+//import { Firebase } from '@ionic-native/firebase';
+import { FirebaseX } from "@ionic-native/firebase-x/ngx";
+
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import { CommonService } from './services/shared/common.service';
+import { FcmProvider } from '../providers/fcm/fcm';
+
+const firebase = {
+  // your firebase web config
+  apiKey:"AIzaSyDrd2GNepJWvtn9m3YlSFIv53Nz_X-9dQ4",
+  projectId: "giscoapp",
+  storageBucket: "giscoapp.appspot.com"
+ }
 
 @NgModule({
   declarations: [
@@ -159,7 +174,9 @@ import { CommonService } from './services/shared/common.service';
       // please get your own API key here:
       // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
       apiKey: 'AIzaSyBdH99WPCCNOhcDXI_kAwmn93FuNfA_Nh8'
-    })
+    }),
+    AngularFireModule.initializeApp(firebase), 
+    AngularFirestoreModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -218,10 +235,13 @@ import { CommonService } from './services/shared/common.service';
     PrescrizioniService,
     OsservazioniService,
     AttivitaService,
+    AlertService,
     DatePicker,
-    Firebase,
+    //Firebase,
+    FirebaseX,
     CommonService,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    FcmProvider
   ],
   exports: [
     ComponentsModule

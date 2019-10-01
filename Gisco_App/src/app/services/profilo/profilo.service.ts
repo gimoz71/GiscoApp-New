@@ -17,13 +17,13 @@ export class ProfiloService {
     constructor(private httpService: HttpService,private http: HttpClient) {
     }
 
-    public getProfilo(key: number, token: string): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.PROFILO_GET_SCHEDA_KEYWORD
+    public getProfilo(serverUrl: string, key: number, token: string): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.PROFILO_GET_SCHEDA_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + key, token);
     }
 
-    public changePassword(token, oldPsw: string, newPsw: string, rep: string): Observable<Http.HttpResponse> {
+    public changePassword(serverUrl: string, token, oldPsw: string, newPsw: string, rep: string): Observable<Http.HttpResponse> {
         let body = {
             dipendenti_key: token.token_dipendente_key,
             password: oldPsw,
@@ -31,15 +31,15 @@ export class ProfiloService {
             password_rep: rep,
             token: token.token_value
         };
-        return this.httpService.post(GlobalVariable.BASE_API_URL + GlobalVariable.PROFILO_CHANGE_PSW_KEYWORD, body);
+        return this.httpService.post(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.PROFILO_CHANGE_PSW_KEYWORD, body);
     }
 
-    public changeAvatar(imm, token: Login.ws_Token): Observable<Http.HttpResponse> {
+    public changeAvatar(serverUrl: string, imm, token: Login.ws_Token): Observable<Http.HttpResponse> {
         let body = {
             token: token,
             dipendenti_key: token.token_dipendente_key,
             immagine: imm
         }
-        return this.httpService.post(GlobalVariable.BASE_API_URL + GlobalVariable.PROFILO_CHANGE_AVATAR_KEYWORD, body);
+        return this.httpService.post(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.PROFILO_CHANGE_AVATAR_KEYWORD, body);
     }
 }

@@ -54,7 +54,7 @@ export class NuovoMessaggioPage {
     else this.mess = new Messaggio.Messaggio();
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
-      this.messaggiService.getDipendentiAttivi(tokenValue).subscribe(r => {
+      this.messaggiService.getDipendentiAttivi(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
         this.listaDestinatari = r.l_dipendenti;
         for (let i = 0; i < this.listaDestinatari.length; i++) {
           this.listaDestinatari[i].nomeCognome = this.listaDestinatari[i].nome + " " + this.listaDestinatari[i].cognome;
@@ -124,7 +124,7 @@ export class NuovoMessaggioPage {
       let mittente: Dipendente.Dipendente;
       var tokenValue = val.token_value;
       if (this.destinatarioSelezionato != null) {
-        this.profiloService.getProfilo(val.token_dipendente_key, tokenValue).subscribe(r => {
+        this.profiloService.getProfilo(this.storeService.getLocalServerUrl(), val.token_dipendente_key, tokenValue).subscribe(r => {
           console.log('ionViewDidLoad DashboardProfiloPage getProfilo');
           if (r.ErrorMessage.msg_code === 0) {
             mittente = r.dipendente;
@@ -160,7 +160,7 @@ export class NuovoMessaggioPage {
             busta.token = val.token_value;
             this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
               var tokenValue = val.token_value;
-              this.messaggiService.sendMessage(busta).subscribe(r => {
+              this.messaggiService.sendMessage(this.storeService.getLocalServerUrl(), busta).subscribe(r => {
                 console.log(r);
                 if (r.ErrorMessage.msg_code == 0) {
                   console.log(busta);

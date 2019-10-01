@@ -7,7 +7,7 @@ import { StoreService } from '../../services/store/store.service';
 import { Login } from '../../models/login/login.namespace';
 
 import { AlertController } from 'ionic-angular';
-import { Camera, CameraOptions } from '@ionic-native/camera/';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 
 /**
@@ -47,7 +47,7 @@ export class DashboardProfiloPage {
         this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
             console.log("val " + val.token_dipendente_key);
-            this.profiloService.getProfilo(val.token_dipendente_key, tokenValue).subscribe(r => {
+            this.profiloService.getProfilo(this.storeService.getLocalServerUrl(), val.token_dipendente_key, tokenValue).subscribe(r => {
                 console.log('ionViewDidLoad DashboardProfiloPage getProfilo');
                 console.log("facebook " + r);
                 if (r.ErrorMessage.msg_code === 0) {
@@ -112,7 +112,7 @@ export class DashboardProfiloPage {
               loading.present();
             this.imageURI = imageData;
             this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
-            this.profiloService.changeAvatar(this.imageURI, val).subscribe((r) => {
+            this.profiloService.changeAvatar(this.storeService.getLocalServerUrl(), this.imageURI, val).subscribe((r) => {
                     console.log(r);
                     if (r.ErrorMessage.msg_code == 0) {
                         this.profilo.url_avatar=this.imageURI;
@@ -159,7 +159,7 @@ export class DashboardProfiloPage {
                                 if (data.new == data.repeat) {
                                     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
                                         var tokenValue = val.token_value;
-                                        this.profiloService.changePassword(tokenValue, data.old, data.new, data.repeat).subscribe((r) => {
+                                        this.profiloService.changePassword(this.storeService.getLocalServerUrl(), tokenValue, data.old, data.new, data.repeat).subscribe((r) => {
                                             if (r.ErrorMessage.msg_code == 0) {
                                                 this.presentAlert("","password cambiata correttamente");
                                             } else {

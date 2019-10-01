@@ -9,7 +9,7 @@ import { Sito } from '../../../models/sito/sito.namespace';
 import { SitiService } from '../../../services/siti/siti.service';
 import { DispositiviService } from '../../../services/dispositivi/dispositivi.service';
 import moment from 'moment';
-import { Camera, CameraOptions } from '@ionic-native/camera/';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Attivita } from '../../../models/attivita/attivita.namespace';
 import { AttivitaService } from '../../../services/attivita/attivita.service';
 
@@ -73,11 +73,11 @@ export class DashboardAttivitaPage {
       var tokenValue = val.token_value;
       this.myUserKey = val.token_dipendente_key;
       console.log("setViewAttivita");
-      this.attivitaService.getCommentiAttivita(tokenValue, this.selectedAttivita.attivita_key).subscribe(r => {
+      this.attivitaService.getCommentiAttivita(this.storeService.getLocalServerUrl(), tokenValue, this.selectedAttivita.attivita_key).subscribe(r => {
         if (r.ErrorMessage.msg_code === 0) {
           this.listaCommenti = r.l_lista_commenti;
           //  if (this.conclusa) {
-          this.attivitaService.getAttivitaChiusura(this.selectedAttivita.attivita_key, tokenValue).subscribe(r => {
+          this.attivitaService.getAttivitaChiusura(this.storeService.getLocalServerUrl(), this.selectedAttivita.attivita_key, tokenValue).subscribe(r => {
             if (r.ErrorMessage.msg_code === 0) {
               this.selectedAttivita = r.attivita;
               this.dataInizio = r.att_data_inizio_effettiva;
@@ -85,7 +85,7 @@ export class DashboardAttivitaPage {
               this.note = r.att_descrizione;
 
               this.listaPersonalizzate = r.c_proprieta_personalizzate;
-              this.attivitaService.getListaImmaginiAttivita(this.selectedAttivita.attivita_key, tokenValue).subscribe(r => {
+              this.attivitaService.getListaImmaginiAttivita(this.storeService.getLocalServerUrl(), this.selectedAttivita.attivita_key, tokenValue).subscribe(r => {
                 if (r.ErrorMessage.msg_code === 0) {
                   this.listaImmagini = r.l_lista_immagini_attivita;
                 }
@@ -150,7 +150,7 @@ export class DashboardAttivitaPage {
             var tokenValue = val.token_value;
             this.ws_Att_Ch.token = tokenValue;
             console.log("this.ws_Att_Ch " + JSON.stringify(this.ws_Att_Ch));
-            this.attivitaService.salvaChiusuraAttivita(this.ws_Att_Ch).subscribe(r => {
+            this.attivitaService.salvaChiusuraAttivita(this.storeService.getLocalServerUrl(), this.ws_Att_Ch).subscribe(r => {
 
               if (r.ErrorMessage.msg_code === 0) {
                 this.conclusa = true;
@@ -204,7 +204,7 @@ export class DashboardAttivitaPage {
         this.ws_Oss_Com.commento.dipendenti.dipendenti_key = val.token_dipendente_key;
         this.ws_Oss_Com.commento.com_dipendente_key = val.token_dipendente_key;
         console.log("pippo" + JSON.stringify(this.ws_Oss_Com));
-        this.attivitaService.salvaCommentoAttivita(this.ws_Oss_Com).subscribe(r => {
+        this.attivitaService.salvaCommentoAttivita(this.storeService.getLocalServerUrl(), this.ws_Oss_Com).subscribe(r => {
           if (r.ErrorMessage.msg_code === 0) {
             console.log(r)
             this.ws_Oss_Com.commento.commenti_key = r.result_key;
@@ -254,7 +254,7 @@ export class DashboardAttivitaPage {
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.ws_Oss_Com.token = tokenValue;
-      this.attivitaService.cancellaCommentoAttivita(this.ws_Oss_Com).subscribe(r => {
+      this.attivitaService.cancellaCommentoAttivita(this.storeService.getLocalServerUrl(), this.ws_Oss_Com).subscribe(r => {
         if (r.ErrorMessage.msg_code === 0) {
           if (commenti == undefined) {
             this.listaCommenti.splice(this.listaCommenti.indexOf(c), 1);
@@ -303,7 +303,7 @@ export class DashboardAttivitaPage {
         this.ws_Oss_Com.token = tokenValue;
         this.ws_Oss_Com.commento.dipendenti.dipendenti_key = val.token_dipendente_key;
         this.ws_Oss_Com.commento.com_dipendente_key = val.token_dipendente_key;
-        this.attivitaService.salvaCommentoAttivita(this.ws_Oss_Com).subscribe(r => {
+        this.attivitaService.salvaCommentoAttivita(this.storeService.getLocalServerUrl(), this.ws_Oss_Com).subscribe(r => {
           console.log("pippo  fgd")
           if (r.ErrorMessage.msg_code === 0) {
             this.ws_Oss_Com.commento.commenti_key = r.result_key;
@@ -459,7 +459,7 @@ export class DashboardAttivitaPage {
         ws_imm.immagine = imageData;
         
         console.log("image put" + JSON.stringify( ws_imm));
-        this.attivitaService.salvaImmagineAttivita(ws_imm).subscribe((r) => {
+        this.attivitaService.salvaImmagineAttivita(this.storeService.getLocalServerUrl(), ws_imm).subscribe((r) => {
           console.log(r);
           if (r.ErrorMessage.msg_code == 0) {
             this.presentAlert("", "immagine è stata salvata correttamente")
@@ -487,7 +487,7 @@ export class DashboardAttivitaPage {
       ws_imm.token = val.token_value;
       ws_imm.immagine = imm;
       console.log("goToEliminaImmagine "+JSON.stringify(ws_imm));
-      this.attivitaService.cancellaImmagineAttivita(ws_imm).subscribe((r) => {
+      this.attivitaService.cancellaImmagineAttivita(this.storeService.getLocalServerUrl(), ws_imm).subscribe((r) => {
         console.log(r);
         if (r.ErrorMessage.msg_code == 0) {
           this.listaImmagini.splice(this.listaImmagini.indexOf(imm), 1);

@@ -15,8 +15,8 @@ export class OsservazioniService {
     constructor(private httpService: HttpService) {
     }
 
-    public getListaOsservazioni(token: string, tipo_cod: any, sito_cod: string, prot_cod: string, from: number, to: number): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_GET_ELENCO_KEYWORD
+    public getListaOsservazioni(serverUrl: string, token: string, tipo_cod: any, sito_cod: string, prot_cod: string, from: number, to: number): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_GET_ELENCO_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + from
             + GlobalVariable.URL_SEPARATOR + to
@@ -25,82 +25,82 @@ export class OsservazioniService {
             + GlobalVariable.URL_SEPARATOR + prot_cod, token);
     }
 
-    public getOsservazione(key: number, token: string): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_GET_KEYWORD
+    public getOsservazione(serverUrl: string, key: number, token: string): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_GET_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + key, token);
     }
 
-    public getOsservazioneChiusura(key: number, token: string): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_GET_CHIUSURA_KEYWORD
+    public getOsservazioneChiusura(serverUrl: string, key: number, token: string): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_GET_CHIUSURA_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + key, token);
     }
 
-    public salvaOsservazione(osservazione: Osservazione.ws_Osservazione): Observable<Http.HttpResponse> {
-        return this.httpService.post(GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_SALVA_KEYWORD
+    public salvaOsservazione(serverUrl: string, osservazione: Osservazione.ws_Osservazione): Observable<Http.HttpResponse> {
+        return this.httpService.post(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_SALVA_KEYWORD
             + GlobalVariable.URL_SEPARATOR, osservazione);
     }
 
-    public cancellaOsservazione(osservazione: Osservazione.ws_Osservazione): Observable<Http.HttpResponse> {
-        return this.httpService.post(GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_DELET_KEYWORD
+    public cancellaOsservazione(serverUrl: string, osservazione: Osservazione.ws_Osservazione): Observable<Http.HttpResponse> {
+        return this.httpService.post(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_DELET_KEYWORD
             + GlobalVariable.URL_SEPARATOR, osservazione);
     }
 
-    public getOsservazionePersonalizzati(tipo: number, token: string): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_GET_PERSONALIZZATI_KEYWORD
+    public getOsservazionePersonalizzati(serverUrl: string, tipo: number, token: string): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_GET_PERSONALIZZATI_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + tipo, token);
     }
 
-    public getListaTipologieOsservazione(token: string): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_GET_TIPOLOGIA_KEYWORD
+    public getListaTipologieOsservazione(serverUrl: string, token: string): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_GET_TIPOLOGIA_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER, token);
     }
 
-    public getListaImmaginiOsservazione(key: number, token: string): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_GET_IMMAGINI_KEYWORD
+    public getListaImmaginiOsservazione(serverUrl: string, key: number, token: string): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_GET_IMMAGINI_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER + GlobalVariable.URL_SEPARATOR + key, token);
     }
 
-    public salvaImmagineOsservazione(immagine: Osservazione.ws_SendImage): Observable<Http.HttpResponse> {
-        return this.httpService.post(GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_SALVA_IMMAGINE_KEYWORD
+    public salvaImmagineOsservazione(serverUrl: string, immagine: Osservazione.ws_SendImage): Observable<Http.HttpResponse> {
+        return this.httpService.post(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_SALVA_IMMAGINE_KEYWORD
             + GlobalVariable.URL_SEPARATOR, immagine);
     }
 
-    public salvaChiusuraOsservazione(osservazione: Osservazione.ws_Osservazione_Chiusura): Observable<Http.HttpResponse> {
-        return this.httpService.post(GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_SALVA_CHIUSURA_KEYWORD
+    public salvaChiusuraOsservazione(serverUrl: string, osservazione: Osservazione.ws_Osservazione_Chiusura): Observable<Http.HttpResponse> {
+        return this.httpService.post(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_SALVA_CHIUSURA_KEYWORD
             + GlobalVariable.URL_SEPARATOR, osservazione);
     }
 
-    public cancellaImmagineOsservazione(osservazione: Osservazione.ws_Immagine): Observable<Http.HttpResponse> {
-        return this.httpService.post(GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_DELET_IMMAGINE_KEYWORD
+    public cancellaImmagineOsservazione(serverUrl: string, osservazione: Osservazione.ws_Immagine): Observable<Http.HttpResponse> {
+        return this.httpService.post(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_DELET_IMMAGINE_KEYWORD
             + GlobalVariable.URL_SEPARATOR, osservazione);
     }
 
-    public salvaAssegnazioneOsservazione(assegnazione: Osservazione.ws_Assegnazione): Observable<Http.HttpResponse> {
-        return this.httpService.post(GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_SALVA_ASSEGNAZIONE_KEYWORD
+    public salvaAssegnazioneOsservazione(serverUrl: string, assegnazione: Osservazione.ws_Assegnazione): Observable<Http.HttpResponse> {
+        return this.httpService.post(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_SALVA_ASSEGNAZIONE_KEYWORD
             + GlobalVariable.URL_SEPARATOR, assegnazione);
     }
 
-    public cancellaAssegnazioneOsservazione(assegnazione: Osservazione.ws_Assegnazione): Observable<Http.HttpResponse> {
-        return this.httpService.post(GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_DELET_ASSEGNAZIONE_KEYWORD
+    public cancellaAssegnazioneOsservazione(serverUrl: string, assegnazione: Osservazione.ws_Assegnazione): Observable<Http.HttpResponse> {
+        return this.httpService.post(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_DELET_ASSEGNAZIONE_KEYWORD
             + GlobalVariable.URL_SEPARATOR, assegnazione);
     }
 
-    public getCommentiOsservazione(token: string, key:number): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_GET_COMMENTI_KEYWORD
+    public getCommentiOsservazione(serverUrl: string, token: string, key:number): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_GET_COMMENTI_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + key, token);
     }
 
-    public salvaCommentoOsservazione(commento: Osservazione.ws_Commento): Observable<Http.HttpResponse> {
+    public salvaCommentoOsservazione(serverUrl: string, commento: Osservazione.ws_Commento): Observable<Http.HttpResponse> {
         return this.httpService.post(GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_SALVA_COMMENTO_KEYWORD
             + GlobalVariable.URL_SEPARATOR, commento);
     }
 
-    public cancellaCommentoOsservazione(commento: Osservazione.ws_Commento): Observable<Http.HttpResponse> {
-        return this.httpService.post(GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_DELET_COMMENTO_KEYWORD
+    public cancellaCommentoOsservazione(serverUrl: string, commento: Osservazione.ws_Commento): Observable<Http.HttpResponse> {
+        return this.httpService.post(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_DELET_COMMENTO_KEYWORD
             + GlobalVariable.URL_SEPARATOR, commento);
     }
 

@@ -53,7 +53,7 @@ export class DashboardSitoPage {
             var tokenValue = val.token_value;
             console.log(tokenValue);
             this.whichPage = 'Sito';
-            this.sitiService.getSito(this.selectedSito.azienda_key, tokenValue).subscribe(r => {
+            this.sitiService.getSito(this.storeService.getLocalServerUrl(), this.selectedSito.azienda_key, tokenValue).subscribe(r => {
                 console.log('ionViewDidLoad DashboardSitoPage getSito');
                 if (r.ErrorMessage.msg_code === 0) {
                     this.selectedSito = r.sito;

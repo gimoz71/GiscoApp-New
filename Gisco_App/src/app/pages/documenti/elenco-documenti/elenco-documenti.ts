@@ -52,7 +52,7 @@ export class ElencoDocumentiPage {
     }
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
-      this.documentiService.getListaDocumenti(tokenValue, this.selectedCartella.tab_tipo_documento_cod,
+      this.documentiService.getListaDocumenti(this.storeService.getLocalServerUrl(), tokenValue, this.selectedCartella.tab_tipo_documento_cod,
         this.selectedCartella.doc_foreign_type, this.campoLiberoSito, this.campoLiberoDocumento,
         this.numDocumenti, this.numDocumenti + 19).subscribe(r => {
           console.log('getDocumenti');

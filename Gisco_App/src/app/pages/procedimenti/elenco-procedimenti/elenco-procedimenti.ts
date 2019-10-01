@@ -44,7 +44,7 @@ export class ElencoProcedimentiPage {
     console.log('ionViewDidLoad ElencoDocumentiPage');
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
-      this.procedimentiService.getListaTipologieProcedimento(tokenValue).subscribe(r => {
+      this.procedimentiService.getListaTipologieProcedimento(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
         if (r.ErrorMessage.msg_code === 0) {
           console.log(r.ErrorMessage.msg_code);
           this.listaTipologie = r.l_lista_tipologie;
@@ -64,7 +64,7 @@ export class ElencoProcedimentiPage {
     }
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
-      this.procedimentiService.getListaProcedimenti(tokenValue, this.tipologiaSelezionata.tab_tipo_procedimento_cod, this.campoLiberoSito, this.campoLiberoTitolo,
+      this.procedimentiService.getListaProcedimenti(this.storeService.getLocalServerUrl(), tokenValue, this.tipologiaSelezionata.tab_tipo_procedimento_cod, this.campoLiberoSito, this.campoLiberoTitolo,
         this.numProcedimenti, this.numProcedimenti + 19).subscribe(r => {
           console.log('getDocumenti');
           if (r.ErrorMessage.msg_code === 0) {

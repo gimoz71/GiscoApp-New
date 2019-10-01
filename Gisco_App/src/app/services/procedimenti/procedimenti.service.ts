@@ -15,9 +15,9 @@ export class ProcedimentiService {
     constructor(private httpService: HttpService) {
     }
 
-    public getListaProcedimentiAll(token: string): Observable<Http.HttpResponse> {
+    public getListaProcedimentiAll(serverUrl: string, token: string): Observable<Http.HttpResponse> {
 
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.PROCEDIMENTI_GET_ELENCO_KEYWORD
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.PROCEDIMENTI_GET_ELENCO_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + "0" //from
             + GlobalVariable.URL_SEPARATOR + "0" //to
@@ -26,9 +26,9 @@ export class ProcedimentiService {
             + GlobalVariable.URL_SEPARATOR + "A", token);//titolo
     }
 
-    public getListaProcedimenti(token: string, tipologia_key: any, sito:string, titolo:string, from:number, to:number): Observable<Http.HttpResponse> {
+    public getListaProcedimenti(serverUrl: string, token: string, tipologia_key: any, sito:string, titolo:string, from:number, to:number): Observable<Http.HttpResponse> {
 
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.PROCEDIMENTI_GET_ELENCO_KEYWORD
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.PROCEDIMENTI_GET_ELENCO_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + from //from
             + GlobalVariable.URL_SEPARATOR + to //to
@@ -37,15 +37,15 @@ export class ProcedimentiService {
             + GlobalVariable.URL_SEPARATOR + titolo, token);//campo libero
     }
 
-    public getProcedimento(key: number, token: string): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.PROCEDIMENTI_GET_KEYWORD
+    public getProcedimento(serverUrl: string, key: number, token: string): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.PROCEDIMENTI_GET_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + key, token);
     }
 
 
-    public getListaTipologieProcedimento(token: string): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.PROCEDIMENTI_GET_TIPOLOGIE_KEYWORD
+    public getListaTipologieProcedimento(serverUrl: string, token: string): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.PROCEDIMENTI_GET_TIPOLOGIE_KEYWORD
             + GlobalVariable.URL_SEPARATOR+ GlobalVariable.URL_TOKEN_PLACEHOLDER, token);
     }
 

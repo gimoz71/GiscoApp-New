@@ -43,7 +43,7 @@ export class DashboardComunicazionePage {
       var tokenValue = val.token_value;
       console.log(tokenValue);
       this.whichPage = 'Comunicazione';
-      this.comunicazioniService.getComunicazione(this.selectedComunicazione.comunicazioni_key, tokenValue).subscribe(r => {
+      this.comunicazioniService.getComunicazione(this.storeService.getLocalServerUrl(), this.selectedComunicazione.comunicazioni_key, tokenValue).subscribe(r => {
         console.log('ionViewDidLoad DashboardComunicazionePage getComunicazione');
         if (r.ErrorMessage.msg_code === 0) {
           this.selectedComunicazione = r.comunicazione;

@@ -42,7 +42,7 @@ export class ElencoComunicazioniPage {
     loading.present();
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
-      this.comunicazioniService.getListaComunicazioni(tokenValue, this.selectedProcedimento.pro_azienda_key, this.selectedProcedimento.procedimento_key).subscribe(r => {
+      this.comunicazioniService.getListaComunicazioni(this.storeService.getLocalServerUrl(), tokenValue, this.selectedProcedimento.pro_azienda_key, this.selectedProcedimento.procedimento_key).subscribe(r => {
         if (r.ErrorMessage.msg_code === 0) {
           console.log(r.ErrorMessage.msg_code);
           this.listaComunicazioni = r.l_lista_comunicazioni;

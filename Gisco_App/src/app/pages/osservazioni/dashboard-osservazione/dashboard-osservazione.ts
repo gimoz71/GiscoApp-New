@@ -12,9 +12,9 @@ import { SitiService } from '../../../services/siti/siti.service';
 import { DispositiviService } from '../../../services/dispositivi/dispositivi.service';
 import { Dispositivo } from '../../../models/dispositivo/dispositivo.namespace';
 import { IonicSelectableComponent } from 'ionic-selectable';
-import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@ionic-native/geolocation';
+import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@ionic-native/geolocation/ngx';
 import { NuovaAssegnazionePage } from '../nuova-assegnazione/nuova-assegnazione';
-import { Camera, CameraOptions } from '@ionic-native/camera/';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { DashboardChiusuraPage } from '../dashboard-chiusura/dashboard-chiusura';
 import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 
@@ -95,11 +95,11 @@ export class DashboardOsservazionePage {
         this.relativo = false;
         this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
-            this.osservazioniService.getListaTipologieOsservazione(tokenValue).subscribe(r => {
+            this.osservazioniService.getListaTipologieOsservazione(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
                 this.listaTipologieOss = r.l_lista_tipologie;
-                this.dispositiviService.getListaTipologieDispositivo(tokenValue).subscribe(r => {
+                this.dispositiviService.getListaTipologieDispositivo(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
                     this.listaTipologieDisp = r.l_lista_tipologie;
-                    this.sitiService.getListaSitiAll(tokenValue).subscribe(r => {
+                    this.sitiService.getListaSitiAll(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
                         this.listaSiti = r.l_lista_siti;
                         for (let i = 0; i < this.listaSiti.length; i++) {
                             this.listaSiti[i].azCodiceRagione = this.listaSiti[i].az_codice_interno + " " + this.listaSiti[i].az_ragione_sociale;
@@ -137,7 +137,7 @@ export class DashboardOsservazionePage {
             content: 'Caricamento...'
         });
         loading.present();
-        this.osservazioniService.getOsservazione(attivita_key, tokenValue).subscribe(r => {
+        this.osservazioniService.getOsservazione(this.storeService.getLocalServerUrl(), attivita_key, tokenValue).subscribe(r => {
             console.log('ionViewDidLoad DashboardOsservazionePage getOsservazione');
             if (r.ErrorMessage.msg_code === 0) {
                 this.selectedOsservazione = r.osservazione;
@@ -145,7 +145,7 @@ export class DashboardOsservazionePage {
                 this.listaPersonalizzate = r.c_proprieta_personalizzate;
                 console.log('getOsservazione ' + this.listaPersonalizzate.length);
                 this.setViewOsservazione();
-                this.osservazioniService.getListaImmaginiOsservazione(this.selectedOsservazione.attivita_key, tokenValue).subscribe(r => {
+                this.osservazioniService.getListaImmaginiOsservazione(this.storeService.getLocalServerUrl(), this.selectedOsservazione.attivita_key, tokenValue).subscribe(r => {
                     if (r.ErrorMessage.msg_code === 0) {
                         this.listaImmagini = r.l_lista_immagini;
                     }
@@ -222,7 +222,7 @@ export class DashboardOsservazionePage {
         loading.present();
         this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
-            this.osservazioniService.getOsservazionePersonalizzati(this.tipologiaOssSelezionata.tab_tipo_scadenza_cod, tokenValue).subscribe(r => {
+            this.osservazioniService.getOsservazionePersonalizzati(this.storeService.getLocalServerUrl(), this.tipologiaOssSelezionata.tab_tipo_scadenza_cod, tokenValue).subscribe(r => {
                 this.listaPersonalizzate = r.c_proprieta_personalizzate;
                 console.log("llistaPersonalizzate.le " + this.listaPersonalizzate.length);
                 loading.dismiss();
@@ -243,7 +243,7 @@ export class DashboardOsservazionePage {
             if (this.tipologiaDispSelezionata.tab_tipo_dispositivo_cod == 0) {
                 this.tipologiaDispSelezionata.tab_tipo_dispositivo_cod = "A";
             }
-            this.dispositiviService.getListaDispositivi(tokenValue, this.tipologiaDispSelezionata.tab_tipo_dispositivo_cod, "A", "A").subscribe(r => {
+            this.dispositiviService.getListaDispositivi(this.storeService.getLocalServerUrl(), tokenValue, this.tipologiaDispSelezionata.tab_tipo_dispositivo_cod, "A", "A").subscribe(r => {
                 this.listaDispositivi = r.l_lista_dispositivi;
                 if (this.selectedOsservazione) {
                     this.dispositivoSelezionato = this.listaDispositivi.find(disp => disp.dispositivi_key === this.selectedOsservazione.att_dispositivo_key)
@@ -301,7 +301,7 @@ export class DashboardOsservazionePage {
                         this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
                             var tokenValue = val.token_value;
                             this.ws_Oss.token = tokenValue;
-                            this.osservazioniService.salvaOsservazione(this.ws_Oss).subscribe(r => {
+                            this.osservazioniService.salvaOsservazione(this.storeService.getLocalServerUrl(), this.ws_Oss).subscribe(r => {
                                 console.log("salvaOsservazione " + JSON.stringify(this.ws_Oss));
                                 if (r.ErrorMessage.msg_code == 0) {
                                     this.reloadOsservazioni = true;
@@ -414,7 +414,7 @@ export class DashboardOsservazionePage {
                 ws_imm.immagine = imageData;
 
                 console.log("image put" + JSON.stringify(ws_imm));
-                this.osservazioniService.salvaImmagineOsservazione(ws_imm).subscribe((r) => {
+                this.osservazioniService.salvaImmagineOsservazione(this.storeService.getLocalServerUrl(), ws_imm).subscribe((r) => {
                     console.log(r);
                     if (r.ErrorMessage.msg_code == 0) {
                         this.presentAlert("", "immagine è stata salvata correttamente")
@@ -442,7 +442,7 @@ export class DashboardOsservazionePage {
             ws_imm.token = val.token_value;
             ws_imm.immagine = imm;
             console.log("goToEliminaImmagine " + JSON.stringify(ws_imm));
-            this.osservazioniService.cancellaImmagineOsservazione(ws_imm).subscribe((r) => {
+            this.osservazioniService.cancellaImmagineOsservazione(this.storeService.getLocalServerUrl(), ws_imm).subscribe((r) => {
                 console.log(r);
                 if (r.ErrorMessage.msg_code == 0) {
                     this.listaImmagini.splice(this.listaImmagini.indexOf(imm), 1);
@@ -460,7 +460,7 @@ export class DashboardOsservazionePage {
             let ws_Ass = new Osservazione.ws_Assegnazione();
             ws_Ass.assegnazione = assegnazione;
             ws_Ass.token = tokenValue;
-            this.osservazioniService.cancellaAssegnazioneOsservazione(ws_Ass).subscribe(r => {
+            this.osservazioniService.cancellaAssegnazioneOsservazione(this.storeService.getLocalServerUrl(), ws_Ass).subscribe(r => {
                 if (r.ErrorMessage.msg_code === 0) {
                     console.log(r);
                     this.listaAssegnazioni.splice(this.listaAssegnazioni.indexOf(assegnazione), 1);
@@ -483,7 +483,7 @@ export class DashboardOsservazionePage {
             let ws_Oss = new Osservazione.ws_Osservazione();
             ws_Oss.osservazione = this.selectedOsservazione;
             ws_Oss.token = tokenValue;
-            this.osservazioniService.cancellaOsservazione(ws_Oss).subscribe(r => {
+            this.osservazioniService.cancellaOsservazione(this.storeService.getLocalServerUrl(), ws_Oss).subscribe(r => {
                 if (r.ErrorMessage.msg_code === 0) {
                     console.log(r);
                     this.reloadOsservazioni = true;

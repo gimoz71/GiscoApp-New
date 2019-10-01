@@ -16,8 +16,8 @@ export class MessaggiService {
     constructor(private httpService: HttpService) {
     }
 
-    public getMessaggio(key: number, token: string): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_GET_KEYWORD
+    public getMessaggio(serverUrl: string, key: number, token: string): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_GET_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + key, token);
     }
@@ -26,8 +26,8 @@ export class MessaggiService {
     D = Cestinato
     P = Preferito
      */
-    public getListaMessaggiRicevuti(token: string, filter:string, from:any, to:any): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_GET_ELENCO_KEYWORD
+    public getListaMessaggiRicevuti(serverUrl: string, token: string, filter:string, from:any, to:any): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_GET_ELENCO_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + from//from
             + GlobalVariable.URL_SEPARATOR + to
@@ -35,8 +35,8 @@ export class MessaggiService {
             + GlobalVariable.URL_SEPARATOR + filter, token);
     }
 
-    public getListaMessaggiCestino(token: string, filter:string, from:any, to:any): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_GET_ELENCO_KEYWORD
+    public getListaMessaggiCestino(serverUrl: string, token: string, filter:string, from:any, to:any): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_GET_ELENCO_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + from//from
             + GlobalVariable.URL_SEPARATOR + to
@@ -44,16 +44,16 @@ export class MessaggiService {
             + GlobalVariable.URL_SEPARATOR + filter, token);
     }
 
-    public getListaMessaggiUscita(token: string, filter:string, from:any, to:any): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_GET_ELENCO_KEYWORD
+    public getListaMessaggiUscita(serverUrl: string, token: string, filter:string, from:any, to:any): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_GET_ELENCO_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + from//from
             + GlobalVariable.URL_SEPARATOR + to
             + GlobalVariable.URL_SEPARATOR + "O"
             + GlobalVariable.URL_SEPARATOR + filter, token);
     }
-    public getListaMessaggiImportanti(token: string, filter:string, from:any, to:any): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_GET_ELENCO_KEYWORD
+    public getListaMessaggiImportanti(serverUrl: string, token: string, filter:string, from:any, to:any): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_GET_ELENCO_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + from//from
             + GlobalVariable.URL_SEPARATOR + to
@@ -62,8 +62,8 @@ export class MessaggiService {
     }
 
 
-    public getDipendentiAttivi(token: string) {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_GET_CONTATTI_KEYWORD
+    public getDipendentiAttivi(serverUrl: string, token: string) {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_GET_CONTATTI_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + "S", token);
     }
@@ -96,28 +96,28 @@ export class MessaggiService {
   Con stato:
   N=toglie
   S=mette*/
-    public setStarMessage(key: number, stato: string, token: string) {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_SET_STAR_KEYWORD
+    public setStarMessage(serverUrl: string, key: number, stato: string, token: string) {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_SET_STAR_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + key
             + GlobalVariable.URL_SEPARATOR + stato, token);
     }
 
-    public setDeleteMessage(key: number, token: string) {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_SET_DELETED_KEYWORD
+    public setDeleteMessage(serverUrl: string, key: number, token: string) {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_SET_DELETED_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + key
             + GlobalVariable.URL_SEPARATOR, token);
     }
 
 
-    public deleteMessage(mess) {
-        return this.httpService.post(GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_DELET_KEYWORD
+    public deleteMessage(serverUrl: string, mess) {
+        return this.httpService.post(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_DELET_KEYWORD
             + GlobalVariable.URL_SEPARATOR, mess);
     }
 
-    public sendMessage(mess: Messaggio.BustaMessaggio): Observable<Http.HttpResponse> {
-        return this.httpService.post(GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_SALVA_KEYWORD, mess);
+    public sendMessage(serverUrl: string, mess: Messaggio.BustaMessaggio): Observable<Http.HttpResponse> {
+        return this.httpService.post(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_SALVA_KEYWORD, mess);
     }
 
 }

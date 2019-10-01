@@ -15,9 +15,9 @@ export class SitiService {
     constructor(private httpService: HttpService) {
     }
 
-    public getListaSitiAll(token: string): Observable<Http.HttpResponse> {
+    public getListaSitiAll(serverUrl: string, token: string): Observable<Http.HttpResponse> {
 
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.SITI_GET_ELENCO_KEYWORD
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.SITI_GET_ELENCO_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + "0" //from
             + GlobalVariable.URL_SEPARATOR + "0" //to
@@ -26,9 +26,9 @@ export class SitiService {
             + GlobalVariable.URL_SEPARATOR + "A", token);//testo libero
     }
 
-    public getListaSiti(token: string, tipologia_key: any, provincia_cod:string, campoLibero): Observable<Http.HttpResponse> {
+    public getListaSiti(serverUrl: string, token: string, tipologia_key: any, provincia_cod:string, campoLibero): Observable<Http.HttpResponse> {
 
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.SITI_GET_ELENCO_KEYWORD
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.SITI_GET_ELENCO_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + "0" //from
             + GlobalVariable.URL_SEPARATOR + "0" //to
@@ -37,14 +37,14 @@ export class SitiService {
             + GlobalVariable.URL_SEPARATOR + campoLibero, token);//campo libero
     }
 
-    public getSito(key: number, token: string): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.SITI_GET_KEYWORD
+    public getSito(serverUrl: string, key: number, token: string): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.SITI_GET_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + key, token);//id sito esempio: key=120 ha tutti i dati che devono essere visualizzati
     }
 
-    public getListaProvinceSito(token: string): Observable<Http.HttpResponse> {
-         return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.GET_PROVINCE_KEYWORD
+    public getListaProvinceSito(serverUrl: string, token: string): Observable<Http.HttpResponse> {
+         return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.GET_PROVINCE_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER 
             + GlobalVariable.URL_SEPARATOR + "46" //tipoddl
             + GlobalVariable.URL_SEPARATOR + "N" //filtro
@@ -54,8 +54,8 @@ export class SitiService {
             + GlobalVariable.URL_SEPARATOR + "Tutti", token);//primotutti
     }
 
-    public getListaTipologieSito(token: string): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.SITI_GET_TIPOLOGIE_KEYWORD
+    public getListaTipologieSito(serverUrl: string, token: string): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.SITI_GET_TIPOLOGIE_KEYWORD
             + GlobalVariable.URL_SEPARATOR+ GlobalVariable.URL_TOKEN_PLACEHOLDER, token);
     }
 

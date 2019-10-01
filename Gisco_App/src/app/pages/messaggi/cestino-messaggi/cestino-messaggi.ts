@@ -47,7 +47,7 @@ export class CestinoMessaggiPage {
     }
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
-      this.messaggiService.getListaMessaggiCestino(tokenValue, this.campoLibero,
+      this.messaggiService.getListaMessaggiCestino(this.storeService.getLocalServerUrl(), tokenValue, this.campoLibero,
         this.numMess, this.numMess + 19).subscribe(r => {
           console.log('getListaMessaggiCestino');
           if (r.ErrorMessage.msg_code === 0) {
@@ -125,7 +125,7 @@ export class CestinoMessaggiPage {
       let busta = new Messaggio.BustaMessaggio();
       busta.messaggio = mess;
       busta.token = tokenValue;
-      this.messaggiService.deleteMessage(busta).subscribe(r => {
+      this.messaggiService.deleteMessage(this.storeService.getLocalServerUrl(), busta).subscribe(r => {
         if (r.ErrorMessage.msg_code === 0) {
           console.log(busta);
           console.log(r);

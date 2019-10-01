@@ -38,7 +38,7 @@ export class NuovaAssegnazionePage {
   ionViewDidLoad() {
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
-      this.messaggiService.getDipendentiAttivi(tokenValue).subscribe(r => {
+      this.messaggiService.getDipendentiAttivi(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
         this.listaNominativi = r.l_dipendenti;
         for (let i = 0; i < this.listaNominativi.length; i++) {
           this.listaNominativi[i].nomeCognome = this.listaNominativi[i].nome + " " + this.listaNominativi[i].cognome;
@@ -103,7 +103,7 @@ export class NuovaAssegnazionePage {
         ws_ass.assegnazione = assegnazione;
         ws_ass.token = tokenValue;
         ws_ass.attivita_key = this.selectedOsservazione.attivita_key;
-        this.osservazioniService.salvaAssegnazioneOsservazione(ws_ass).subscribe(r => {
+        this.osservazioniService.salvaAssegnazioneOsservazione(this.storeService.getLocalServerUrl(), ws_ass).subscribe(r => {
           console.log(r);
           if (r.ErrorMessage.msg_code == 0) {
             console.log(ws_ass);

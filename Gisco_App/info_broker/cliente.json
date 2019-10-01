@@ -1,0 +1,12 @@
+{
+    "cliente": {
+        "id": "",
+        "stato": "",
+        "nome": "",
+        "cognome": "",
+        "cf": "",
+        "patrimonio": "",
+        "idPatrimonio": "",
+        "email": ""
+    }
+}

@@ -40,7 +40,7 @@ export class DetailsMessaggioPage {
     console.log("this.messagioCestino "+this.messagioCestino);
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
-      this.messaggiService.getMessaggio(this.mess.messaggi_key, tokenValue).subscribe(r => {
+      this.messaggiService.getMessaggio(this.storeService.getLocalServerUrl(), this.mess.messaggi_key, tokenValue).subscribe(r => {
         this.mess = r.messaggio;
         console.log(this.mess);
       },
@@ -64,7 +64,7 @@ export class DetailsMessaggioPage {
   setDelete(mess: Messaggio.Messaggio) {
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
-      this.messaggiService.setDeleteMessage(mess.messaggi_key, tokenValue).subscribe(r => {
+      this.messaggiService.setDeleteMessage(this.storeService.getLocalServerUrl(), mess.messaggi_key, tokenValue).subscribe(r => {
         console.log(r);
       },
         (error) => {
@@ -100,7 +100,7 @@ export class DetailsMessaggioPage {
   setStar(mess: Messaggio.Messaggio, stato) {
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
-      this.messaggiService.setStarMessage(mess.messaggi_key, stato, tokenValue).subscribe(r => {
+      this.messaggiService.setStarMessage(this.storeService.getLocalServerUrl(), mess.messaggi_key, stato, tokenValue).subscribe(r => {
         mess.preferito = stato;
       },
         (error) => {

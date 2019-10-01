@@ -38,7 +38,7 @@ export class CartellePage {
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       console.log(tokenValue);
-      this.documentiService.getCartelle(tokenValue).subscribe(r => {
+      this.documentiService.getCartelle(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
         console.log('ionViewDidLoad getCartelle');
         if (r.ErrorMessage.msg_code === 0) {
           console.log(r.ErrorMessage.msg_code);

@@ -48,7 +48,7 @@ export class DashboardDispositivoPage {
             var tokenValue = val.token_value;
             console.log(tokenValue);
             this.whichPage = 'Dispositivo';
-            this.dispositiviService.getDispositivo(this.selectedDispositivo.dis_azienda_key, tokenValue).subscribe(r => {
+            this.dispositiviService.getDispositivo(this.storeService.getLocalServerUrl(), this.selectedDispositivo.dis_azienda_key, tokenValue).subscribe(r => {
                 console.log('ionViewDidLoad DashboardDispositivoPage getDispositivo');
                 if (r.ErrorMessage.msg_code === 0) {
                     this.selectedDispositivo = r.dispositivo;

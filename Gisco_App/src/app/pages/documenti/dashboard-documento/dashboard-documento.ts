@@ -37,7 +37,7 @@ export class DashboardDocumentoPage {
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       console.log(tokenValue);
-      this.documentiService.getDocumento(this.selectedDocumento.documenti_key, tokenValue).subscribe(r => {
+      this.documentiService.getDocumento(this.storeService.getLocalServerUrl(), this.selectedDocumento.documenti_key, tokenValue).subscribe(r => {
         console.log('ionViewDidLoad DashboardSitoPage getDocumento');
         if (r.ErrorMessage.msg_code === 0) {
           this.selectedDocumento = r.documento;

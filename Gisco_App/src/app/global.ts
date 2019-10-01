@@ -1,5 +1,6 @@
 export const GlobalVariable = Object.freeze({
-    BASE_API_URL: 'http://testapp.piattaformagisco.com/services/',
+    BASE_API_URL: '/services/',
+    //BASE_API_URL: 'http://testapp.piattaformagisco.com/services/',
     URL_SEPARATOR: '/',
     URL_TOKEN_PLACEHOLDER: 'TOKEN',
     URL_CHECK_TOKEN: 'checktoken',

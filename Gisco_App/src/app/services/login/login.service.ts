@@ -10,8 +10,8 @@ export class LoginService {
     constructor(private httpService: HttpService) {
     };
 
-    public login(username: string, password: string): Observable<Login.ws_Token> {
-        return this.httpService.getToken(GlobalVariable.BASE_API_URL + GlobalVariable.URL_TOKEN_PLACEHOLDER
+    public login(serverUrl: string, username: string, password: string): Observable<Login.ws_Token> {
+        return this.httpService.getToken(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + username 
             + GlobalVariable.URL_SEPARATOR + password);
     };

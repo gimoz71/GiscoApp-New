@@ -10,7 +10,7 @@ import { Sito } from '../../../models/sito/sito.namespace';
 import { SitiService } from '../../../services/siti/siti.service';
 import { DispositiviService } from '../../../services/dispositivi/dispositivi.service';
 import moment from 'moment';
-import { Camera, CameraOptions } from '@ionic-native/camera/';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 
 @Component({
@@ -71,18 +71,18 @@ export class DashboardChiusuraPage {
       var tokenValue = val.token_value;
       this.myUserKey = val.token_dipendente_key;
       console.log("setViewOsservazione");
-      this.osservazioniService.getCommentiOsservazione(tokenValue, this.osservazione.attivita_key).subscribe(r => {
+      this.osservazioniService.getCommentiOsservazione(this.storeService.getLocalServerUrl(), tokenValue, this.osservazione.attivita_key).subscribe(r => {
         if (r.ErrorMessage.msg_code === 0) {
           this.listaCommenti = r.l_lista_commenti;
           //  if (this.conclusa) {
-          this.osservazioniService.getOsservazioneChiusura(this.osservazione.attivita_key, tokenValue).subscribe(r => {
+          this.osservazioniService.getOsservazioneChiusura(this.storeService.getLocalServerUrl(), this.osservazione.attivita_key, tokenValue).subscribe(r => {
             if (r.ErrorMessage.msg_code === 0) {
               this.osservazione = r.osservazione;
               this.dataInizio = r.att_data_inizio_effettiva;
               this.dataFine = r.att_data_fine_effettiva;
               this.note = r.att_descrizione;
               this.listaPersonalizzate = r.c_proprieta_personalizzate;
-              this.osservazioniService.getListaImmaginiOsservazione(this.osservazione.attivita_key, tokenValue).subscribe(r => {
+              this.osservazioniService.getListaImmaginiOsservazione(this.storeService.getLocalServerUrl(), this.osservazione.attivita_key, tokenValue).subscribe(r => {
                 if (r.ErrorMessage.msg_code === 0) {
                   this.listaImmagini = r.l_lista_immagini;
                 }
@@ -145,7 +145,7 @@ export class DashboardChiusuraPage {
           this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
             this.ws_Oss_Ch.token = tokenValue;
-            this.osservazioniService.salvaChiusuraOsservazione(this.ws_Oss_Ch).subscribe(r => {
+            this.osservazioniService.salvaChiusuraOsservazione(this.storeService.getLocalServerUrl(), this.ws_Oss_Ch).subscribe(r => {
               console.log("this.ws_Oss.osservazione " + JSON.stringify(this.ws_Oss_Ch));
 
               if (r.ErrorMessage.msg_code === 0) {
@@ -200,7 +200,7 @@ export class DashboardChiusuraPage {
         this.ws_Oss_Com.commento.dipendenti.dipendenti_key = val.token_dipendente_key;
         this.ws_Oss_Com.commento.com_dipendente_key = val.token_dipendente_key;
         console.log("pippo" + JSON.stringify(this.ws_Oss_Com));
-        this.osservazioniService.salvaCommentoOsservazione(this.ws_Oss_Com).subscribe(r => {
+        this.osservazioniService.salvaCommentoOsservazione(this.storeService.getLocalServerUrl(), this.ws_Oss_Com).subscribe(r => {
           if (r.ErrorMessage.msg_code === 0) {
             console.log(r)
             this.ws_Oss_Com.commento.commenti_key = r.result_key;
@@ -250,7 +250,7 @@ export class DashboardChiusuraPage {
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.ws_Oss_Com.token = tokenValue;
-      this.osservazioniService.cancellaCommentoOsservazione(this.ws_Oss_Com).subscribe(r => {
+      this.osservazioniService.cancellaCommentoOsservazione(this.storeService.getLocalServerUrl(), this.ws_Oss_Com).subscribe(r => {
         if (r.ErrorMessage.msg_code === 0) {
           if (commenti == undefined) {
             this.listaCommenti.splice(this.listaCommenti.indexOf(c), 1);
@@ -299,7 +299,7 @@ export class DashboardChiusuraPage {
         this.ws_Oss_Com.token = tokenValue;
         this.ws_Oss_Com.commento.dipendenti.dipendenti_key = val.token_dipendente_key;
         this.ws_Oss_Com.commento.com_dipendente_key = val.token_dipendente_key;
-        this.osservazioniService.salvaCommentoOsservazione(this.ws_Oss_Com).subscribe(r => {
+        this.osservazioniService.salvaCommentoOsservazione(this.storeService.getLocalServerUrl(), this.ws_Oss_Com).subscribe(r => {
           console.log("pippo  fgd")
           if (r.ErrorMessage.msg_code === 0) {
             this.ws_Oss_Com.commento.commenti_key = r.result_key;
@@ -455,7 +455,7 @@ export class DashboardChiusuraPage {
         ws_imm.immagine = imageData;
         
         console.log("image put" + JSON.stringify( ws_imm));
-        this.osservazioniService.salvaImmagineOsservazione(ws_imm).subscribe((r) => {
+        this.osservazioniService.salvaImmagineOsservazione(this.storeService.getLocalServerUrl(), ws_imm).subscribe((r) => {
           console.log(r);
           if (r.ErrorMessage.msg_code == 0) {
             this.presentAlert("", "immagine è stata salvata correttamente")
@@ -483,7 +483,7 @@ export class DashboardChiusuraPage {
       ws_imm.token = val.token_value;
       ws_imm.immagine = imm;
       console.log("goToEliminaImmagine "+JSON.stringify(ws_imm));
-      this.osservazioniService.cancellaImmagineOsservazione(ws_imm).subscribe((r) => {
+      this.osservazioniService.cancellaImmagineOsservazione(this.storeService.getLocalServerUrl(), ws_imm).subscribe((r) => {
         console.log(r);
         if (r.ErrorMessage.msg_code == 0) {
           this.listaImmagini.splice(this.listaImmagini.indexOf(imm), 1);

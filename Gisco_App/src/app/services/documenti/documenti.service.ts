@@ -15,20 +15,20 @@ export class DocumentiService {
     constructor(private httpService: HttpService) {
     }
 
-    public getCartelle(token: string): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.DOCUMENTI_GET_CARTELLE_KEYWORD
+    public getCartelle(serverUrl: string, token: string): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.DOCUMENTI_GET_CARTELLE_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER,
             token);
     }
 
-    public getTipologiaDocumenti(token: string, categoria: string): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.DOCUMENTI_GET_TIPOLOGIA_KEYWORD
+    public getTipologiaDocumenti(serverUrl: string, token: string, categoria: string): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.DOCUMENTI_GET_TIPOLOGIA_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER 
             + GlobalVariable.URL_SEPARATOR + categoria, token); //doc_foreign_type
     }
 
-    public getListaDocumentiAll(token: string, tipo:any, categoria: string): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.DOCUMENTI_GET_ELENCO_KEYWORD
+    public getListaDocumentiAll(serverUrl: string, token: string, tipo:any, categoria: string): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.DOCUMENTI_GET_ELENCO_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + "0" //from
             + GlobalVariable.URL_SEPARATOR + "0" //to
@@ -38,8 +38,8 @@ export class DocumentiService {
             + GlobalVariable.URL_SEPARATOR + "A" , token);//campo libero
     }
 
-    public getListaDocumenti(token: string, tipo: any, categoria: string, sito: string, campoLibero: string, from:any, to:any): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.DOCUMENTI_GET_ELENCO_KEYWORD
+    public getListaDocumenti(serverUrl: string, token: string, tipo: any, categoria: string, sito: string, campoLibero: string, from:any, to:any): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.DOCUMENTI_GET_ELENCO_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + from
             + GlobalVariable.URL_SEPARATOR + to
@@ -49,8 +49,8 @@ export class DocumentiService {
             + GlobalVariable.URL_SEPARATOR + campoLibero, token);//campo libero
     }
 
-    public getDocumento(key: number, token: string): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.DOCUMENTI_GET_KEYWORD
+    public getDocumento(serverUrl: string, key: number, token: string): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.DOCUMENTI_GET_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + key, token);
     }

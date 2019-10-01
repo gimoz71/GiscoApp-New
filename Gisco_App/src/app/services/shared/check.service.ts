@@ -16,9 +16,9 @@ export class CheckService {
         return this.http.get<Error.ErrorResponse>(url);
     }*/
 
-    public checkToken(token : string): Observable<Login.ws_Token> {
+    public checkToken(serverUrl: string, token : string): Observable<Login.ws_Token> {
         console.log("checkToken");
-            return this.http.get<Login.ws_Token>(GlobalVariable.BASE_API_URL + GlobalVariable.URL_CHECK_TOKEN
+            return this.http.get<Login.ws_Token>(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.URL_CHECK_TOKEN
             + GlobalVariable.URL_SEPARATOR+token);
 
      /*   //test

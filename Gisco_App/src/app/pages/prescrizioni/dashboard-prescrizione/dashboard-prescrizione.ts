@@ -43,7 +43,7 @@ export class DashboardPrescrizionePage {
       var tokenValue = val.token_value;
       console.log(tokenValue);
       this.whichPage = 'Prescrizione';
-      this.prescrizioniService.getPrescrizione(this.selectedPrescrizione.prescrizione_key, tokenValue).subscribe(r => {
+      this.prescrizioniService.getPrescrizione(this.storeService.getLocalServerUrl(), this.selectedPrescrizione.prescrizione_key, tokenValue).subscribe(r => {
         console.log('ionViewDidLoad getPrescrizione');
         if (r.ErrorMessage.msg_code === 0) {
           this.selectedPrescrizione = r.prescrizione;

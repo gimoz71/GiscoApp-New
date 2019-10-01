@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "991014087326-mscf8mo35g9dviokm54n285edmafncj1.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.marte5.giscoapp",
-            "certificate_hash": "093f6d1371ffb421cef2551d418cda5211c194ab"
-          }
-        },
-        {
           "client_id": "991014087326-rom49saioc9rj44vjsgkd7bgaufgnhfk.apps.googleusercontent.com",
           "client_type": 3
         }

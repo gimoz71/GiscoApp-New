@@ -53,7 +53,7 @@ export class ElencoAttivitaPage {
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       if (val !== null) {
         var tokenValue = val.token_value;
-        this.attivitaService.getListaCategorieAttivita(tokenValue).subscribe(r => {
+        this.attivitaService.getListaCategorieAttivita(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
           if (r.ErrorMessage.msg_code === 0) {
             console.log(r.ErrorMessage.msg_code);
             this.listaCategorie = r.l_lista_tipologie;
@@ -81,7 +81,7 @@ export class ElencoAttivitaPage {
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       //(token: string, categoria: any, tipo_cod: any, sito_cod: string, from: number, to: number)
-      this.attivitaService.getListaAttivita(tokenValue, this.categoriaSelezionata.tab_tipo_attivita_cod, this.tipologiaSelezionata.tab_tipo_scadenza_cod, this.campoLiberoSito, this.campoLiberoProtocollo, this.numAttivita, this.numAttivita + 19).subscribe(r => {
+      this.attivitaService.getListaAttivita(this.storeService.getLocalServerUrl(), tokenValue, this.categoriaSelezionata.tab_tipo_attivita_cod, this.tipologiaSelezionata.tab_tipo_scadenza_cod, this.campoLiberoSito, this.campoLiberoProtocollo, this.numAttivita, this.numAttivita + 19).subscribe(r => {
         console.log('getAttivita');
         if (r.ErrorMessage.msg_code === 0) {
           console.log(r.ErrorMessage.msg_code);
@@ -142,7 +142,7 @@ export class ElencoAttivitaPage {
     });
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
-      this.attivitaService.getListaTipologieAttivita(this.categoriaSelezionata.tab_tipo_attivita_cod, tokenValue).subscribe(r => {
+      this.attivitaService.getListaTipologieAttivita(this.storeService.getLocalServerUrl(), this.categoriaSelezionata.tab_tipo_attivita_cod, tokenValue).subscribe(r => {
         if (r.ErrorMessage.msg_code === 0) {
           console.log(r.ErrorMessage.msg_code);
           this.listaTipologie = r.l_lista_tipologie;

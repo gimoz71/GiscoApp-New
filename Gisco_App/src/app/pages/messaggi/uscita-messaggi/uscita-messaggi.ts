@@ -49,7 +49,7 @@ export class UscitaMessaggiPage {
     }
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
-      this.messaggiService.getListaMessaggiUscita(tokenValue, this.campoLibero,
+      this.messaggiService.getListaMessaggiUscita(this.storeService.getLocalServerUrl(), tokenValue, this.campoLibero,
         this.numMess, this.numMess + 19).subscribe(r => {
           console.log('getListaMessaggiUscita');
           if (r.ErrorMessage.msg_code === 0) {
@@ -99,7 +99,7 @@ export class UscitaMessaggiPage {
   public setDelete(mess: Messaggio.Messaggio) {
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
-      this.messaggiService.setDeleteMessage(mess.messaggi_key, tokenValue).subscribe(r => {
+      this.messaggiService.setDeleteMessage(this.storeService.getLocalServerUrl(), mess.messaggi_key, tokenValue).subscribe(r => {
         if (r.ErrorMessage.msg_code === 0) {
           console.log("Deleted ", r);
           /*   this.numMess = 1;

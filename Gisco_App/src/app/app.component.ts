@@ -1,9 +1,9 @@
 import { LoadingPage } from './pages/loading/loading';
 
 import { Component, ViewChild } from '@angular/core';
-import { Platform, MenuController, Nav } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { Platform, MenuController, Nav, AlertController, ToastController } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 import { Storage } from '@ionic/storage';
 
@@ -19,12 +19,15 @@ import { DashboardProfiloPage } from './pages/profilo/dashboard-profilo';
 import { ElencoProcedimentiPage } from './pages/procedimenti/elenco-procedimenti/elenco-procedimenti';
 import { ElencoOsservazioniPage } from './pages/osservazioni/elenco-osservazioni/elenco-osservazioni';
 import { ElencoAttivitaPage } from './pages/attivita/elenco-attivita/elenco-attivita';
-import { Firebase } from '@ionic-native/firebase/ngx';
 
 import { CommonService } from './services/shared/common.service';
 import { StoreService} from './services/store/store.service';
+import { AlertService } from './services/shared/alert.service';
 
 import { Login } from './models/login/login.namespace';
+
+import { FirebaseX } from '@ionic-native/firebase-x/ngx';
+
 
 
 @Component({
@@ -52,11 +55,18 @@ export class MyApp {
     public statusBar: StatusBar,
     private storage: Storage,
     public splashScreen: SplashScreen,
-    private firebase: Firebase,
     public commonService: CommonService,
-    public storeService: StoreService
+    public storeService: StoreService,
+    public alertController: AlertController,
+    public toastCtrl: ToastController,
+    public firebaseNative: FirebaseX,
+    public alertService: AlertService
   ) {
-    this.initializeApp();
+
+    this.platform.ready().then((readySource) => {
+      console.log('Platform ready from', readySource);
+      this.initializeApp();
+    });
 
     // set our app's pages
     this.pages = [
@@ -74,75 +84,81 @@ export class MyApp {
     ];
   }
 
-  initializeApp() {
+  async initializeApp() {
+    this.storeService.initizlizeServerUrl();
+
+    var piattaforma = "";
+    if(this.platform.is("mobileweb")){
+      piattaforma = "mobileweb";
+    }
+    if(this.platform.is("ios")){
+      piattaforma = "ios";
+    }
+    if(this.platform.is("android")){
+      piattaforma = "android";
+    }
+    
+
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      console.log("PIPPO");
-    //  console.log(this.platform.platforms());
-      if (!this.platform.is('mobileweb')) {//serve per testare con ionic serve -l, prima di release va cancellato
-        if (this.platform.is('ios')) {
-          this.firebase.grantPermission()
-            .then(() => {
-              this.firebase.getToken().then(token => console.log(`PIPPO The token is ${token}`)) // save the token server-side and use it to push notifications to this device
-                .catch(error => console.error('Error getting token', error));
-            });
-        } else {
-          this.firebase.getToken().then(token => console.log(`PIPPO The token is ${token}`)) // save the token server-side and use it to push notifications to this device
-            .catch(error => console.error('Error getting token', error));
-        }
-        if (this.platform.is('ios') || this.platform.is('android')) {
-          this.firebase.onNotificationOpen()
-            .subscribe(data => console.log(`User opened a notification ${data}`));
-        }
-      }
-      /*
-     this.firebase.onTokenRefresh()
-       .subscribe((token: string) => console.log(`Got a new token ${token}`));*/
     });
 
     //carico le notifiche per le pagine nel menu
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
-      var tokenValue = val.token_value;
-      this.commonService.getNotifiche(tokenValue).subscribe(r => {
-        var notifiche = r.l_notifiche;
-        for (let notifica of notifiche) {
-          switch(notifica.notifica_type){
-            case "attivita": {
-              if(notifica.notifica_count){
-                this.numNotifiche_attivita = notifica.notifica_count;
+      if(val != null){
+        var tokenValue = val.token_value;
+        this.commonService.getNotifiche(tokenValue).subscribe(r => {
+          var notifiche = r.l_notifiche;
+          for (let notifica of notifiche) {
+            switch(notifica.notifica_type){
+              case "attivita": {
+                if(notifica.notifica_count){
+                  this.numNotifiche_attivita = notifica.notifica_count;
+                }
               }
-            }
-            case "osservazioni": {
-              if(notifica.notifica_count){
-                this.numNotifiche_osservazioni = notifica.notifica_count;
+              case "osservazioni": {
+                if(notifica.notifica_count){
+                  this.numNotifiche_osservazioni = notifica.notifica_count;
+                }
               }
-            }
-            case "prescrizioni": {
-              if(notifica.notifica_count){
-                this.numNotifiche_prescrizioni = notifica.notifica_count;
+              case "prescrizioni": {
+                if(notifica.notifica_count){
+                  this.numNotifiche_prescrizioni = notifica.notifica_count;
+                }
               }
-            }
-            case "messaggi": {
-              if(notifica.notifica_count){
-                this.numNotifiche_messaggi = notifica.notifica_count;
+              case "messaggi": {
+                if(notifica.notifica_count){
+                  this.numNotifiche_messaggi = notifica.notifica_count;
+                }
               }
-            }
-            case "commenti_at": {
-              if(notifica.notifica_count){
-                this.numNotifiche_commenti_at = notifica.notifica_count;
+              case "commenti_at": {
+                if(notifica.notifica_count){
+                  this.numNotifiche_commenti_at = notifica.notifica_count;
+                }
               }
-            }
-            case "commenti_os": {
-              if(notifica.notifica_count){
-                this.numNotifiche_commenti_os = notifica.notifica_count;
+              case "commenti_os": {
+                if(notifica.notifica_count){
+                  this.numNotifiche_commenti_os = notifica.notifica_count;
+                }
               }
             }
           }
-        }
-        console.log('ADESSO POSSO RENDERIZZARE LA LISTA');
-        this.viewMenu = true;
-      });
+          console.log('ADESSO POSSO RENDERIZZARE LA LISTA');
+          this.viewMenu = true;
+        });
+      } else {
+        // devo effettuare il login
+        this.nav.setRoot(LoginPage);
+      }
+      
+    });
+
+              // Listen to incoming messages
+    this.firebaseNative.onMessageReceived().subscribe(message =>{
+      let id = 0;
+      console.log("TIPO NOTIFICA: " + message.tipo_notifica);
+      this.alertService.presentAlertNewPage(this.nav, message.tipo_notifica, id);
     });
   }
 
@@ -152,14 +168,6 @@ export class MyApp {
     // navigate to the new page if it is not the current page
     this.nav.setRoot(page.component);
   }
-  /*
-    public showMenu(): boolean {
-      let view = this.nav.getActive();
-      if (view) {
-        return this.pagineSenzaMenu.indexOf(view.name) === -1;
-      } else
-        return false;
-    };*/
 
   public logOut() {
     this.storage.clear();
@@ -205,90 +213,7 @@ export class MyApp {
         break;
     }
 
-    console.log('notifiche per ' + titolo + ': ' + toReturn);
     return toReturn;
   }
-
-  /*
-  @Component({
-    templateUrl: 'app.html',
-    styles: ['app.scss']
-  })
-  export class MyApp {
-    @ViewChild(Nav) nav: Nav;
-    rootPage: any = LoadingPage;
-  
-    private pagineSenzaMenu: Array<string> = new Array("LoadingPage", "LoginPage");
-  
-    constructor(platform: Platform,
-      statusBar: StatusBar,
-      splashScreen: SplashScreen,
-      private storage: Storage,
-      private menuCtrl: MenuController ) {
-  
-      platform.ready().then(() => {
-        statusBar.styleDefault();
-        splashScreen.hide();
-      });
-    };
-  
-    public logOut(): void {
-      this.storage.clear();
-      this.menuCtrl.close();
-      this.nav.setRoot(LoginPage);
-    };
-  
-    public goToHome(): void {
-      this.nav.setRoot(HomePage);
-    }
-  
-    public showMenu(): boolean {
-      let view = this.nav.getActive();
-      if (view) {
-        return this.pagineSenzaMenu.indexOf(view.name) === -1;
-      } else return false;
-    };
-  
-    public goToListaSiti(): void {
-      this.nav.push(ElencoSitiPage);
-      this.menuCtrl.close();
-    }
-  
-    public goToMappaSiti(): void {
-      this.nav.push(MappaSitiPage);
-      this.menuCtrl.close();
-    }
-  
-    public goToListaDispositivi(): void {
-      this.nav.push(ElencoDispositiviPage);
-      this.menuCtrl.close();
-    }
-  
-    public goToMappaDispositivi(): void {
-      this.nav.push(MappaDispositiviPage);
-      this.menuCtrl.close();
-    }
-  
-  
-    public goToChat(): void {
-      this.nav.push(ChatPage);
-      this.menuCtrl.close();
-    }
-  
-    public goToDocumenti(): void {
-      this.nav.push(CartellePage);
-      this.menuCtrl.close();
-    }
-  
-    public goToMessaggi(): void {
-      this.nav.setRoot(ElencoMessaggiPage);
-      this.menuCtrl.close();
-    }
-    
-    public goToProfilo(): void {
-      this.nav.setRoot(DashboardProfiloPage);
-      this.menuCtrl.close();
-    }
-  }*/
 
 }

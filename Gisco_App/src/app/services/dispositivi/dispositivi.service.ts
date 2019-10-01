@@ -6,6 +6,7 @@ import { GlobalVariable } from '../../global';
 import { Http } from '../../models/shared/http.namespace';
 import { Nav } from 'ionic-angular';
 
+
 @Injectable()
 export class DispositiviService {
 
@@ -14,9 +15,9 @@ export class DispositiviService {
     constructor(private httpService: HttpService) {
     }
 
-    public getListaDispositiviAll(token: string): Observable<Http.HttpResponse> {
+    public getListaDispositiviAll(serverUrl: string, token: string): Observable<Http.HttpResponse> {
 
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.DISPOSITIVI_GET_ELENCO_KEYWORD
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.DISPOSITIVI_GET_ELENCO_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + "0" //from
             + GlobalVariable.URL_SEPARATOR + "0" //to
@@ -25,8 +26,8 @@ export class DispositiviService {
             + GlobalVariable.URL_SEPARATOR + "A", token);//libero
     }
 
-    public getListaDispositivi(token: string, tipologia_cod: any, provincia_cod:string, campoLibero): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.DISPOSITIVI_GET_ELENCO_KEYWORD
+    public getListaDispositivi(serverUrl: string, token: string, tipologia_cod: any, provincia_cod:string, campoLibero): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.DISPOSITIVI_GET_ELENCO_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + "0" //from
             + GlobalVariable.URL_SEPARATOR + "0" //to
@@ -35,14 +36,14 @@ export class DispositiviService {
             + GlobalVariable.URL_SEPARATOR + campoLibero, token);//libero
     }
 
-    public getDispositivo(key: number, token: string): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.DISPOSITIVI_GET_KEYWORD
+    public getDispositivo(serverUrl: string, key: number, token: string): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.DISPOSITIVI_GET_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + key, token);//id dispositivo 
     }
 
-    public getListaProvinceDispositivo(token: string): Observable<Http.HttpResponse> {
-        return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.GET_PROVINCE_KEYWORD
+    public getListaProvinceDispositivo(serverUrl: string, token: string): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.GET_PROVINCE_KEYWORD
            + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER 
            + GlobalVariable.URL_SEPARATOR + "46" //tipoddl
            + GlobalVariable.URL_SEPARATOR + "N" //filtro
@@ -52,8 +53,8 @@ export class DispositiviService {
            + GlobalVariable.URL_SEPARATOR + "Tutti", token);//primotutti
    }
 
-   public getListaTipologieDispositivo(token: string): Observable<Http.HttpResponse> {
-       return this.httpService.get(GlobalVariable.BASE_API_URL + GlobalVariable.DISPOSITIVI_GET_TIPOLOGIE_KEYWORD
+   public getListaTipologieDispositivo(serverUrl: string, token: string): Observable<Http.HttpResponse> {
+       return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.DISPOSITIVI_GET_TIPOLOGIE_KEYWORD
            + GlobalVariable.URL_SEPARATOR+ GlobalVariable.URL_TOKEN_PLACEHOLDER, token);
    }
 }

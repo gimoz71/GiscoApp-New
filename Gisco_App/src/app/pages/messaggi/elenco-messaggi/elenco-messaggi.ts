@@ -9,6 +9,7 @@ import { UscitaMessaggiPage } from '../uscita-messaggi/uscita-messaggi';
 import { DetailsMessaggioPage } from '../details-messaggio/details-messaggio';
 import { CestinoMessaggiPage } from '../cestino-messaggi/cestino-messaggi';
 import { ImportantiMessaggiPage } from '../importanti-messaggi/importanti-messaggi';
+import { BasePage } from '../../common/base';
 
 
 @Component({
@@ -33,6 +34,7 @@ export class ElencoMessaggiPage {
         private alertCtrl: AlertController,
         public messaggiService: MessaggiService,
         public loadingCtrl: LoadingController) {
+        
         this.listaMessaggi = new Array<Messaggio.Messaggio>();
         this.campoLibero = "A";
         this.numMessRicevuti = 1;
@@ -51,7 +53,7 @@ export class ElencoMessaggiPage {
         }
         this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
-            this.messaggiService.getListaMessaggiRicevuti(tokenValue, this.campoLibero,
+            this.messaggiService.getListaMessaggiRicevuti(this.storeService.getLocalServerUrl(), tokenValue, this.campoLibero,
                 this.numMess, this.numMess + 19).subscribe(r => {
                     console.log('getListaMessaggiRicevuti');
                     if (r.ErrorMessage.msg_code === 0) {
@@ -116,7 +118,7 @@ export class ElencoMessaggiPage {
     setStar(mess: Messaggio.Messaggio, stato) {
         this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
-            this.messaggiService.setStarMessage(mess.messaggi_key, stato, tokenValue).subscribe(r => {
+            this.messaggiService.setStarMessage(this.storeService.getLocalServerUrl(), mess.messaggi_key, stato, tokenValue).subscribe(r => {
                 mess.preferito = stato;
             },
                 (error) => {
@@ -129,7 +131,7 @@ export class ElencoMessaggiPage {
     setDelete(mess: Messaggio.Messaggio) {
         this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
-            this.messaggiService.setDeleteMessage(mess.messaggi_key, tokenValue).subscribe(r => {
+            this.messaggiService.setDeleteMessage(this.storeService.getLocalServerUrl(), mess.messaggi_key, tokenValue).subscribe(r => {
                 if (r.ErrorMessage.msg_code === 0) {
                     console.log("Deleted ", r);
                     this.listaMessaggi.splice(this.listaMessaggi.indexOf(mess), 1);

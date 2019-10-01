@@ -48,7 +48,7 @@ export class ElencoSitiPage {
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       console.log(tokenValue);
-      this.sitiService.getListaSitiAll(tokenValue).subscribe(r => {
+      this.sitiService.getListaSitiAll(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
         console.log('ionViewDidLoad getListaSiti');
         if (r.ErrorMessage.msg_code === 0) {
           console.log(r.ErrorMessage.msg_code);
@@ -57,7 +57,7 @@ export class ElencoSitiPage {
         loading.dismiss();
       })
 
-      this.sitiService.getListaTipologieSito(tokenValue).subscribe(r => {
+      this.sitiService.getListaTipologieSito(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
         if (r.ErrorMessage.msg_code === 0) {
           console.log(r.ErrorMessage.msg_code);
           this.listaTipologie = r.l_lista_tipologie;
@@ -65,7 +65,7 @@ export class ElencoSitiPage {
         }
       })
 
-      this.sitiService.getListaProvinceSito(tokenValue).subscribe(r => {
+      this.sitiService.getListaProvinceSito(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
         if (r.ErrorMessage.msg_code === 0) {
           console.log(r.ErrorMessage.msg_code);
           this.listaProvince = r.l_dropdown;
@@ -101,7 +101,7 @@ export class ElencoSitiPage {
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
 
-      this.sitiService.getListaSiti(tokenValue, this.tipologiaSelezionata.tab_tipologia_sito_key, this.provinciaSelezionata.Codice, this.campoLibero).subscribe(r => {
+      this.sitiService.getListaSiti(this.storeService.getLocalServerUrl(), tokenValue, this.tipologiaSelezionata.tab_tipologia_sito_key, this.provinciaSelezionata.Codice, this.campoLibero).subscribe(r => {
         console.log('ionViewDidLoad getListaSiti');
         if (r.ErrorMessage.msg_code === 0) {
           console.log(r.ErrorMessage.msg_code);
