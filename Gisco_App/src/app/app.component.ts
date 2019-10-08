@@ -36,8 +36,8 @@ import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage = LoadingPage;//home
-  pages: Array<{ title: string, component: any, icon: any }>;
+  public rootPage = LoadingPage;//home
+  public pages: Array<{ title: string, component: any, icon: any }>;
   private pagineSenzaMenu: Array<string> = new Array("LoadingPage", "LoginPage");
 
   private numNotifiche_attivita = 0;
@@ -98,7 +98,6 @@ export class MyApp {
       piattaforma = "android";
     }
     
-
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
@@ -108,7 +107,7 @@ export class MyApp {
     this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
       if(val != null){
         var tokenValue = val.token_value;
-        this.commonService.getNotifiche(tokenValue).subscribe(r => {
+        this.commonService.getNotifiche(tokenValue, this.storeService.getLocalServerUrl()).subscribe(r => {
           var notifiche = r.l_notifiche;
           for (let notifica of notifiche) {
             switch(notifica.notifica_type){

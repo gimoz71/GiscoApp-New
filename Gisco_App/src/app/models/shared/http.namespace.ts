@@ -16,6 +16,7 @@ export namespace Http {
         public Success: boolean;        // Esito della chiamata
         public ErrorMessage: Error.ErrorMessage;       // oggetto errore 
         public Message: string;
+        public result: string;
         public result_key: number; // la chiave di un'osservazione salvata
 
         public l_lista_siti: Array<Sito.Sito>;

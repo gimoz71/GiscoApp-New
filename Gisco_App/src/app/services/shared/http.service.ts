@@ -29,6 +29,12 @@ export class HttpService {
         return this.http.get<Http.HttpResponse>(completeUrl);
     }
 
+    //questa operazione va solo se si è loggati
+    public getNoToken(url: string): Observable<Http.HttpResponse> {
+
+        return this.http.get<Http.HttpResponse>(url).timeoutWith(1000, Observable.throw(new Error("TIMEOUT")));
+    }
+
     public post(url: string, body): Observable<Http.HttpResponse> {
         console.log('HttpService post ' + url);
         return this.http.post<Http.HttpResponse>(url, body);

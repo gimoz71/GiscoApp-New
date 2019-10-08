@@ -52,7 +52,7 @@ export class LoginPage {
         self.serverUrl = url;
         self.login();
       } else {
-        self.alertService.presentServerInputAlert();
+        self.alertService.presentServerInputAlert("Indirizzo Server");
       }
     });
   }
@@ -61,7 +61,6 @@ export class LoginPage {
 
     var self = this;
     this.firebaseNative.getToken().then(function(fbToken){
-      //self.alertService.presentAlert("firebaseToken received: " + fbToken);
       self.firebase_token = fbToken;
 
       self.loginService.login(self.serverUrl, self.username, self.password).subscribe(r => {
@@ -71,16 +70,15 @@ export class LoginPage {
   
           self.navController.setRoot(HomePage, {val: 'pippo'});
         } else {
-          //throw new Error("test Error");
-          let ed = new Error.ErrorData();
-          ed.message = "errore nel login" ; 
-          self.error.sendError(ed);
+          self.alertService.presentErrorAlert("Si è verificato un errore durante il login");
         }
+      },
+      error => {
+        self.alertService.presentErrorAlert("Si è verificato un errore durante il login: " + error);
       });
     });
   }
-
-
+  
   presentAlert() {
     // se serve, qui si puo' mettere una chiamata per tenere traccia di chi ha tentato e fallito il login
     let alert = this.alertCtrl.create({

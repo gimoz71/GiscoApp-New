@@ -52,7 +52,7 @@ export class HomePage{
   }
 
   public createAttivitaChart(tokenValue: string) {
-    this.commonService.getAttivitaChartData(tokenValue).subscribe(data => {
+    this.commonService.getAttivitaChartData(tokenValue, this.storeService.getLocalServerUrl()).subscribe(data => {
       if(data.ErrorMessage.msg_code == 0){
 
         this.attivitaChartVisible = data['visible'] == "S";
@@ -120,7 +120,7 @@ export class HomePage{
   }
 
   public createPrescrizioniChart(tokenValue: string) {
-    this.commonService.getPrescrizioniChartData(tokenValue).subscribe(data => {
+    this.commonService.getPrescrizioniChartData(tokenValue, this.storeService.getLocalServerUrl()).subscribe(data => {
 
       if(data.ErrorMessage.msg_code == 0){
         var labels = new Array<string>();

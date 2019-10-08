@@ -1,4 +1,7 @@
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/timeoutWith';
+
 import { Login } from './../../models/login/login.namespace';
 import { Platform, MenuController, Nav, NavController, AlertController, ToastController } from 'ionic-angular';
 
@@ -13,18 +16,30 @@ import { ElencoAttivitaPage } from '../../pages/attivita/elenco-attivita/elenco-
 import { ElencoProcedimentiPage } from '../../pages/procedimenti/elenco-procedimenti/elenco-procedimenti';
 import { StoreService } from '../store/store.service';
 
+import { LoginService } from '../login/login.service';
+
 @Injectable()
 export class AlertService {
 
      constructor(private http: HttpClient,
         public alertController: AlertController,
-        public storeService: StoreService){}
+        public storeService: StoreService,
+        public loginService: LoginService){}
 
      public async presentAlert(message: string) {
         let alert = this.alertController.create({
             title: 'Conferma',
             message: message,
             buttons: ['OK']
+          });
+          alert.present();
+      }
+
+      public async presentErrorAlert(message: string) {
+        let alert = this.alertController.create({
+            title: 'Errore',
+            message: message,
+            buttons: ['CHIUDI']
           });
           alert.present();
       }
@@ -77,9 +92,9 @@ export class AlertService {
         confirm.present();
       }
 
-      public presentServerInputAlert() {
+      public presentServerInputAlert(header: string) {
         let alert = this.alertController.create({
-          title: 'Indirizzo Server',
+          title: header,
           inputs: [
             {
               name: 'indirizzo',
@@ -92,14 +107,24 @@ export class AlertService {
               handler: data => {
                 var server = data.indirizzo;
                 //controllo di validita'
+                this.loginService.checkServerValidity(server)
+                .subscribe(r => {
+                  if(r.result == 'OK'){
+                    console.log();
 
-                //eventuale salvataggio
-                var esitoSalvataggio = this.storeService.setServer(server);
-                if(esitoSalvataggio == 1){
-                  this.presentAlert("Salvataggio server avvenuto con successo");
-                } else {
-                  this.presentAlert("Si è verificato un problema nel salvataggio del server");
-                }
+                    var esitoSalvataggio = this.storeService.setServer(server);
+                    if(esitoSalvataggio == 1){
+                      this.presentAlert("Salvataggio server avvenuto con successo");
+                    } else {
+                      this.presentAlert("Si è verificato un problema nel salvataggio del server");
+                    }
+                  } else {
+                    this.presentErrorAlert(r.ErrorMessage.msg_testo);
+                  }
+                }, 
+                error => {
+                  this.presentServerInputAlert("Indirizzo Server Sbagliato");
+                });
               }
             }
           ]

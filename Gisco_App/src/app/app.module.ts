@@ -2,6 +2,7 @@ import { ErrorService } from './services/shared/error.service';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { GlobalErrorHandler } from '../app/handler/error/globalerror.handler';
 import { HttpClientModule } from '@angular/common/http';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -240,7 +241,7 @@ const firebase = {
     //Firebase,
     FirebaseX,
     CommonService,
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
     FcmProvider
   ],
   exports: [

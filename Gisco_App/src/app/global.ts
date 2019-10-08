@@ -5,6 +5,8 @@ export const GlobalVariable = Object.freeze({
     URL_TOKEN_PLACEHOLDER: 'TOKEN',
     URL_CHECK_TOKEN: 'checktoken',
 
+    PING_KEYWORD: 'ping',
+
     SITI_GET_ELENCO_KEYWORD: 'get_elenco_siti',
     SITI_GET_TIPOLOGIE_KEYWORD: 'get_tipologie_siti',
     SITI_GET_KEYWORD: 'get_sito',
