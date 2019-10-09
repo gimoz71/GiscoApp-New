@@ -110,7 +110,7 @@ export class AlertService {
                 this.loginService.checkServerValidity(server)
                 .subscribe(r => {
                   if(r.result == 'OK'){
-                    console.log();
+                    console.log('OK');
 
                     var esitoSalvataggio = this.storeService.setServer(server);
                     if(esitoSalvataggio == 1){
@@ -123,6 +123,7 @@ export class AlertService {
                   }
                 }, 
                 error => {
+                  console.log("Errore indirizzo server sbagliato: " + error.message);
                   this.presentServerInputAlert("Indirizzo Server Sbagliato");
                 });
               }

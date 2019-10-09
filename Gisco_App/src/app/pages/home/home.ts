@@ -205,5 +205,5 @@ export class HomePage{
     console.log("goToNuovaOsservazione click");
      this.navCtrl.push(DashboardOsservazionePage)
   }
-
+  
 }

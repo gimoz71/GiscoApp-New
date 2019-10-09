@@ -1,0 +1,33 @@
+<ion-header>
+	<ion-navbar>
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>Settings</ion-title>
+	</ion-navbar>
+</ion-header>
+<ion-content>
+  <form (ngSubmit)="saveSettings()" #registerForm="ngForm" class="container">
+    <div class="card mx-auto mt-5">
+        <ion-row class="card-header">
+            <ion-col>
+              <div class="logo">Gisco</div>
+            </ion-col>
+          </ion-row>
+          <ion-row class="card-body">
+            <ion-col>
+              <ion-list inset>
+                <div class="form-group">
+                  <input type="text" placeholder="servername" name="servername" [(ngModel)]="servername"/>
+                </div>
+              </ion-list>
+            </ion-col>
+          </ion-row>
+        <ion-row>
+          <ion-col>
+            <button ion-button class="btn" full type="submit" [disabled]="!registerForm.form.valid">Salva</button>
+          </ion-col>
+        </ion-row>
+    </div>
+  </form>
+</ion-content>

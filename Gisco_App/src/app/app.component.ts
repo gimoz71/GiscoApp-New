@@ -19,12 +19,15 @@ import { DashboardProfiloPage } from './pages/profilo/dashboard-profilo';
 import { ElencoProcedimentiPage } from './pages/procedimenti/elenco-procedimenti/elenco-procedimenti';
 import { ElencoOsservazioniPage } from './pages/osservazioni/elenco-osservazioni/elenco-osservazioni';
 import { ElencoAttivitaPage } from './pages/attivita/elenco-attivita/elenco-attivita';
+import { SettingsPage } from './pages/settings/settings';
 
 import { CommonService } from './services/shared/common.service';
 import { StoreService} from './services/store/store.service';
 import { AlertService } from './services/shared/alert.service';
+import { LoginService } from './services/login/login.service';
 
 import { Login } from './models/login/login.namespace';
+import { Common } from './models/common/common.namespace';
 
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 
@@ -60,8 +63,13 @@ export class MyApp {
     public alertController: AlertController,
     public toastCtrl: ToastController,
     public firebaseNative: FirebaseX,
-    public alertService: AlertService
+    public alertService: AlertService,
+    public loginService: LoginService
   ) {
+
+    this.loginService.notifiche.subscribe(not => {
+      this.manageNotifiche(not);
+    });
 
     this.platform.ready().then((readySource) => {
       console.log('Platform ready from', readySource);
@@ -109,48 +117,16 @@ export class MyApp {
         var tokenValue = val.token_value;
         this.commonService.getNotifiche(tokenValue, this.storeService.getLocalServerUrl()).subscribe(r => {
           var notifiche = r.l_notifiche;
-          for (let notifica of notifiche) {
-            switch(notifica.notifica_type){
-              case "attivita": {
-                if(notifica.notifica_count){
-                  this.numNotifiche_attivita = notifica.notifica_count;
-                }
-              }
-              case "osservazioni": {
-                if(notifica.notifica_count){
-                  this.numNotifiche_osservazioni = notifica.notifica_count;
-                }
-              }
-              case "prescrizioni": {
-                if(notifica.notifica_count){
-                  this.numNotifiche_prescrizioni = notifica.notifica_count;
-                }
-              }
-              case "messaggi": {
-                if(notifica.notifica_count){
-                  this.numNotifiche_messaggi = notifica.notifica_count;
-                }
-              }
-              case "commenti_at": {
-                if(notifica.notifica_count){
-                  this.numNotifiche_commenti_at = notifica.notifica_count;
-                }
-              }
-              case "commenti_os": {
-                if(notifica.notifica_count){
-                  this.numNotifiche_commenti_os = notifica.notifica_count;
-                }
-              }
-            }
-          }
+          this.manageNotifiche(notifiche);
           console.log('ADESSO POSSO RENDERIZZARE LA LISTA');
+        }, error => {
+          console.log("Errore nel recupero delle notifiche: " + error.message);
           this.viewMenu = true;
         });
       } else {
         // devo effettuare il login
         this.nav.setRoot(LoginPage);
       }
-      
     });
 
               // Listen to incoming messages
@@ -159,6 +135,44 @@ export class MyApp {
       console.log("TIPO NOTIFICA: " + message.tipo_notifica);
       this.alertService.presentAlertNewPage(this.nav, message.tipo_notifica, id);
     });
+  }
+
+  private manageNotifiche(notifiche: Common.NotificaList[]): void {
+    for (let notifica of notifiche) {
+      switch(notifica.notifica_type){
+        case "attivita": {
+          if(notifica.notifica_count){
+            this.numNotifiche_attivita = notifica.notifica_count;
+          }
+        }
+        case "osservazioni": {
+          if(notifica.notifica_count){
+            this.numNotifiche_osservazioni = notifica.notifica_count;
+          }
+        }
+        case "prescrizioni": {
+          if(notifica.notifica_count){
+            this.numNotifiche_prescrizioni = notifica.notifica_count;
+          }
+        }
+        case "messaggi": {
+          if(notifica.notifica_count){
+            this.numNotifiche_messaggi = notifica.notifica_count;
+          }
+        }
+        case "commenti_at": {
+          if(notifica.notifica_count){
+            this.numNotifiche_commenti_at = notifica.notifica_count;
+          }
+        }
+        case "commenti_os": {
+          if(notifica.notifica_count){
+            this.numNotifiche_commenti_os = notifica.notifica_count;
+          }
+        }
+      }
+    }
+    this.viewMenu = true;
   }
 
   openPage(page) {
@@ -172,6 +186,11 @@ export class MyApp {
     this.storage.clear();
     this.menu.close();
     this.nav.setRoot(LoginPage);
+  };
+
+  public goToSettings() {
+    this.menu.close();
+    this.nav.setRoot(SettingsPage);
   };
 
   public getNumeroNotifiche(titolo: string): string {

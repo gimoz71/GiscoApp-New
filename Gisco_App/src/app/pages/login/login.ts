@@ -6,6 +6,7 @@ import { LoginService } from '../../services/login/login.service';
 import { StoreService } from './../../services/store/store.service';
 import { ErrorService } from './../../services/shared/error.service';
 import { Login } from '../../models/login/login.namespace';
+import { Common } from '../../models/common/common.namespace';
 
 import { HomePage} from '../../pages/home/home';
 
@@ -13,6 +14,7 @@ import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 
 import { AlertService } from '../../services/shared/alert.service';
 import { ElencoMessaggiPage } from '../messaggi/elenco-messaggi/elenco-messaggi';
+import { CommonService } from '../../services/shared/common.service';
 
 /**
  * Generated class for the ComunicazioneComponent component.
@@ -41,7 +43,8 @@ export class LoginPage {
     @Inject(forwardRef(() => StoreService)) private store: StoreService,
     private error: ErrorService,
     public firebaseNative: FirebaseX,
-    public alertService: AlertService){
+    public alertService: AlertService,
+    public commonService: CommonService){
     this.userData = new Login.ws_Token();
   }
 
@@ -68,6 +71,11 @@ export class LoginPage {
           self.userData = r;
           self.store.setUserData(self.userData);
   
+          self.commonService.getNotifiche(r.token_value, self.store.getLocalServerUrl()).subscribe(r => {
+            var notifiche = r.l_notifiche;
+            self.loginService.wakeupNotifiche(notifiche);
+          });
+
           self.navController.setRoot(HomePage, {val: 'pippo'});
         } else {
           self.alertService.presentErrorAlert("Si è verificato un errore durante il login");
