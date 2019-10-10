@@ -32,7 +32,7 @@ export class HttpService {
     //questa operazione va solo se si è loggati
     public getNoToken(url: string): Observable<Http.HttpResponse> {
 
-        return this.http.get<Http.HttpResponse>(url).timeoutWith(1000, Observable.throw(new Error("TIMEOUT")));
+        return this.http.get<Http.HttpResponse>(url).timeoutWith(10000, Observable.throw(new Error("TIMEOUT")));
     }
 
     public post(url: string, body): Observable<Http.HttpResponse> {

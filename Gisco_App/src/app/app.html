@@ -34,11 +34,17 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content *ngIf="viewMenu">
-    <ion-list>
+  <ion-content>
+    <ion-list *ngIf="viewMenu">
       <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
         <ion-icon name="{{p.icon}}" item-left></ion-icon>
         {{p.title}} <ion-badge color="secondary">{{getNumeroNotifiche(p.title)}}</ion-badge>
+      </button>
+    </ion-list>
+    <ion-list>
+      <button ion-item (click)="goToSettings()">
+        <ion-icon name="settings" item-left></ion-icon>
+        settings
       </button>
       <button ion-item (click)="logOut()">
         <ion-icon name="logout" item-left></ion-icon>

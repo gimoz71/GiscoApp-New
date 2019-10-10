@@ -27,7 +27,6 @@ import { ElencoDocumentiModule } from './modules/documenti/elencoDocumenti/elenc
 
 
 // #REGION - Pages
-
 import { LoadingPage } from './pages/loading/loading';
 import { LoginPage } from './pages/login/login';
 import { HomePage } from './pages/home/home';
@@ -48,6 +47,10 @@ import { ChatPage } from './pages/chat/chat';
 //    DOCUMENTI
 import { CartellePage } from './pages/documenti/cartelle/cartelle';
 import { ElencoDocumentiPage } from './pages/documenti/elenco-documenti/elenco-documenti';
+
+//    SETTINGS
+import { SettingsModule } from './modules/settings/settings.module';
+import { SettingsPage } from './pages/settings/settings';
 
 // #REGION - Components
 
@@ -169,6 +172,7 @@ const firebase = {
     DashboardChiusuraModule,
     ElencoAttivitaModule,
     DashboardAttivitaModule,
+    SettingsModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     AgmCoreModule.forRoot({
@@ -213,7 +217,8 @@ const firebase = {
     DashboardOsservazionePage,
     DashboardChiusuraPage,
     ElencoAttivitaPage,
-    DashboardAttivitaPage
+    DashboardAttivitaPage,
+    SettingsPage
   ],
   providers: [
     StatusBar,
