@@ -32,7 +32,6 @@ import { Common } from './models/common/common.namespace';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 
 
-
 @Component({
   templateUrl: 'app.html'
 })
@@ -93,7 +92,7 @@ export class MyApp {
   }
 
   async initializeApp() {
-    this.storeService.initizlizeServerUrl();
+    this.storeService.initializeServerUrl();
 
     var piattaforma = "";
     if(this.platform.is("mobileweb")){
@@ -111,24 +110,28 @@ export class MyApp {
       this.splashScreen.hide();
     });
 
-    //carico le notifiche per le pagine nel menu
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
-      if(val != null){
-        var tokenValue = val.token_value;
-        this.commonService.getNotifiche(tokenValue, this.storeService.getLocalServerUrl()).subscribe(r => {
-          var notifiche = r.l_notifiche;
-          this.manageNotifiche(notifiche);
-          console.log('ADESSO POSSO RENDERIZZARE LA LISTA');
-        }, error => {
-          console.log("Errore nel recupero delle notifiche: " + error.message);
-          this.viewMenu = true;
-        });
-      } else {
-        // devo effettuare il login
-        this.nav.setRoot(LoginPage);
-      }
-    });
-
+    if(this.storeService.getLocalServerUrl() === ""){
+      this.nav.setRoot(LoginPage);
+    } else {
+      //carico le notifiche per le pagine nel menu
+      this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+        if(val != null){
+          var tokenValue = val.token_value;
+          this.commonService.getNotifiche(tokenValue, this.storeService.getLocalServerUrl()).subscribe(r => {
+            var notifiche = r.l_notifiche;
+            this.manageNotifiche(notifiche);
+            console.log('ADESSO POSSO RENDERIZZARE LA LISTA');
+          }, error => {
+            console.log("Errore nel recupero delle notifiche: " + error.message);
+            this.viewMenu = true;
+          });
+        } else {
+          // devo effettuare il login
+          this.nav.setRoot(LoginPage);
+        }
+      });
+    }
+    
               // Listen to incoming messages
     this.firebaseNative.onMessageReceived().subscribe(message =>{
       let id = 0;

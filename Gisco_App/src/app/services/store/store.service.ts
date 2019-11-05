@@ -21,6 +21,7 @@ export class StoreService {
         private check: CheckService, 
         private login: LoginService) {
             this.ud=null;
+            this.initializeServerUrl();
     }
 /*
     public getUserData(): Login.ws_Token {
@@ -85,7 +86,7 @@ export class StoreService {
         return this.ud;
     };*/
 
-    public initizlizeServerUrl(): void {
+    public initializeServerUrl(): void {
         if(this.serverUrl == null || this.serverUrl == "") {
             this.storage.get("serverUrl").then((val: string) =>{
                 this.serverUrl = val;

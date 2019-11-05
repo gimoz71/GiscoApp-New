@@ -3,6 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js/dist/Chart.js';
 import { NavController, LoadingController } from 'ionic-angular';
 import { DashboardOsservazionePage } from '../osservazioni/dashboard-osservazione/dashboard-osservazione';
+import { DashboardAttivitaPage } from '../attivita/dashboard-attivita/dashboard-attivita';
 
 import { StoreService } from '../../services/store/store.service';
 import { AttivitaService } from '../../services/attivita/attivita.service';
@@ -206,4 +207,10 @@ export class HomePage{
      this.navCtrl.push(DashboardOsservazionePage)
   }
   
+  public goToDetails(attivita: Attivita.Attivita) {
+    this.navCtrl.push(DashboardAttivitaPage,{
+        selectedAttivita: attivita,
+        callbackChiusa: false
+      });
+  }
 }
