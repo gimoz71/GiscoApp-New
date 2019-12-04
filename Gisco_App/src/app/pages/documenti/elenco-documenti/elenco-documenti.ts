@@ -50,7 +50,7 @@ export class ElencoDocumentiPage {
     if (!infiniteScroll) {
       loading.present();
     }
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.documentiService.getListaDocumenti(this.storeService.getLocalServerUrl(), tokenValue, this.selectedCartella.tab_tipo_documento_cod,
         this.selectedCartella.doc_foreign_type, this.campoLiberoSito, this.campoLiberoDocumento,
@@ -110,7 +110,7 @@ export class ElencoDocumentiPage {
     console.log("goToDocumento click" + documento);
     this.navCtrl.push(DashboardDocumentoPage, { documento: documento })
   }
-  
+
   back() {
     this.navCtrl.pop();
   }

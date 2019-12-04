@@ -39,7 +39,7 @@ export class ElencoOsservazioniPage {
     this.numOsservazioniRicevuti = 1;
     this.listaOsservazioni = new Array<Osservazione.Osservazione>();
     this.campoLiberoSito = "A";
-    this.campoLiberoProtocollo="A";
+    this.campoLiberoProtocollo = "A";
   }
 
   ionViewDidLoad() {
@@ -48,23 +48,23 @@ export class ElencoOsservazioniPage {
       content: 'Caricamento...'
     });
     loading.present();
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
-      if (val!==null){
-      var tokenValue = val.token_value;
-      this.osservazioniService.getListaTipologieOsservazione(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
-        if (r.ErrorMessage.msg_code === 0) {
-          console.log(r.ErrorMessage.msg_code);
-          this.listaTipologie = r.l_lista_tipologie;
-          this.tipologiaSelezionata = this.listaTipologie[0];
-          this.setTipologiaFiltro();
-        }
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
+      if (val !== null) {
+        var tokenValue = val.token_value;
+        this.osservazioniService.getListaTipologieOsservazione(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
+          if (r.ErrorMessage.msg_code === 0) {
+            console.log(r.ErrorMessage.msg_code);
+            this.listaTipologie = r.l_lista_tipologie;
+            this.tipologiaSelezionata = this.listaTipologie[0];
+            this.setTipologiaFiltro();
+          }
+          loading.dismiss();
+        })
+      } else {
+        this.navCtrl.setRoot(LoginPage);
         loading.dismiss();
-      })
-    }else{
-      this.navCtrl.setRoot(LoginPage);
-      loading.dismiss();
-    }
-  });
+      }
+    });
   }
 
   public getOsservazioni(infiniteScroll?) {
@@ -74,7 +74,7 @@ export class ElencoOsservazioniPage {
     if (!infiniteScroll) {
       loading.present();
     }
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.osservazioniService.getListaOsservazioni(this.storeService.getLocalServerUrl(), tokenValue, this.tipologiaSelezionata.tab_tipo_scadenza_cod, this.campoLiberoSito, this.campoLiberoProtocollo,
         this.numOsservazioni, this.numOsservazioni + 19).subscribe(r => {
@@ -139,12 +139,12 @@ export class ElencoOsservazioniPage {
 
   public goToDetails(osservazione: Osservazione.Osservazione) {
     console.log("goToDetails click " + osservazione.attivita_key);
-    this.navCtrl.push(DashboardOsservazionePage, { selectedOsservazione: osservazione, callbackReload: this.reloadListaCallbackFunction});
+    this.navCtrl.push(DashboardOsservazionePage, { selectedOsservazione: osservazione, callbackReload: this.reloadListaCallbackFunction });
   }
 
   public goToNuovaOsservazione() {
     console.log("goToNuovaOsservazione click");
-    this.navCtrl.push(DashboardOsservazionePage, { selectedOsservazione: undefined, callbackReload: this.reloadListaCallbackFunction});
+    this.navCtrl.push(DashboardOsservazionePage, { selectedOsservazione: undefined, callbackReload: this.reloadListaCallbackFunction });
   }
 
   reloadListaCallbackFunction = (reload, oss: Osservazione.Osservazione) => {

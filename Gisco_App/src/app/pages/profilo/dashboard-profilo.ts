@@ -44,7 +44,7 @@ export class DashboardProfiloPage {
             content: 'Caricamento...'
         });
         loading.present();
-        this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+        this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
             console.log("val " + val.token_dipendente_key);
             this.profiloService.getProfilo(this.storeService.getLocalServerUrl(), val.token_dipendente_key, tokenValue).subscribe(r => {
@@ -55,7 +55,7 @@ export class DashboardProfiloPage {
                     console.log("this.profilo.nome " + this.profilo.nome);
                 } else {
                     console.log("errore " + r.ErrorMessage.msg_testo);
-                    this.presentAlert("","errore modifica avatar")
+                    this.presentAlert("", "errore modifica avatar")
                 }
                 loading.dismiss();
             })
@@ -108,16 +108,16 @@ export class DashboardProfiloPage {
         this.camera.getPicture(options).then((imageData) => {
             let loading = this.loadingCtrl.create({
                 content: 'Caricamento...'
-              });
-              loading.present();
+            });
+            loading.present();
             this.imageURI = imageData;
-            this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
-            this.profiloService.changeAvatar(this.storeService.getLocalServerUrl(), this.imageURI, val).subscribe((r) => {
+            this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
+                this.profiloService.changeAvatar(this.storeService.getLocalServerUrl(), this.imageURI, val).subscribe((r) => {
                     console.log(r);
                     if (r.ErrorMessage.msg_code == 0) {
-                        this.profilo.url_avatar=this.imageURI;
+                        this.profilo.url_avatar = this.imageURI;
                     } else {
-                        this.presentAlert("","errore modifica avatar")
+                        this.presentAlert("", "errore modifica avatar")
                     }
                     loading.dismiss();
                 });
@@ -157,25 +157,25 @@ export class DashboardProfiloPage {
                         if (this.checkPassword(data.old) == true) {
                             if (data.new.length > 5) {
                                 if (data.new == data.repeat) {
-                                    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+                                    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
                                         var tokenValue = val.token_value;
                                         this.profiloService.changePassword(this.storeService.getLocalServerUrl(), tokenValue, data.old, data.new, data.repeat).subscribe((r) => {
                                             if (r.ErrorMessage.msg_code == 0) {
-                                                this.presentAlert("","password cambiata correttamente");
+                                                this.presentAlert("", "password cambiata correttamente");
                                             } else {
                                                 console.log(r);
-                                                this.presentAlert("","errore modifica password");
+                                                this.presentAlert("", "errore modifica password");
                                             }
                                         });
                                     })
                                 } else {
-                                    this.presentAlert("","le password non corrispondono");
+                                    this.presentAlert("", "le password non corrispondono");
                                 }
                             } else {
-                                this.presentAlert("","la password deve essere più lunga di 5 caratteri");
+                                this.presentAlert("", "la password deve essere più lunga di 5 caratteri");
                             }
                         } else {
-                            this.presentAlert("","password corrente non corretta");
+                            this.presentAlert("", "password corrente non corretta");
                         }
                     }
                 }
@@ -188,13 +188,13 @@ export class DashboardProfiloPage {
     checkPassword(old): boolean {
         return true;
     }
-    presentAlert(title:string, mess:string) {
+    presentAlert(title: string, mess: string) {
         let alert = this.alertCtrl.create({
-          title: title,
-          subTitle: mess,
-          buttons: ['Ok']
+            title: title,
+            subTitle: mess,
+            buttons: ['Ok']
         });
         alert.present();
-      }
+    }
 
 }

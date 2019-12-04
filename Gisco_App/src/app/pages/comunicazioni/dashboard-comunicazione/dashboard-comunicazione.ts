@@ -33,13 +33,13 @@ export class DashboardComunicazionePage {
     public comunicazioniService: ComunicazioniService,
     private storeService: StoreService) {
     this.selectedComunicazione = navParams.get('comunicazione');
-    this.procedimento= new Procedimento.Procedimento();
+    this.procedimento = new Procedimento.Procedimento();
   }
 
   ionViewDidLoad() {
 
     console.log('ionViewDidLoad DashboardComunicazionePage');
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       console.log(tokenValue);
       this.whichPage = 'Comunicazione';
@@ -66,9 +66,9 @@ export class DashboardComunicazionePage {
 
   public goToDetails(event, prescrizione) {
     console.log("goToDetailsPrescrizione click" + prescrizione);
-   
-      this.navCtrl.push(DashboardPrescrizionePage, { prescrizione: prescrizione, com: this.selectedComunicazione.com_titolo})
-    
+
+    this.navCtrl.push(DashboardPrescrizionePage, { prescrizione: prescrizione, com: this.selectedComunicazione.com_titolo })
+
   }
 
   back() {

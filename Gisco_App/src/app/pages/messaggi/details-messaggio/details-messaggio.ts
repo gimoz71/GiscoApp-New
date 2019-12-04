@@ -17,7 +17,7 @@ export class DetailsMessaggioPage {
 
   public mess: Messaggio.Messaggio;
   public onlyNotImportant: boolean;
-  public messagioCestino:boolean;
+  public messagioCestino: boolean;
   color: string;
   icon: string;
   callback: any;
@@ -36,9 +36,9 @@ export class DetailsMessaggioPage {
   }
 
   ionViewDidLoad() {
-    console.log("this.onlyNotImportant "+this.onlyNotImportant);
-    console.log("this.messagioCestino "+this.messagioCestino);
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    console.log("this.onlyNotImportant " + this.onlyNotImportant);
+    console.log("this.messagioCestino " + this.messagioCestino);
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.messaggiService.getMessaggio(this.storeService.getLocalServerUrl(), this.mess.messaggi_key, tokenValue).subscribe(r => {
         this.mess = r.messaggio;
@@ -56,13 +56,13 @@ export class DetailsMessaggioPage {
       this.callback(this.mess).then(() => {
         this.navCtrl.pop();
       });
-    }else{
+    } else {
       this.navCtrl.pop();
     }
   }
 
   setDelete(mess: Messaggio.Messaggio) {
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.messaggiService.setDeleteMessage(this.storeService.getLocalServerUrl(), mess.messaggi_key, tokenValue).subscribe(r => {
         console.log(r);
@@ -98,7 +98,7 @@ export class DetailsMessaggioPage {
   }
 
   setStar(mess: Messaggio.Messaggio, stato) {
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.messaggiService.setStarMessage(this.storeService.getLocalServerUrl(), mess.messaggi_key, stato, tokenValue).subscribe(r => {
         mess.preferito = stato;

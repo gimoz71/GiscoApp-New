@@ -48,7 +48,7 @@ export class DashboardChiusuraPage {
     private navParams: NavParams,
     private loadingCtrl: LoadingController,
     private actionSheetCtrl: ActionSheetController,
-    private alertCtrl: AlertController,    
+    private alertCtrl: AlertController,
     private camera: Camera) {
 
     this.ws_Oss_Ch = new Osservazione.ws_Osservazione_Chiusura();
@@ -67,7 +67,7 @@ export class DashboardChiusuraPage {
     loading.present();
     console.log("this.ws_Oss.osservazione " + this.osservazione.att_conclusa);
     this.conclusa = this.osservazione.att_conclusa === 'S';
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.myUserKey = val.token_dipendente_key;
       console.log("setViewOsservazione");
@@ -136,13 +136,13 @@ export class DashboardChiusuraPage {
         if (moment(this.dataInizio).isBefore(moment(this.dataFine))) {
           this.ws_Oss_Ch.osservazione.att_conclusa = "S";
           this.ws_Oss_Ch.att_descrizione = this.note;
-          this.ws_Oss_Ch.c_proprieta_personalizzate=this.listaPersonalizzate;
+          this.ws_Oss_Ch.c_proprieta_personalizzate = this.listaPersonalizzate;
           let loading = this.loadingCtrl.create({
             content: 'Caricamento...'
           });
           loading.present();
           console.log("this.ws_Oss.osservazione " + this.osservazione.att_conclusa);
-          this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+          this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
             this.ws_Oss_Ch.token = tokenValue;
             this.osservazioniService.salvaChiusuraOsservazione(this.storeService.getLocalServerUrl(), this.ws_Oss_Ch).subscribe(r => {
@@ -194,7 +194,7 @@ export class DashboardChiusuraPage {
         content: 'Caricamento...'
       });
       loading.present();
-      this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+      this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
         var tokenValue = val.token_value;
         this.ws_Oss_Com.token = tokenValue;
         this.ws_Oss_Com.commento.dipendenti.dipendenti_key = val.token_dipendente_key;
@@ -247,7 +247,7 @@ export class DashboardChiusuraPage {
       content: 'Caricamento...'
     });
     loading.present();
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.ws_Oss_Com.token = tokenValue;
       this.osservazioniService.cancellaCommentoOsservazione(this.storeService.getLocalServerUrl(), this.ws_Oss_Com).subscribe(r => {
@@ -294,7 +294,7 @@ export class DashboardChiusuraPage {
         content: 'Caricamento...'
       });
       loading.present();
-      this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+      this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
         var tokenValue = val.token_value;
         this.ws_Oss_Com.token = tokenValue;
         this.ws_Oss_Com.commento.dipendenti.dipendenti_key = val.token_dipendente_key;
@@ -448,13 +448,13 @@ export class DashboardChiusuraPage {
     this.camera.getPicture(options).then((imageData) => {
       console.log('ionViewDidLoad DashboardOsservazionePage');
       var ws_imm = new Osservazione.ws_SendImage();
-      this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+      this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
         ws_imm.token = val.token_value;
         ws_imm.oggetto_key = this.osservazione.attivita_key;
         ws_imm.tipologia = "attivita";
         ws_imm.immagine = imageData;
-        
-        console.log("image put" + JSON.stringify( ws_imm));
+
+        console.log("image put" + JSON.stringify(ws_imm));
         this.osservazioniService.salvaImmagineOsservazione(this.storeService.getLocalServerUrl(), ws_imm).subscribe((r) => {
           console.log(r);
           if (r.ErrorMessage.msg_code == 0) {
@@ -479,10 +479,10 @@ export class DashboardChiusuraPage {
     });
     loading.present();
     var ws_imm = new Osservazione.ws_Immagine();
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       ws_imm.token = val.token_value;
       ws_imm.immagine = imm;
-      console.log("goToEliminaImmagine "+JSON.stringify(ws_imm));
+      console.log("goToEliminaImmagine " + JSON.stringify(ws_imm));
       this.osservazioniService.cancellaImmagineOsservazione(this.storeService.getLocalServerUrl(), ws_imm).subscribe((r) => {
         console.log(r);
         if (r.ErrorMessage.msg_code == 0) {

@@ -45,7 +45,7 @@ export class ElencoSitiPage {
       content: 'Caricamento...'
     });
     loading.present();
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       console.log(tokenValue);
       this.sitiService.getListaSitiAll(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
@@ -98,7 +98,7 @@ export class ElencoSitiPage {
       this.provinciaSelezionata.Codice = "A"
     }
 
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
 
       this.sitiService.getListaSiti(this.storeService.getLocalServerUrl(), tokenValue, this.tipologiaSelezionata.tab_tipologia_sito_key, this.provinciaSelezionata.Codice, this.campoLibero).subscribe(r => {

@@ -34,7 +34,7 @@ export class DashboardDocumentoPage {
       content: 'Caricamento...'
     });
     loading.present();
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       console.log(tokenValue);
       this.documentiService.getDocumento(this.storeService.getLocalServerUrl(), this.selectedDocumento.documenti_key, tokenValue).subscribe(r => {
@@ -51,7 +51,7 @@ export class DashboardDocumentoPage {
     this.navCtrl.pop();
   }
 
-  openUrl(){
-     window.open(this.selectedDocumento.doc_url, '_system'); 
-    }
+  openUrl() {
+    window.open(this.selectedDocumento.doc_url, '_system');
+  }
 }

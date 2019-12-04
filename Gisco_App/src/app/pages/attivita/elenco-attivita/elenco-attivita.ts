@@ -50,7 +50,7 @@ export class ElencoAttivitaPage {
       content: 'Caricamento...'
     });
     loading.present();
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       if (val !== null) {
         var tokenValue = val.token_value;
         this.attivitaService.getListaCategorieAttivita(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
@@ -78,7 +78,7 @@ export class ElencoAttivitaPage {
     if (!infiniteScroll) {
       loading.present();
     }
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       //(token: string, categoria: any, tipo_cod: any, sito_cod: string, from: number, to: number)
       this.attivitaService.getListaAttivita(this.storeService.getLocalServerUrl(), tokenValue, this.categoriaSelezionata.tab_tipo_attivita_cod, this.tipologiaSelezionata.tab_tipo_scadenza_cod, this.campoLiberoSito, this.campoLiberoProtocollo, this.numAttivita, this.numAttivita + 19).subscribe(r => {
@@ -140,7 +140,7 @@ export class ElencoAttivitaPage {
     let loading = this.loadingCtrl.create({
       content: 'Caricamento...'
     });
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.attivitaService.getListaTipologieAttivita(this.storeService.getLocalServerUrl(), this.categoriaSelezionata.tab_tipo_attivita_cod, tokenValue).subscribe(r => {
         if (r.ErrorMessage.msg_code === 0) {

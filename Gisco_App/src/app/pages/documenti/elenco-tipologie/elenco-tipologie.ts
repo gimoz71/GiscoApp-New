@@ -38,7 +38,7 @@ export class TipologiePage {
       content: 'Caricamento...'
     });
     loading.present();
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       console.log(tokenValue);
       this.documentiService.getTipologiaDocumenti(this.storeService.getLocalServerUrl(), tokenValue, this.selectedCartella.doc_foreign_type).subscribe(r => {

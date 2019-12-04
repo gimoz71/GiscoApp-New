@@ -122,13 +122,14 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 import { CommonService } from './services/shared/common.service';
 import { FcmProvider } from '../providers/fcm/fcm';
+import { GeolocatedService } from './services/shared/geolocated.service';
 
 const firebase = {
   // your firebase web config
-  apiKey:"AIzaSyDrd2GNepJWvtn9m3YlSFIv53Nz_X-9dQ4",
+  apiKey: "AIzaSyDrd2GNepJWvtn9m3YlSFIv53Nz_X-9dQ4",
   projectId: "giscoapp",
   storageBucket: "giscoapp.appspot.com"
- }
+}
 
 @NgModule({
   declarations: [
@@ -180,7 +181,7 @@ const firebase = {
       // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
       apiKey: 'AIzaSyBdH99WPCCNOhcDXI_kAwmn93FuNfA_Nh8'
     }),
-    AngularFireModule.initializeApp(firebase), 
+    AngularFireModule.initializeApp(firebase),
     AngularFirestoreModule
   ],
   bootstrap: [IonicApp],
@@ -211,7 +212,7 @@ const firebase = {
     DashboardProcedimentoPage,
     ElencoComunicazioniPage,
     DashboardComunicazionePage,
-    DashboardPrescrizionePage,    
+    DashboardPrescrizionePage,
     ElencoOsservazioniPage,
     NuovaAssegnazionePage,
     DashboardOsservazionePage,
@@ -235,7 +236,7 @@ const firebase = {
     DocumentiService,
     ProfiloService,
     ProcedimentiService,
-    Camera, 
+    Camera,
     Geolocation,
     ComunicazioniService,
     PrescrizioniService,
@@ -245,6 +246,7 @@ const firebase = {
     DatePicker,
     //Firebase,
     FirebaseX,
+    GeolocatedService,
     CommonService,
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     FcmProvider

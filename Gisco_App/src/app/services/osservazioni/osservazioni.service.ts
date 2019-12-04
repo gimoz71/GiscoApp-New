@@ -7,12 +7,30 @@ import { Http } from '../../models/shared/http.namespace';
 import { Nav } from 'ionic-angular';
 import { Osservazione } from "../../models/osservazione/osservazione.namespace";
 
+import { GeolocatedService } from "../shared/geolocated.service";
+import { Geoposition } from "@ionic-native/geolocation/ngx";
+
 @Injectable()
 export class OsservazioniService {
 
     @ViewChild(Nav) nav;
 
-    constructor(private httpService: HttpService) {
+    private currentLat: string;
+    private currentLon: string;
+
+    constructor(private httpService: HttpService,
+        private geolocated: GeolocatedService) {
+        this.currentLat = "0";
+        this.currentLon = "0";
+
+        this.geolocated.getCurrentPos().then((pos: Geoposition) => {
+            this.currentLat = (pos.coords.latitude + "").replace('.', ',');
+            this.currentLon = (pos.coords.longitude + "").replace('.', ',');
+        }, (err: PositionError) => {
+            // vallutare la gestione dell'errore se non si recuperano le coordinate
+            console.log("error : " + err.message);
+
+        });
     }
 
     public getListaOsservazioni(serverUrl: string, token: string, tipo_cod: any, sito_cod: string, prot_cod: string, from: number, to: number): Observable<Http.HttpResponse> {
@@ -22,7 +40,10 @@ export class OsservazioniService {
             + GlobalVariable.URL_SEPARATOR + to
             + GlobalVariable.URL_SEPARATOR + tipo_cod //tipo
             + GlobalVariable.URL_SEPARATOR + sito_cod //sito
-            + GlobalVariable.URL_SEPARATOR + prot_cod, token);
+            + GlobalVariable.URL_SEPARATOR + prot_cod
+            + GlobalVariable.URL_SEPARATOR + this.currentLat
+            + GlobalVariable.URL_SEPARATOR + this.currentLon
+            , token);
     }
 
     public getOsservazione(serverUrl: string, key: number, token: string): Observable<Http.HttpResponse> {
@@ -88,7 +109,7 @@ export class OsservazioniService {
             + GlobalVariable.URL_SEPARATOR, assegnazione);
     }
 
-    public getCommentiOsservazione(serverUrl: string, token: string, key:number): Observable<Http.HttpResponse> {
+    public getCommentiOsservazione(serverUrl: string, token: string, key: number): Observable<Http.HttpResponse> {
         return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_GET_COMMENTI_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + key, token);

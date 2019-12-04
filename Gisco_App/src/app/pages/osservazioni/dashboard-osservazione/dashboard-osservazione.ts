@@ -72,7 +72,7 @@ export class DashboardOsservazionePage {
         private camera: Camera,
         private geolocation: Geolocation) {
         this.selectedOsservazione = this.navParams.get("selectedOsservazione");
-        if(this.selectedOsservazione === undefined){
+        if (this.selectedOsservazione === undefined) {
             this.isInserimento = true;
         } else {
             this.isInserimento = false;
@@ -93,7 +93,7 @@ export class DashboardOsservazionePage {
         });
         loading.present();
         this.relativo = false;
-        this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+        this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
             this.osservazioniService.getListaTipologieOsservazione(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
                 this.listaTipologieOss = r.l_lista_tipologie;
@@ -220,7 +220,7 @@ export class DashboardOsservazionePage {
         let loading = this.loadingCtrl.create({
         });
         loading.present();
-        this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+        this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
             this.osservazioniService.getOsservazionePersonalizzati(this.storeService.getLocalServerUrl(), this.tipologiaOssSelezionata.tab_tipo_scadenza_cod, tokenValue).subscribe(r => {
                 this.listaPersonalizzate = r.c_proprieta_personalizzate;
@@ -238,7 +238,7 @@ export class DashboardOsservazionePage {
         let loading = this.loadingCtrl.create({
         });
         loading.present();
-        this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+        this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
             if (this.tipologiaDispSelezionata.tab_tipo_dispositivo_cod == 0) {
                 this.tipologiaDispSelezionata.tab_tipo_dispositivo_cod = "A";
@@ -298,7 +298,7 @@ export class DashboardOsservazionePage {
                         console.log("this.ws_Oss.osservazione " + this.tipologiaOssSelezionata.tab_tipo_scadenza_desc);
                         this.ws_Oss.c_proprieta_personalizzate = this.listaPersonalizzate;
 
-                        this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+                        this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
                             var tokenValue = val.token_value;
                             this.ws_Oss.token = tokenValue;
                             this.osservazioniService.salvaOsservazione(this.storeService.getLocalServerUrl(), this.ws_Oss).subscribe(r => {
@@ -407,7 +407,7 @@ export class DashboardOsservazionePage {
         this.camera.getPicture(options).then((imageData) => {
             console.log('ionViewDidLoad DashboardOsservazionePage');
             var ws_imm = new Osservazione.ws_SendImage();
-            this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+            this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
                 ws_imm.token = val.token_value;
                 ws_imm.oggetto_key = this.selectedOsservazione.attivita_key;
                 ws_imm.tipologia = "attivita";
@@ -438,7 +438,7 @@ export class DashboardOsservazionePage {
         });
         loading.present();
         var ws_imm = new Osservazione.ws_Immagine();
-        this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+        this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
             ws_imm.token = val.token_value;
             ws_imm.immagine = imm;
             console.log("goToEliminaImmagine " + JSON.stringify(ws_imm));
@@ -455,7 +455,7 @@ export class DashboardOsservazionePage {
     }
 
     goToEliminaAssegnazione(assegnazione) {
-        this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+        this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
             let ws_Ass = new Osservazione.ws_Assegnazione();
             ws_Ass.assegnazione = assegnazione;
@@ -478,7 +478,7 @@ export class DashboardOsservazionePage {
     }
 
     goToEliminaOsservazione() {
-        this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+        this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
             let ws_Oss = new Osservazione.ws_Osservazione();
             ws_Oss.osservazione = this.selectedOsservazione;

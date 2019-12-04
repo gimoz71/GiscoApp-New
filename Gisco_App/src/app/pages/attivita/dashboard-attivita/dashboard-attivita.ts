@@ -50,7 +50,7 @@ export class DashboardAttivitaPage {
     private navParams: NavParams,
     private loadingCtrl: LoadingController,
     private actionSheetCtrl: ActionSheetController,
-    private alertCtrl: AlertController,    
+    private alertCtrl: AlertController,
     private camera: Camera) {
 
     this.ws_Att_Ch = new Attivita.ws_Attivita_Chiusura();
@@ -69,7 +69,7 @@ export class DashboardAttivitaPage {
     loading.present();
     console.log("this.ws_Oss.attivita " + this.selectedAttivita.att_conclusa);
     this.conclusa = this.selectedAttivita.att_conclusa === 'S';
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.myUserKey = val.token_dipendente_key;
       console.log("setViewAttivita");
@@ -140,13 +140,13 @@ export class DashboardAttivitaPage {
         if (moment(this.dataInizio).isBefore(moment(this.dataFine))) {
           this.ws_Att_Ch.attivita.att_conclusa = "S";
           this.ws_Att_Ch.att_descrizione = this.note;
-          this.ws_Att_Ch.c_proprieta_personalizzate=this.listaPersonalizzate;
+          this.ws_Att_Ch.c_proprieta_personalizzate = this.listaPersonalizzate;
           let loading = this.loadingCtrl.create({
             content: 'Caricamento...'
           });
           loading.present();
           console.log("this.ws_Oss.osservazione " + this.selectedAttivita.att_conclusa);
-          this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+          this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
             this.ws_Att_Ch.token = tokenValue;
             console.log("this.ws_Att_Ch " + JSON.stringify(this.ws_Att_Ch));
@@ -198,7 +198,7 @@ export class DashboardAttivitaPage {
         content: 'Caricamento...'
       });
       loading.present();
-      this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+      this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
         var tokenValue = val.token_value;
         this.ws_Oss_Com.token = tokenValue;
         this.ws_Oss_Com.commento.dipendenti.dipendenti_key = val.token_dipendente_key;
@@ -251,7 +251,7 @@ export class DashboardAttivitaPage {
       content: 'Caricamento...'
     });
     loading.present();
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.ws_Oss_Com.token = tokenValue;
       this.attivitaService.cancellaCommentoAttivita(this.storeService.getLocalServerUrl(), this.ws_Oss_Com).subscribe(r => {
@@ -298,7 +298,7 @@ export class DashboardAttivitaPage {
         content: 'Caricamento...'
       });
       loading.present();
-      this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+      this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
         var tokenValue = val.token_value;
         this.ws_Oss_Com.token = tokenValue;
         this.ws_Oss_Com.commento.dipendenti.dipendenti_key = val.token_dipendente_key;
@@ -452,13 +452,13 @@ export class DashboardAttivitaPage {
     this.camera.getPicture(options).then((imageData) => {
       console.log('ionViewDidLoad DashboardOsservazionePage');
       var ws_imm = new Osservazione.ws_SendImage();
-      this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+      this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
         ws_imm.token = val.token_value;
         ws_imm.oggetto_key = this.selectedAttivita.attivita_key;
         ws_imm.tipologia = "attivita";
         ws_imm.immagine = imageData;
-        
-        console.log("image put" + JSON.stringify( ws_imm));
+
+        console.log("image put" + JSON.stringify(ws_imm));
         this.attivitaService.salvaImmagineAttivita(this.storeService.getLocalServerUrl(), ws_imm).subscribe((r) => {
           console.log(r);
           if (r.ErrorMessage.msg_code == 0) {
@@ -483,10 +483,10 @@ export class DashboardAttivitaPage {
     });
     loading.present();
     var ws_imm = new Attivita.ws_Immagine();
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       ws_imm.token = val.token_value;
       ws_imm.immagine = imm;
-      console.log("goToEliminaImmagine "+JSON.stringify(ws_imm));
+      console.log("goToEliminaImmagine " + JSON.stringify(ws_imm));
       this.attivitaService.cancellaImmagineAttivita(this.storeService.getLocalServerUrl(), ws_imm).subscribe((r) => {
         console.log(r);
         if (r.ErrorMessage.msg_code == 0) {

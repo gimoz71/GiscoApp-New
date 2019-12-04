@@ -24,7 +24,7 @@ export class NuovaAssegnazionePage {
   private selectedOsservazione: Osservazione.Osservazione;
   color: string;
   icon: string;
-  
+
   constructor(public navCtrl: NavController,
     public messaggiService: MessaggiService,
     public osservazioniService: OsservazioniService,
@@ -36,7 +36,7 @@ export class NuovaAssegnazionePage {
   }
 
   ionViewDidLoad() {
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.messaggiService.getDipendentiAttivi(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
         this.listaNominativi = r.l_dipendenti;
@@ -83,7 +83,7 @@ export class NuovaAssegnazionePage {
 
   public salvaAssegnazione() {
 
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       if (this.nominativoSelezionato != null) {
         var ws_ass = new Osservazione.ws_Assegnazione();
@@ -120,7 +120,7 @@ export class NuovaAssegnazionePage {
     });
   }
 
-  presentAlert(title:string, mess:string) {
+  presentAlert(title: string, mess: string) {
     let alert = this.alertCtrl.create({
       title: title,
       subTitle: mess,

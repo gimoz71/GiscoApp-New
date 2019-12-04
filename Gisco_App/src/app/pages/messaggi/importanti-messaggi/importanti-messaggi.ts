@@ -32,7 +32,7 @@ export class ImportantiMessaggiPage {
     this.listaMessaggi = new Array<Messaggio.Messaggio>();
     this.campoLibero = "A";
     this.numMessRicevuti = 1;
-    
+
   }
 
   ionViewDidLoad() {
@@ -50,7 +50,7 @@ export class ImportantiMessaggiPage {
     if (!infiniteScroll) {
       loading.present();
     }
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.messaggiService.getListaMessaggiImportanti(this.storeService.getLocalServerUrl(), tokenValue, this.campoLibero,
         this.numMess, this.numMess + 19).subscribe(r => {
@@ -94,7 +94,7 @@ export class ImportantiMessaggiPage {
   }
 
   setStar(mess: Messaggio.Messaggio, stato) {
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.messaggiService.setStarMessage(this.storeService.getLocalServerUrl(), mess.messaggi_key, stato, tokenValue).subscribe(r => {
         /*   this.numMess = 1;
@@ -110,7 +110,7 @@ export class ImportantiMessaggiPage {
   }
 
   setDelete(mess: Messaggio.Messaggio) {
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.messaggiService.setDeleteMessage(this.storeService.getLocalServerUrl(), mess.messaggi_key, tokenValue).subscribe(r => {
         if (r.ErrorMessage.msg_code === 0) {
@@ -154,17 +154,17 @@ export class ImportantiMessaggiPage {
   eliminaMessCallbackFunction = (mess) => {
     return new Promise((resolve, reject) => {
       //  this.test = _params;
-      if(mess.preferito==="N"){
+      if (mess.preferito === "N") {
         this.listaMessaggi.splice(this.listaMessaggi.indexOf(mess), 1);
         this.numMess = this.numMess - 1;
       }
-      console.log("eliminaMessCallbackFunction "+mess.preferito);
-        resolve();
+      console.log("eliminaMessCallbackFunction " + mess.preferito);
+      resolve();
     });
-   }
+  }
 
   public goToDetails(mess) {
-    this.navCtrl.push(DetailsMessaggioPage, { mess: mess, callback: this.eliminaMessCallbackFunction, onlyNotImportant: false});
+    this.navCtrl.push(DetailsMessaggioPage, { mess: mess, callback: this.eliminaMessCallbackFunction, onlyNotImportant: false });
   }
 
 }

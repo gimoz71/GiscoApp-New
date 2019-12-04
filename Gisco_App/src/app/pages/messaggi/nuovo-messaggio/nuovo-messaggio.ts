@@ -30,7 +30,7 @@ export class NuovoMessaggioPage {
     public messaggiService: MessaggiService,
     public profiloService: ProfiloService,
     private storeService: StoreService,
-    private alertCtrl:AlertController,
+    private alertCtrl: AlertController,
     private navParams: NavParams) {
 
   }
@@ -52,7 +52,7 @@ export class NuovoMessaggioPage {
       this.messaggio = this.mess.messaggio;
     }
     else this.mess = new Messaggio.Messaggio();
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.messaggiService.getDipendentiAttivi(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
         this.listaDestinatari = r.l_dipendenti;
@@ -61,7 +61,7 @@ export class NuovoMessaggioPage {
         }
       },
         (error) => {
-          this.presentAlert("","errore recupero della risorsa");
+          this.presentAlert("", "errore recupero della risorsa");
         })
     });
   }
@@ -120,7 +120,7 @@ export class NuovoMessaggioPage {
 
   public inviaMessaggio() {
 
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       let mittente: Dipendente.Dipendente;
       var tokenValue = val.token_value;
       if (this.destinatarioSelezionato != null) {
@@ -131,8 +131,8 @@ export class NuovoMessaggioPage {
             console.log("this.profilo.nome " + mittente.email);
             let busta: Messaggio.BustaMessaggio = new Messaggio.BustaMessaggio();
             let mess: Messaggio.Messaggio = new Messaggio.Messaggio();
-  
-  
+
+
             mess.mittente_key = val.token_dipendente_key;
             mess.destinatario_key = this.destinatarioSelezionato.dipendenti_key;
             mess.data = new Date().getTime().toString();
@@ -145,7 +145,7 @@ export class NuovoMessaggioPage {
             mess.nome_mit = mittente.nome;
             mess.cognome_des = this.destinatarioSelezionato.cognome;
             mess.nome_des = this.destinatarioSelezionato.nome;
-  
+
             busta.c_conoscenza = [];
             if (this.conoscenzeSelezionate != undefined) {
               for (let i = 0; i < this.conoscenzeSelezionate.length; i++) {
@@ -155,33 +155,33 @@ export class NuovoMessaggioPage {
                 busta.c_conoscenza.push(con);
               }
             }
-  
+
             busta.messaggio = mess;
             busta.token = val.token_value;
-            this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+            this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
               var tokenValue = val.token_value;
               this.messaggiService.sendMessage(this.storeService.getLocalServerUrl(), busta).subscribe(r => {
                 console.log(r);
                 if (r.ErrorMessage.msg_code == 0) {
                   console.log(busta);
-                  this.presentAlert("","Messaggio inviato correttamente");
+                  this.presentAlert("", "Messaggio inviato correttamente");
                   this.back();
                 } else {
-                  this.presentAlert("","Errore nell'invio del messaggio");
+                  this.presentAlert("", "Errore nell'invio del messaggio");
                 }
               });
             });
           } else {
-            this.presentAlert("","Errore recupero mittente");
+            this.presentAlert("", "Errore recupero mittente");
           }
         })
       } else {
-        this.presentAlert("","Selezionare destinatario");
+        this.presentAlert("", "Selezionare destinatario");
       }
     });
   }
 
-  presentAlert(title:string, mess:string) {
+  presentAlert(title: string, mess: string) {
     let alert = this.alertCtrl.create({
       title: title,
       subTitle: mess,

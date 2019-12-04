@@ -46,7 +46,7 @@ export class ElencoDispositiviPage {
             content: 'Caricamento...'
         });
         loading.present();
-        this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+        this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
             console.log(tokenValue);
             this.dispositiviService.getListaDispositiviAll(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
@@ -101,7 +101,7 @@ export class ElencoDispositiviPage {
             this.provinciaSelezionata.Codice = "A"
         }
 
-        this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+        this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
 
             this.dispositiviService.getListaDispositivi(this.storeService.getLocalServerUrl(), tokenValue, this.tipologiaSelezionata.tab_tipo_dispositivo_cod, this.provinciaSelezionata.Codice, this.campoLibero).subscribe(r => {

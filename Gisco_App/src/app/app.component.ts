@@ -22,7 +22,7 @@ import { ElencoAttivitaPage } from './pages/attivita/elenco-attivita/elenco-atti
 import { SettingsPage } from './pages/settings/settings';
 
 import { CommonService } from './services/shared/common.service';
-import { StoreService} from './services/store/store.service';
+import { StoreService } from './services/store/store.service';
 import { AlertService } from './services/shared/alert.service';
 import { LoginService } from './services/login/login.service';
 
@@ -44,7 +44,7 @@ export class MyApp {
 
   private numNotifiche_attivita = 0;
   private numNotifiche_osservazioni = 0;
-  private numNotifiche_prescrizioni= 0;
+  private numNotifiche_prescrizioni = 0;
   private numNotifiche_messaggi = 0;
   private numNotifiche_commenti_at = 0;
   private numNotifiche_commenti_os = 0;
@@ -77,17 +77,17 @@ export class MyApp {
 
     // set our app's pages
     this.pages = [
-        { title: 'Home', component: HomePage, icon: 'home' },
-        { title: 'Elenco Siti', component: ElencoSitiPage, icon: 'list-box' },
-        { title: 'Mappa Siti', component: MappaSitiPage, icon: 'navigate' },
-        { title: 'Elenco Dispositivi', component: ElencoDispositiviPage, icon: 'list-box' },
-        { title: 'Mappa Dispositivi', component: MappaDispositiviPage, icon: 'navigate' },
-        { title: 'Documenti', component: CartellePage, icon: 'document' },
-        { title: 'Messaggi', component: ElencoMessaggiPage, icon: 'chatboxes' },
-        { title: 'Procedimenti', component: ElencoProcedimentiPage, icon: 'home' },
-        { title: 'Osservazioni', component: ElencoOsservazioniPage, icon: 'eye' },
-        { title: 'Attività', component: ElencoAttivitaPage, icon: 'analytics' },
-        { title: 'Profilo', component: DashboardProfiloPage, icon: 'person' },
+      { title: 'Home', component: HomePage, icon: 'home' },
+      { title: 'Elenco Siti', component: ElencoSitiPage, icon: 'list-box' },
+      { title: 'Mappa Siti', component: MappaSitiPage, icon: 'navigate' },
+      { title: 'Elenco Dispositivi', component: ElencoDispositiviPage, icon: 'list-box' },
+      { title: 'Mappa Dispositivi', component: MappaDispositiviPage, icon: 'navigate' },
+      { title: 'Documenti', component: CartellePage, icon: 'document' },
+      { title: 'Messaggi', component: ElencoMessaggiPage, icon: 'chatboxes' },
+      { title: 'Procedimenti', component: ElencoProcedimentiPage, icon: 'home' },
+      { title: 'Osservazioni', component: ElencoOsservazioniPage, icon: 'eye' },
+      { title: 'Attività', component: ElencoAttivitaPage, icon: 'analytics' },
+      { title: 'Profilo', component: DashboardProfiloPage, icon: 'person' },
     ];
   }
 
@@ -95,45 +95,49 @@ export class MyApp {
     this.storeService.initializeServerUrl();
 
     var piattaforma = "";
-    if(this.platform.is("mobileweb")){
+    if (this.platform.is("mobileweb")) {
       piattaforma = "mobileweb";
     }
-    if(this.platform.is("ios")){
+    if (this.platform.is("ios")) {
       piattaforma = "ios";
     }
-    if(this.platform.is("android")){
+    if (this.platform.is("android")) {
       piattaforma = "android";
     }
-    
+
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
 
-    if(this.storeService.getLocalServerUrl() === ""){
-      this.nav.setRoot(LoginPage);
-    } else {
-      //carico le notifiche per le pagine nel menu
-      this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
-        if(val != null){
-          var tokenValue = val.token_value;
-          this.commonService.getNotifiche(tokenValue, this.storeService.getLocalServerUrl()).subscribe(r => {
-            var notifiche = r.l_notifiche;
-            this.manageNotifiche(notifiche);
-            console.log('ADESSO POSSO RENDERIZZARE LA LISTA');
-          }, error => {
-            console.log("Errore nel recupero delle notifiche: " + error.message);
-            this.viewMenu = true;
-          });
-        } else {
-          // devo effettuare il login
-          this.nav.setRoot(LoginPage);
-        }
-      });
-    }
-    
-              // Listen to incoming messages
-    this.firebaseNative.onMessageReceived().subscribe(message =>{
+
+    //carico le notifiche per le pagine nel menu
+    this.storeService.getServerUrl().then((url: string) => {
+      if (url) {
+        this.storeService.getUserDataPromise(url).then((val: Login.ws_Token) => {
+          if (val != null) {
+            var tokenValue = val.token_value;
+            this.commonService.getNotifiche(tokenValue, this.storeService.getLocalServerUrl()).subscribe(r => {
+              var notifiche = r.l_notifiche;
+              this.manageNotifiche(notifiche);
+              console.log('ADESSO POSSO RENDERIZZARE LA LISTA');
+            }, error => {
+              console.log("Errore nel recupero delle notifiche: " + error.message);
+              this.viewMenu = true;
+            });
+          } else {
+            // devo effettuare il login
+            this.nav.setRoot(LoginPage);
+          }
+        });
+      } else {
+        this.nav.setRoot(LoginPage);
+      }
+    });
+
+
+    // Listen to incoming messages
+    this.firebaseNative.onMessageReceived().subscribe(message => {
       let id = 0;
       console.log("TIPO NOTIFICA: " + message.tipo_notifica);
       this.alertService.presentAlertNewPage(this.nav, message.tipo_notifica, id);
@@ -142,34 +146,34 @@ export class MyApp {
 
   private manageNotifiche(notifiche: Common.NotificaList[]): void {
     for (let notifica of notifiche) {
-      switch(notifica.notifica_type){
+      switch (notifica.notifica_type) {
         case "attivita": {
-          if(notifica.notifica_count){
+          if (notifica.notifica_count) {
             this.numNotifiche_attivita = notifica.notifica_count;
           }
         }
         case "osservazioni": {
-          if(notifica.notifica_count){
+          if (notifica.notifica_count) {
             this.numNotifiche_osservazioni = notifica.notifica_count;
           }
         }
         case "prescrizioni": {
-          if(notifica.notifica_count){
+          if (notifica.notifica_count) {
             this.numNotifiche_prescrizioni = notifica.notifica_count;
           }
         }
         case "messaggi": {
-          if(notifica.notifica_count){
+          if (notifica.notifica_count) {
             this.numNotifiche_messaggi = notifica.notifica_count;
           }
         }
         case "commenti_at": {
-          if(notifica.notifica_count){
+          if (notifica.notifica_count) {
             this.numNotifiche_commenti_at = notifica.notifica_count;
           }
         }
         case "commenti_os": {
-          if(notifica.notifica_count){
+          if (notifica.notifica_count) {
             this.numNotifiche_commenti_os = notifica.notifica_count;
           }
         }
@@ -198,38 +202,38 @@ export class MyApp {
 
   public getNumeroNotifiche(titolo: string): string {
     var toReturn = '';
-    switch(titolo){
-      case "Attività": 
-        if(this.numNotifiche_attivita > 0){
-          toReturn = this.numNotifiche_attivita+'';
+    switch (titolo) {
+      case "Attività":
+        if (this.numNotifiche_attivita > 0) {
+          toReturn = this.numNotifiche_attivita + '';
         }
         break;
-      case "Osservazioni": 
-        if(this.numNotifiche_osservazioni > 0){
-            toReturn = this.numNotifiche_osservazioni + '';
+      case "Osservazioni":
+        if (this.numNotifiche_osservazioni > 0) {
+          toReturn = this.numNotifiche_osservazioni + '';
         }
         break;
-      case "Prescrizioni": 
-        if(this.numNotifiche_prescrizioni > 0){
-            toReturn = this.numNotifiche_prescrizioni + '';
+      case "Prescrizioni":
+        if (this.numNotifiche_prescrizioni > 0) {
+          toReturn = this.numNotifiche_prescrizioni + '';
         }
         break;
-      case "Messaggi": 
-        if(this.numNotifiche_messaggi > 0){
-            toReturn = this.numNotifiche_messaggi + '';
+      case "Messaggi":
+        if (this.numNotifiche_messaggi > 0) {
+          toReturn = this.numNotifiche_messaggi + '';
         }
         break;
-      case "Commenti Attivita": 
-        if(this.numNotifiche_commenti_at > 0){
-            toReturn = this.numNotifiche_commenti_at + '';
+      case "Commenti Attivita":
+        if (this.numNotifiche_commenti_at > 0) {
+          toReturn = this.numNotifiche_commenti_at + '';
         }
         break;
-      case "Commenti Osservazioni": 
-        if(this.numNotifiche_commenti_os > 0){
-            toReturn = this.numNotifiche_commenti_os + '';
+      case "Commenti Osservazioni":
+        if (this.numNotifiche_commenti_os > 0) {
+          toReturn = this.numNotifiche_commenti_os + '';
         }
         break;
-      default: 
+      default:
         toReturn = '';
         break;
     }
