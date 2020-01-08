@@ -47,7 +47,7 @@ export class UscitaMessaggiPage {
     if (!infiniteScroll) {
       loading.present();
     }
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.messaggiService.getListaMessaggiUscita(this.storeService.getLocalServerUrl(), tokenValue, this.campoLibero,
         this.numMess, this.numMess + 19).subscribe(r => {
@@ -92,12 +92,12 @@ export class UscitaMessaggiPage {
 
 
   public goToDetails(mess) {
-    this.navCtrl.push(DetailsMessaggioPage, { mess: mess, callback:undefined, onlyNotImportant: true })
+    this.navCtrl.push(DetailsMessaggioPage, { mess: mess, callback: undefined, onlyNotImportant: true })
   }
 
 
   public setDelete(mess: Messaggio.Messaggio) {
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.messaggiService.setDeleteMessage(this.storeService.getLocalServerUrl(), mess.messaggi_key, tokenValue).subscribe(r => {
         if (r.ErrorMessage.msg_code === 0) {

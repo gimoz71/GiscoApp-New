@@ -35,7 +35,7 @@ export class CartellePage {
       content: 'Caricamento...'
     });
     loading.present();
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       console.log(tokenValue);
       this.documentiService.getCartelle(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {

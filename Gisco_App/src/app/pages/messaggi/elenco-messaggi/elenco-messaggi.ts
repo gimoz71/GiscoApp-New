@@ -34,7 +34,7 @@ export class ElencoMessaggiPage {
         private alertCtrl: AlertController,
         public messaggiService: MessaggiService,
         public loadingCtrl: LoadingController) {
-        
+
         this.listaMessaggi = new Array<Messaggio.Messaggio>();
         this.campoLibero = "A";
         this.numMessRicevuti = 1;
@@ -51,7 +51,7 @@ export class ElencoMessaggiPage {
         if (!infiniteScroll) {
             loading.present();
         }
-        this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+        this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
             this.messaggiService.getListaMessaggiRicevuti(this.storeService.getLocalServerUrl(), tokenValue, this.campoLibero,
                 this.numMess, this.numMess + 19).subscribe(r => {
@@ -116,7 +116,7 @@ export class ElencoMessaggiPage {
     }
 
     setStar(mess: Messaggio.Messaggio, stato) {
-        this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+        this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
             this.messaggiService.setStarMessage(this.storeService.getLocalServerUrl(), mess.messaggi_key, stato, tokenValue).subscribe(r => {
                 mess.preferito = stato;
@@ -129,7 +129,7 @@ export class ElencoMessaggiPage {
     }
 
     setDelete(mess: Messaggio.Messaggio) {
-        this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+        this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
             this.messaggiService.setDeleteMessage(this.storeService.getLocalServerUrl(), mess.messaggi_key, tokenValue).subscribe(r => {
                 if (r.ErrorMessage.msg_code === 0) {

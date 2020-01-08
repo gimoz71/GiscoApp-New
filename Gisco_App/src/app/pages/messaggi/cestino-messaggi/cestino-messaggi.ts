@@ -45,7 +45,7 @@ export class CestinoMessaggiPage {
     if (!infiniteScroll) {
       loading.present();
     }
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.messaggiService.getListaMessaggiCestino(this.storeService.getLocalServerUrl(), tokenValue, this.campoLibero,
         this.numMess, this.numMess + 19).subscribe(r => {
@@ -89,7 +89,7 @@ export class CestinoMessaggiPage {
   }
 
   public goToDetails(mess) {
-    this.navCtrl.push(DetailsMessaggioPage, { mess: mess, callback:undefined, messagioCestino: true })
+    this.navCtrl.push(DetailsMessaggioPage, { mess: mess, callback: undefined, messagioCestino: true })
   }
 
   back() {
@@ -120,7 +120,7 @@ export class CestinoMessaggiPage {
 
 
   delete(mess) {
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       let busta = new Messaggio.BustaMessaggio();
       busta.messaggio = mess;
@@ -131,7 +131,7 @@ export class CestinoMessaggiPage {
           console.log(r);
           this.listaMessaggi.splice(this.listaMessaggi.indexOf(mess), 1);
           this.numMess = this.numMess - 1;
-          this.presentAlert("","messaggio eliminato");
+          this.presentAlert("", "messaggio eliminato");
         }
       },
         (error) => {
@@ -143,7 +143,7 @@ export class CestinoMessaggiPage {
   ripristina(mess) {
   }
 
-  presentAlert(title:string, mess:string) {
+  presentAlert(title: string, mess: string) {
     let alert = this.alertCtrl.create({
       title: title,
       subTitle: mess,

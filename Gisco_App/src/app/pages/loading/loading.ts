@@ -35,15 +35,25 @@ export class LoadingPage {
   }
   ionViewDidLoad() {
     this.presentLoadingDefault();
+    this.store.getServerUrl().then((url: string) => {
 
-    this.store.getUserDataPromise().then((val: Login.ws_Token) => {
-      if (val != null) {
-        this.navCtrl.setRoot(HomePage);
+      if (url) {
+        this.store.getUserDataPromise(url).then((val: Login.ws_Token) => {
+          if (val != null) {
+            this.navCtrl.setRoot(HomePage);
+          } else {
+            this.navCtrl.setRoot(LoginPage);
+          }
+        }
+        );
       } else {
         this.navCtrl.setRoot(LoginPage);
       }
-    }
-    )
+
+    });
+
+
+
 
   }
 

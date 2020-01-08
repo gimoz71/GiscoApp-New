@@ -42,7 +42,7 @@ export class ElencoProcedimentiPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ElencoDocumentiPage');
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.procedimentiService.getListaTipologieProcedimento(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
         if (r.ErrorMessage.msg_code === 0) {
@@ -62,7 +62,7 @@ export class ElencoProcedimentiPage {
     if (!infiniteScroll) {
       loading.present();
     }
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.procedimentiService.getListaProcedimenti(this.storeService.getLocalServerUrl(), tokenValue, this.tipologiaSelezionata.tab_tipo_procedimento_cod, this.campoLiberoSito, this.campoLiberoTitolo,
         this.numProcedimenti, this.numProcedimenti + 19).subscribe(r => {

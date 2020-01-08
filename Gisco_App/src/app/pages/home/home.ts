@@ -3,6 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js/dist/Chart.js';
 import { NavController, LoadingController } from 'ionic-angular';
 import { DashboardOsservazionePage } from '../osservazioni/dashboard-osservazione/dashboard-osservazione';
+import { DashboardAttivitaPage } from '../attivita/dashboard-attivita/dashboard-attivita';
 
 import { StoreService } from '../../services/store/store.service';
 import { AttivitaService } from '../../services/attivita/attivita.service';
@@ -16,7 +17,7 @@ import { Common } from '../../models/common/common.namespace';
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage{
+export class HomePage {
 
   @ViewChild('doughnutCanvas') doughnutCanvas;
   @ViewChild('stackedCanvas') stackedCanvas;
@@ -37,14 +38,14 @@ export class HomePage{
     public attivitaService: AttivitaService,
     public commonService: CommonService,
     public loadingCtrl: LoadingController) {
-      this.listaAttivita = new Array<Attivita.Attivita>();
-      this.prescrizioniChartData = new Common.PrescrizioniChartData();
-      this.attivitaChartData = new Array<Common.AttivitaChartData>();
+    this.listaAttivita = new Array<Attivita.Attivita>();
+    this.prescrizioniChartData = new Common.PrescrizioniChartData();
+    this.attivitaChartData = new Array<Common.AttivitaChartData>();
   }
 
-  public ionViewDidLoad() : void {
-    
-    this.storeService.getUserDataPromise().then((val: Login.ws_Token) => {
+  public ionViewDidLoad(): void {
+
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       this.getAttivita(val.token_value);
       this.createPrescrizioniChart(val.token_value);
       this.createAttivitaChart(val.token_value);
@@ -53,7 +54,7 @@ export class HomePage{
 
   public createAttivitaChart(tokenValue: string) {
     this.commonService.getAttivitaChartData(tokenValue, this.storeService.getLocalServerUrl()).subscribe(data => {
-      if(data.ErrorMessage.msg_code == 0){
+      if (data.ErrorMessage.msg_code == 0) {
 
         this.attivitaChartVisible = data['visible'] == "S";
 
@@ -65,7 +66,7 @@ export class HomePage{
 
         var elencoAttivita = data.l_attivita;
 
-        for(var attivita of elencoAttivita){
+        for (var attivita of elencoAttivita) {
           labels.push(attivita.tab_tipo_attivita_desc);
           datasetScadute.push(attivita.at_scadute);
           datasetInScadenza.push(attivita.at_in_scadenza);
@@ -84,7 +85,7 @@ export class HomePage{
             data: datasetInScadenza
           }, {
             label: 'Future',
-            backgroundColor:'#62A9EB',
+            backgroundColor: '#62A9EB',
             data: datasetFuture
           }]
         };
@@ -94,25 +95,25 @@ export class HomePage{
           type: 'bar',
           data: barChartData,
           options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              aspectRatio: 1,
-              scales: {
-                  xAxes: [{
-                    barPercentage: 1,
-                    barThickness: 15,
-                    gridLines: {
-                        offsetGridLines: true
-                    },
-                    stacked: true
-                  }],
-                  yAxes: [{
-                      stacked: true,
-                      ticks: {
-                        beginAtZero: true
-                      }
-                  }]
-              }
+            responsive: true,
+            maintainAspectRatio: false,
+            aspectRatio: 1,
+            scales: {
+              xAxes: [{
+                barPercentage: 1,
+                barThickness: 15,
+                gridLines: {
+                  offsetGridLines: true
+                },
+                stacked: true
+              }],
+              yAxes: [{
+                stacked: true,
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            }
           }
         });
       }
@@ -122,7 +123,7 @@ export class HomePage{
   public createPrescrizioniChart(tokenValue: string) {
     this.commonService.getPrescrizioniChartData(tokenValue, this.storeService.getLocalServerUrl()).subscribe(data => {
 
-      if(data.ErrorMessage.msg_code == 0){
+      if (data.ErrorMessage.msg_code == 0) {
         var labels = new Array<string>();
         var dataSet = new Array<number>();
         var colors = new Array<string>();
@@ -159,19 +160,19 @@ export class HomePage{
 
           type: 'doughnut',
           data: {
-              labels: labels,
-              datasets: [{
-                  label: '# of Votes',
-                  data: dataSet,
-                  backgroundColor: colors,
-                  hoverBackgroundColor: colors
-              }]
+            labels: labels,
+            datasets: [{
+              label: '# of Votes',
+              data: dataSet,
+              backgroundColor: colors,
+              hoverBackgroundColor: colors
+            }]
           },
           options: {
-              maintainAspectRatio: false,
-              aspectRatio: 1
+            maintainAspectRatio: false,
+            aspectRatio: 1
           }
-    
+
         });
       }
     });
@@ -203,7 +204,13 @@ export class HomePage{
 
   public goToNuovaOsservazione() {
     console.log("goToNuovaOsservazione click");
-     this.navCtrl.push(DashboardOsservazionePage)
+    this.navCtrl.push(DashboardOsservazionePage)
   }
-  
+
+  public goToDetails(attivita: Attivita.Attivita) {
+    this.navCtrl.push(DashboardAttivitaPage, {
+      selectedAttivita: attivita,
+      callbackChiusa: false
+    });
+  }
 }
