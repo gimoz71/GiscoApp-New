@@ -26,7 +26,7 @@ export class MessaggiService {
     D = Cestinato
     P = Preferito
      */
-    public getListaMessaggiRicevuti(serverUrl: string, token: string, filter:string, from:any, to:any): Observable<Http.HttpResponse> {
+    public getListaMessaggiRicevuti(serverUrl: string, token: string, filter: string, from: any, to: any): Observable<Http.HttpResponse> {
         return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_GET_ELENCO_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + from//from
@@ -35,7 +35,7 @@ export class MessaggiService {
             + GlobalVariable.URL_SEPARATOR + filter, token);
     }
 
-    public getListaMessaggiCestino(serverUrl: string, token: string, filter:string, from:any, to:any): Observable<Http.HttpResponse> {
+    public getListaMessaggiCestino(serverUrl: string, token: string, filter: string, from: any, to: any): Observable<Http.HttpResponse> {
         return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_GET_ELENCO_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + from//from
@@ -44,7 +44,7 @@ export class MessaggiService {
             + GlobalVariable.URL_SEPARATOR + filter, token);
     }
 
-    public getListaMessaggiUscita(serverUrl: string, token: string, filter:string, from:any, to:any): Observable<Http.HttpResponse> {
+    public getListaMessaggiUscita(serverUrl: string, token: string, filter: string, from: any, to: any): Observable<Http.HttpResponse> {
         return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_GET_ELENCO_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + from//from
@@ -52,7 +52,7 @@ export class MessaggiService {
             + GlobalVariable.URL_SEPARATOR + "O"
             + GlobalVariable.URL_SEPARATOR + filter, token);
     }
-    public getListaMessaggiImportanti(serverUrl: string, token: string, filter:string, from:any, to:any): Observable<Http.HttpResponse> {
+    public getListaMessaggiImportanti(serverUrl: string, token: string, filter: string, from: any, to: any): Observable<Http.HttpResponse> {
         return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_GET_ELENCO_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + from//from
@@ -63,9 +63,15 @@ export class MessaggiService {
 
 
     public getDipendentiAttivi(serverUrl: string, token: string) {
-        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_GET_CONTATTI_KEYWORD
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_GET_ELENCO_DIPENDENTI_KEYWORD
             + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
             + GlobalVariable.URL_SEPARATOR + "S", token);
+    }
+
+    public getDipendentiAttiviSito(serverUrl: string, sito_cod: string, token: string) {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.MESSAGGI_GET_COMBO_DIPENDENTI_KEYWORD
+            + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
+            + GlobalVariable.URL_SEPARATOR + sito_cod, token);
     }
 
     /*  public GetContactDetails(key : number){

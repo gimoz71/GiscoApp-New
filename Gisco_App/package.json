@@ -9,7 +9,8 @@
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
-    "ionic:serve": "ionic-app-scripts serve"
+    "ionic:serve": "ionic-app-scripts serve",
+    "browser": "ionic-app-scripts serve --sourceMap source-map --iscordovaserve --wwwDir platforms/browser/www/ --buildDir platforms/browser/www/build"
   },
   "dependencies": {
     "@agm/core": "^1.0.0-beta.3",
@@ -35,6 +36,7 @@
     "chart.js": "^2.8.0",
     "cordova-android": "^8.1.0",
     "cordova-android-support-gradle-release": "^3.0.1",
+    "cordova-browser": "^6.0.0",
     "cordova-ios": "^5.0.1",
     "cordova-plugin-androidx": "^1.0.2",
     "cordova-plugin-androidx-adapter": "^1.1.0",
@@ -77,8 +79,8 @@
       },
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-googlemaps": {
-        "API_KEY_FOR_ANDROID": "AIzaSyDrd2GNepJWvtn9m3YlSFIv53Nz_X-9dQ4",
-        "API_KEY_FOR_IOS": "AIzaSyCALyK47FqTVkxLmQ35L_tVuWfV10Sq72E",
+        "API_KEY_FOR_ANDROID": "AIzaSyC0ZS8b6gni8cmzaP6wANluaN7XWCvNtBc",
+        "API_KEY_FOR_IOS": "AIzaSyC0ZS8b6gni8cmzaP6wANluaN7XWCvNtBc",
         "PLAY_SERVICES_VERSION": "15.0.1",
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
@@ -111,7 +113,8 @@
     },
     "platforms": [
       "ios",
-      "android"
+      "android",
+      "browser"
     ]
   }
 }

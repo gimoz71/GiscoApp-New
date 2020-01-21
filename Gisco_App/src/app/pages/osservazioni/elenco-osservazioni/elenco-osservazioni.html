@@ -4,11 +4,6 @@
             <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Elenco Osservazioni</ion-title>
-        <ion-buttons end>
-            <button ion-button (click)="goToNuovaOsservazione()">
-                <ion-icon name="add"></ion-icon>
-            </button>
-        </ion-buttons>
     </ion-navbar>
     <ion-searchbar placeholder="Sito" (ionInput)="setSitoFiltro($event)"></ion-searchbar>
     <ion-searchbar placeholder="Protocollo" (ionInput)="setProtocolloFiltro($event)"></ion-searchbar>
@@ -21,9 +16,10 @@
         </ion-select>
     </ion-item>
 </ion-header>
-<ion-content >
+<ion-content>
     <ion-list>
-        <ion-item *ngFor="let osservazione of listaOsservazioni" (click)="goToDetails(osservazione)" text-wrap no-padding>
+        <ion-item *ngFor="let osservazione of listaOsservazioni" (click)="goToDetails(osservazione)" text-wrap
+            no-padding>
             <button no-lines ion-item no-margin clear>
                 <h2>{{(osservazione.att_protocollo)}} - {{osservazione.att_titolo}}</h2>
                 <p>{{osservazione.az_codice_interno}} {{osservazione.az_ragione_sociale}}</p>

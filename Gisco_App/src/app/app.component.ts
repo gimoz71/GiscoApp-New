@@ -29,7 +29,7 @@ import { LoginService } from './services/login/login.service';
 import { Login } from './models/login/login.namespace';
 import { Common } from './models/common/common.namespace';
 
-import { FirebaseX } from '@ionic-native/firebase-x/ngx';
+// import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 
 
 @Component({
@@ -61,7 +61,7 @@ export class MyApp {
     public storeService: StoreService,
     public alertController: AlertController,
     public toastCtrl: ToastController,
-    public firebaseNative: FirebaseX,
+    // public firebaseNative: FirebaseX,
     public alertService: AlertService,
     public loginService: LoginService
   ) {
@@ -137,11 +137,11 @@ export class MyApp {
 
 
     // Listen to incoming messages
-    this.firebaseNative.onMessageReceived().subscribe(message => {
-      let id = 0;
-      console.log("TIPO NOTIFICA: " + message.tipo_notifica);
-      this.alertService.presentAlertNewPage(this.nav, message.tipo_notifica, id);
-    });
+    // this.firebaseNative.onMessageReceived().subscribe(message => {
+    //   let id = 0;
+    //   console.log("TIPO NOTIFICA: " + message.tipo_notifica);
+    //   this.alertService.presentAlertNewPage(this.nav, message.tipo_notifica, id);
+    // });
   }
 
   private manageNotifiche(notifiche: Common.NotificaList[]): void {

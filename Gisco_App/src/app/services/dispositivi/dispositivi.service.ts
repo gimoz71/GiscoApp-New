@@ -41,7 +41,9 @@ export class DispositiviService {
             + GlobalVariable.URL_SEPARATOR + "0" //to
             + GlobalVariable.URL_SEPARATOR + "A" //tipologia
             + GlobalVariable.URL_SEPARATOR + "A" //provincia
-            + GlobalVariable.URL_SEPARATOR + "A", token);//libero
+            + GlobalVariable.URL_SEPARATOR + "A"
+            + GlobalVariable.URL_SEPARATOR + this.currentLat
+            + GlobalVariable.URL_SEPARATOR + this.currentLon, token);//libero
     }
 
     public getListaDispositivi(serverUrl: string, token: string, tipologia_cod: any, provincia_cod: string, campoLibero): Observable<Http.HttpResponse> {
@@ -54,6 +56,14 @@ export class DispositiviService {
             + GlobalVariable.URL_SEPARATOR + campoLibero
             + GlobalVariable.URL_SEPARATOR + this.currentLat
             + GlobalVariable.URL_SEPARATOR + this.currentLon
+            , token);//libero
+    }
+
+    public getListaDispositiviSito(serverUrl: string, token: string, tipologia_cod: any, sito_cod: string): Observable<Http.HttpResponse> {
+        return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.DISPOSITIVI_GET_ELENCO_SITO_KEYWORD
+            + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
+            + GlobalVariable.URL_SEPARATOR + tipologia_cod //tipologia
+            + GlobalVariable.URL_SEPARATOR + sito_cod
             , token);//libero
     }
 
@@ -74,8 +84,9 @@ export class DispositiviService {
             + GlobalVariable.URL_SEPARATOR + "Tutti", token);//primotutti
     }
 
-    public getListaTipologieDispositivo(serverUrl: string, token: string): Observable<Http.HttpResponse> {
+    public getListaTipologieDispositivo(serverUrl: string, token: string, sito_cod: string): Observable<Http.HttpResponse> {
         return this.httpService.get(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.DISPOSITIVI_GET_TIPOLOGIE_KEYWORD
-            + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER, token);
+            + GlobalVariable.URL_SEPARATOR + GlobalVariable.URL_TOKEN_PLACEHOLDER
+            + GlobalVariable.URL_SEPARATOR + sito_cod, token);
     }
 }

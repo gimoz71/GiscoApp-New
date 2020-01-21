@@ -40,7 +40,7 @@ export class ElencoMessaggiPage {
         this.numMessRicevuti = 1;
     }
 
-    ionViewDidLoad() {
+    ionViewDidEnter() {
         this.getMessaggi();
     }
 

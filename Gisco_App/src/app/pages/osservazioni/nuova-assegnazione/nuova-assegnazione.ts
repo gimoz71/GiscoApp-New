@@ -21,7 +21,10 @@ export class NuovaAssegnazionePage {
   public nominativoSelezionato: Dipendente.Dipendente;
   public responsabile: boolean;
 
+  private callbackReload: any;
+
   private selectedOsservazione: Osservazione.Osservazione;
+  private idSitoSelected: string;
   color: string;
   icon: string;
 
@@ -33,12 +36,14 @@ export class NuovaAssegnazionePage {
     private alertCtrl: AlertController,
     private navParams: NavParams) {
     this.selectedOsservazione = navParams.get('osservazione');
+    this.callbackReload = navParams.get('callbackReload');
+    this.idSitoSelected = navParams.get('idSitoSelected');
   }
 
   ionViewDidLoad() {
     this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
-      this.messaggiService.getDipendentiAttivi(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
+      this.messaggiService.getDipendentiAttiviSito(this.storeService.getLocalServerUrl(), this.idSitoSelected, tokenValue).subscribe(r => {
         this.listaNominativi = r.l_dipendenti;
         for (let i = 0; i < this.listaNominativi.length; i++) {
           this.listaNominativi[i].nomeCognome = this.listaNominativi[i].nome + " " + this.listaNominativi[i].cognome;
@@ -78,7 +83,9 @@ export class NuovaAssegnazionePage {
   }
 
   back() {
-    this.navCtrl.pop();
+    this.callbackReload(this.selectedOsservazione.attivita_key).then(() => {
+      this.navCtrl.pop();
+    });
   }
 
   public salvaAssegnazione() {
@@ -95,9 +102,9 @@ export class NuovaAssegnazionePage {
         assegnazione.dp_email = this.nominativoSelezionato.email;
         assegnazione.dipendenti_key = this.nominativoSelezionato.dipendenti_key;
         if (this.responsabile)
-          assegnazione.att_dip_scelta = "S";
+          assegnazione.att_dip_scelta = "R";
         else {
-          assegnazione.att_dip_scelta = "N";
+          assegnazione.att_dip_scelta = "";
 
         }
         ws_ass.assegnazione = assegnazione;

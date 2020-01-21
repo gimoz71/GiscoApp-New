@@ -113,8 +113,7 @@ import { ElencoAttivitaModule } from './modules/attivita/elencoAttivita/elencoAt
 import { DashboardAttivitaModule } from './modules/attivita/dashboardAttivita/dashboardAttivita.module';
 import { DashboardAttivitaPage } from './pages/attivita/dashboard-attivita/dashboard-attivita';
 import { AttivitaService } from './services/attivita/attivita.service';
-import { AlertService } from './services/shared/alert.service';
-//import { Firebase } from '@ionic-native/firebase';
+import { AlertService } from './services/shared/alert.service';//import { Firebase } from '@ionic-native/firebase';
 import { FirebaseX } from "@ionic-native/firebase-x/ngx";
 
 import { AngularFireModule } from 'angularfire2';
@@ -123,6 +122,9 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { CommonService } from './services/shared/common.service';
 import { FcmProvider } from '../providers/fcm/fcm';
 import { GeolocatedService } from './services/shared/geolocated.service';
+
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { GiscoHttpInterceptor } from './interceptor/http.interceptor';
 
 const firebase = {
   // your firebase web config
@@ -179,7 +181,7 @@ const firebase = {
     AgmCoreModule.forRoot({
       // please get your own API key here:
       // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
-      apiKey: 'AIzaSyBdH99WPCCNOhcDXI_kAwmn93FuNfA_Nh8'
+      apiKey: 'AIzaSyC0ZS8b6gni8cmzaP6wANluaN7XWCvNtBc'
     }),
     AngularFireModule.initializeApp(firebase),
     AngularFirestoreModule
@@ -244,12 +246,16 @@ const firebase = {
     AttivitaService,
     AlertService,
     DatePicker,
-    //Firebase,
     FirebaseX,
     GeolocatedService,
     CommonService,
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     FcmProvider
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: GiscoHttpInterceptor,
+    //   multi: true
+    // }
   ],
   exports: [
     ComponentsModule

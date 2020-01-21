@@ -58,7 +58,7 @@ export class ElencoDispositiviPage {
                 loading.dismiss();
             })
 
-            this.dispositiviService.getListaTipologieDispositivo(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
+            this.dispositiviService.getListaTipologieDispositivo(this.storeService.getLocalServerUrl(), '0', tokenValue).subscribe(r => {
                 if (r.ErrorMessage.msg_code === 0) {
                     console.log(r.ErrorMessage.msg_code);
                     this.listaTipologie = r.l_lista_tipologie;

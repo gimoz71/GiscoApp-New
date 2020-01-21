@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.marte5.giscoapp" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="it.mesys.gisco" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Gisco</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
@@ -41,8 +41,8 @@
         <variable name="ANDROID_SUPPORT_VERSION" value="27.+" />
     </plugin>
     <plugin name="cordova-plugin-statusbar" spec="^2.4.3" />
-    <preference name="GOOGLE_MAPS_ANDROID_API_KEY" value="AIzaSyDrd2GNepJWvtn9m3YlSFIv53Nz_X-9dQ4" />
-    <preference name="GOOGLE_MAPS_IOS_API_KEY" value="AIzaSyCALyK47FqTVkxLmQ35L_tVuWfV10Sq72E" />
+    <preference name="GOOGLE_MAPS_ANDROID_API_KEY" value="AIzaSyC0ZS8b6gni8cmzaP6wANluaN7XWCvNtBc" />
+    <preference name="GOOGLE_MAPS_IOS_API_KEY" value="AIzaSyC0ZS8b6gni8cmzaP6wANluaN7XWCvNtBc" />
     <platform name="android">
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />

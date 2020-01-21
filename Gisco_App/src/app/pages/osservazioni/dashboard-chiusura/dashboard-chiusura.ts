@@ -26,10 +26,10 @@ export class DashboardChiusuraPage {
   private ws_Oss_Ch: Osservazione.ws_Osservazione_Chiusura;
   private ws_Oss_Com: Osservazione.ws_Commento;
   private listaCommenti: Array<Osservazione.Commento>;
-  private dataInizio: string;
-  private note: string;
-  private dataFine: string;
-  private conclusa: boolean;
+  public dataInizio: string;
+  public note: string;
+  public dataFine: string;
+  public conclusa: boolean;
   private whichPage: string;
   private commentoTesto: string;
   private rispostaTesto: string;
@@ -39,6 +39,8 @@ export class DashboardChiusuraPage {
   private listaPersonalizzate: Array<Osservazione.ProprietaPersonalizzataChiusura>;
   private valoreSKey: number;
   private listaImmagini: Array<Osservazione.Immagine>;
+
+  public customPickerOptions: any;
 
   constructor(public navCtrl: NavController,
     public osservazioniService: OsservazioniService,
@@ -58,6 +60,17 @@ export class DashboardChiusuraPage {
     this.osservazione = this.navParams.get("osservazione")
     this.callbackChiusa = this.navParams.get("callbackChiusa")
     this.listaPersonalizzate = new Array<Osservazione.ProprietaPersonalizzataChiusura>();
+
+    this.customPickerOptions = {
+      buttons: [{
+        text: 'Ok'
+      }, {
+        text: 'Chiudi',
+        handler: () => {
+          return false;
+        }
+      }]
+    }
   }
 
   ionViewDidLoad() {
@@ -133,7 +146,7 @@ export class DashboardChiusuraPage {
         console.log(moment(this.dataInizio, "DD-MM-YYYY HH:mm"));
         console.log("this.ws_Oss.osservazione " + JSON.stringify(this.ws_Oss_Ch));
 
-        if (moment(this.dataInizio).isBefore(moment(this.dataFine))) {
+        if (moment(this.dataInizio).isSameOrBefore(moment(this.dataFine))) {
           this.ws_Oss_Ch.osservazione.att_conclusa = "S";
           this.ws_Oss_Ch.att_descrizione = this.note;
           this.ws_Oss_Ch.c_proprieta_personalizzate = this.listaPersonalizzate;

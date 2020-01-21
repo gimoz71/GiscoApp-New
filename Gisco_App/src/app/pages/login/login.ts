@@ -8,9 +8,9 @@ import { ErrorService } from './../../services/shared/error.service';
 import { Login } from '../../models/login/login.namespace';
 import { Common } from '../../models/common/common.namespace';
 
-import { HomePage} from '../../pages/home/home';
+import { HomePage } from '../../pages/home/home';
 
-import { FirebaseX } from '@ionic-native/firebase-x/ngx';
+// import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 
 import { AlertService } from '../../services/shared/alert.service';
 import { ElencoMessaggiPage } from '../messaggi/elenco-messaggi/elenco-messaggi';
@@ -32,26 +32,26 @@ export class LoginPage {
   private userData: Login.ws_Token;
 
   private username: string = "";
-  private password: string = ""; 
+  private password: string = "";
 
   private firebase_token: string = "";
-  private serverUrl: string = ""; 
-  
-  constructor(@Inject(forwardRef(() => LoginService))  private loginService: LoginService,
+  private serverUrl: string = "";
+
+  constructor(@Inject(forwardRef(() => LoginService)) private loginService: LoginService,
     private alertCtrl: AlertController,
     private navController: NavController,
     @Inject(forwardRef(() => StoreService)) private store: StoreService,
     private error: ErrorService,
-    public firebaseNative: FirebaseX,
+    // public firebaseNative: FirebaseX,
     public alertService: AlertService,
-    public commonService: CommonService){
+    public commonService: CommonService) {
     this.userData = new Login.ws_Token();
   }
 
   public checkLogin(): void {
     var self = this;
-    this.store.getServerUrl().then(function(url: string) {
-      if(url && url != ""){
+    this.store.getServerUrl().then(function (url: string) {
+      if (url && url != "") {
         self.serverUrl = url;
         self.login();
       } else {
@@ -63,30 +63,49 @@ export class LoginPage {
   public login(): void {
 
     var self = this;
-    this.firebaseNative.getToken().then(function(fbToken){
-      self.firebase_token = fbToken;
+    // this.firebaseNative.getToken().then(function(fbToken){
+    //   self.firebase_token = fbToken;
 
-      self.loginService.login(self.serverUrl, self.username, self.password).subscribe(r => {
-        if (r.ErrorMessage.msg_code === 0) {
-          self.userData = r;
-          self.store.setUserData(self.userData);
-  
-          self.commonService.getNotifiche(r.token_value, self.store.getLocalServerUrl()).subscribe(r => {
-            var notifiche = r.l_notifiche;
-            self.loginService.wakeupNotifiche(notifiche);
-          });
+    //   self.loginService.login(self.serverUrl, self.username, self.password, self.firebase_token).subscribe(r => {
+    //     if (r.ErrorMessage.msg_code === 0) {
+    //       self.userData = r;
+    //       self.store.setUserData(self.userData);
 
-          self.navController.setRoot(HomePage, {val: 'pippo'});
-        } else {
-          self.alertService.presentErrorAlert("Si è verificato un errore durante il login");
-        }
-      },
+    //       self.commonService.getNotifiche(r.token_value, self.store.getLocalServerUrl()).subscribe(r => {
+    //         var notifiche = r.l_notifiche;
+    //         self.loginService.wakeupNotifiche(notifiche);
+    //       });
+
+    //       self.navController.setRoot(HomePage, {val: 'pippo'});
+    //     } else {
+    //       self.alertService.presentErrorAlert("Si è verificato un errore durante il login");
+    //     }
+    //   },
+    //   error => {
+    //     self.alertService.presentErrorAlert("Si è verificato un errore durante il login: " + error);
+    //   });
+    // });
+
+    self.loginService.login(self.serverUrl, self.username, self.password, '1').subscribe(r => { // quando è attivo il firebase, qui si deve passare il token di firebase
+      if (r.ErrorMessage.msg_code === 0) {
+        self.userData = r;
+        self.store.setUserData(self.userData);
+
+        self.commonService.getNotifiche(r.token_value, self.store.getLocalServerUrl()).subscribe(r => {
+          var notifiche = r.l_notifiche;
+          self.loginService.wakeupNotifiche(notifiche);
+        });
+
+        self.navController.setRoot(HomePage, { val: 'pippo' });
+      } else {
+        self.alertService.presentErrorAlert("Si è verificato un errore durante il login");
+      }
+    },
       error => {
         self.alertService.presentErrorAlert("Si è verificato un errore durante il login: " + error);
       });
-    });
   }
-  
+
   presentAlert() {
     // se serve, qui si puo' mettere una chiamata per tenere traccia di chi ha tentato e fallito il login
     let alert = this.alertCtrl.create({

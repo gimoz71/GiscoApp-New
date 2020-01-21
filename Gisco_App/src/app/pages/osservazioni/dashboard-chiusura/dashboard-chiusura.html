@@ -36,25 +36,28 @@
                             <ion-label>Titolo {{osservazione.att_titolo }}</ion-label>
                         </ion-item>
                         <ion-item>
-                            <ion-label>Sito {{osservazione.az_codice_interno }} {{osservazione.az_ragione_sociale }}</ion-label>
+                            <ion-label>Sito {{osservazione.az_codice_interno }} {{osservazione.az_ragione_sociale }}
+                            </ion-label>
                         </ion-item>
                         <ion-item>
                             <ion-label>Tipologia {{osservazione.tab_tipo_scadenza_desc }}</ion-label>
                         </ion-item>
                         <ion-item>
-                            <ion-label>Descrizione </ion-label>
+                            <ion-label>Descrizione {{osservazione.att_descrizione}}</ion-label>
                         </ion-item>
                         <ion-item>
                             <ion-label>Data rilevazione {{osservazione.data_segnalazione}} </ion-label>
                         </ion-item>
                         <ion-item>
                             <ion-label>Data inizio effettiva</ion-label>
-                            <ion-datetime displayFormat="DD-MM-YYYY HH:mm" [(ngModel)]="dataInizio" disabled="{{conclusa}}">
+                            <ion-datetime doneText="OK" cancelText="CHIUDI" displayFormat="DD-MM-YYYY HH:mm"
+                                [(ngModel)]="dataInizio" disabled="{{conclusa}}">
                             </ion-datetime>
                         </ion-item>
                         <ion-item>
                             <ion-label>Data fine effettiva </ion-label>
-                            <ion-datetime displayFormat="DD-MM-YYYY HH:mm" [(ngModel)]="dataFine" disabled="{{conclusa}}">
+                            <ion-datetime doneText="OK" cancelText="CHIUDI" displayFormat="DD-MM-YYYY HH:mm"
+                                [(ngModel)]="dataFine" disabled="{{conclusa}}">
                             </ion-datetime>
                         </ion-item>
 
@@ -62,32 +65,45 @@
                             <ion-label>Note sulla chiusura </ion-label>
                             <ion-textarea disabled="{{conclusa}}" [(ngModel)]="note"></ion-textarea>
                         </ion-item>
-                        <button *ngIf="!conclusa" ion-button block outline (click)="chiudiOsservazione()">Concludi</button>
+                        <button *ngIf="!conclusa" ion-button block outline
+                            (click)="chiudiOsservazione()">Concludi</button>
                     </ul>
 
                     <ion-item-group *ngFor="let pers of listaPersonalizzate">
                         <ion-item *ngIf="pers.tam_tipologia==='T'">
                             <ion-label>{{pers.tam_proprieta}}</ion-label>
-                            <ion-input disabled="{{conclusa}}" value="{{pers.attivita_modulo_valori.tac_valore_t}}" (ionChange)="valoreTChanged($event, pers.tipo_attivita_modulo_proprieta_key)"></ion-input>
+                            <ion-input disabled="{{conclusa}}" value="{{pers.attivita_modulo_valori.tac_valore_t}}"
+                                (ionChange)="valoreTChanged($event, pers.tipo_attivita_modulo_proprieta_key)">
+                            </ion-input>
                         </ion-item>
                         <ion-item *ngIf="pers.tam_tipologia==='D'">
                             <ion-label>{{pers.tam_proprieta}} </ion-label>
-                            <ion-datetime disabled="{{conclusa}}" [(ngModel)]="pers.attivita_modulo_valori.tac_valore_d" (ionChange)="valoreDChanged($event, pers.tipo_attivita_modulo_proprieta_key)"></ion-datetime>
+                            <ion-datetime disabled="{{conclusa}}" [(ngModel)]="pers.attivita_modulo_valori.tac_valore_d"
+                                (ionChange)="valoreDChanged($event, pers.tipo_attivita_modulo_proprieta_key)">
+                            </ion-datetime>
                         </ion-item>
                         <ion-item *ngIf="pers.tam_tipologia==='N'">
                             <ion-label>{{pers.tam_proprieta}}</ion-label>
-                            <ion-input type="number" disabled="{{conclusa}}" value="{{pers.attivita_modulo_valori.tac_valore_n}}" (ionChange)="valoreNChanged($event, pers.tipo_attivita_modulo_proprieta_key)"></ion-input>
+                            <ion-input type="number" disabled="{{conclusa}}"
+                                value="{{pers.attivita_modulo_valori.tac_valore_n}}"
+                                (ionChange)="valoreNChanged($event, pers.tipo_attivita_modulo_proprieta_key)">
+                            </ion-input>
                         </ion-item>
 
                         <ion-item *ngIf="pers.tam_tipologia==='O'">
                             <ion-label>{{pers.tam_proprieta}}</ion-label>
-                            <ion-toggle disabled="{{conclusa}}" [checked]="pers.c_valori[0].tam_selected ==='S'" (ionChange)="valoreOChanged($event, pers.tipo_attivita_modulo_proprieta_key)"></ion-toggle>
+                            <ion-toggle disabled="{{conclusa}}" [checked]="pers.c_valori[0].tam_selected ==='S'"
+                                (ionChange)="valoreOChanged($event, pers.tipo_attivita_modulo_proprieta_key)">
+                            </ion-toggle>
                         </ion-item>
 
                         <ion-item *ngIf="pers.tam_tipologia==='S'">
                             <ion-label>{{pers.tam_proprieta}}</ion-label>
-                            <ion-select [(ngModel)]="valoreSKey" disabled="{{conclusa}}" (ionChange)="valoreSChanged($event, pers.c_valori, pers.tipo_attivita_modulo_proprieta_key)">
-                                <ion-option *ngFor="let valoreS of pers.c_valori" [value]="valoreS.tipo_attivita_modulo_proprieta_valori_key" [selected]="valoreS.tam_selected ==='S'">
+                            <ion-select [(ngModel)]="valoreSKey" disabled="{{conclusa}}"
+                                (ionChange)="valoreSChanged($event, pers.c_valori, pers.tipo_attivita_modulo_proprieta_key)">
+                                <ion-option *ngFor="let valoreS of pers.c_valori"
+                                    [value]="valoreS.tipo_attivita_modulo_proprieta_valori_key"
+                                    [selected]="valoreS.tam_selected ==='S'">
                                     {{valoreS.tam_testo}}</ion-option>
                             </ion-select>
                         </ion-item>
@@ -97,7 +113,9 @@
                             <ion-list>
                                 <ion-item *ngFor="let valoreM of pers.c_valori">
                                     <ion-label>{{valoreM.tam_testo}}</ion-label>
-                                    <ion-checkbox slot="end" disabled="{{conclusa}}" [checked]="valoreM.tam_selected ==='S'" (ionChange)="valoreMChanged(valoreM.tipo_attivita_modulo_proprieta_valori_key, pers.tipo_attivita_modulo_proprieta_key)">
+                                    <ion-checkbox slot="end" disabled="{{conclusa}}"
+                                        [checked]="valoreM.tam_selected ==='S'"
+                                        (ionChange)="valoreMChanged(valoreM.tipo_attivita_modulo_proprieta_valori_key, pers.tipo_attivita_modulo_proprieta_key)">
                                     </ion-checkbox>
                                 </ion-item>
                             </ion-list>
@@ -115,7 +133,8 @@
                     <ion-label>{{com.com_data}}</ion-label>
                 </ion-item>
                 <ion-label>{{com.com_descrizione}}</ion-label>
-                <button ion-button *ngIf="myUserKey===com.com_dipendente_key" (click)="eliminaCommento(com, undefined)">elimina</button>
+                <button ion-button *ngIf="myUserKey===com.com_dipendente_key"
+                    (click)="eliminaCommento(com, undefined)">elimina</button>
                 <button ion-button *ngIf="selectedIndexCommento != i" (click)="rispondiCommento(i)">rispondi</button>
 
                 <ion-list *ngFor="let c of com.c_commenti" style="padding-left:90px">
@@ -124,8 +143,10 @@
                         <ion-label>{{c.com_data}}</ion-label>
                     </ion-item>
                     <ion-label>{{c.com_descrizione}}</ion-label>
-                    <button ion-button *ngIf="myUserKey===com.com_dipendente_key" (click)="eliminaCommento(c, com.c_commenti)">elimina</button>
-                    <button ion-button *ngIf="selectedIndexCommento != i" (click)="rispondiCommento(i)">rispondi</button>
+                    <button ion-button *ngIf="myUserKey===com.com_dipendente_key"
+                        (click)="eliminaCommento(c, com.c_commenti)">elimina</button>
+                    <button ion-button *ngIf="selectedIndexCommento != i"
+                        (click)="rispondiCommento(i)">rispondi</button>
                 </ion-list>
 
                 <div *ngIf="selectedIndexCommento == i">

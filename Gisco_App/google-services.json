@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:991014087326:android:7f6942539089f2c2",
         "android_client_info": {
-          "package_name": "com.marte5.giscoapp"
+          "package_name": "it.mesys.gisco"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "991014087326-mscf8mo35g9dviokm54n285edmafncj1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.marte5.giscoapp",
+            "package_name": "it.mesys.gisco",
             "certificate_hash": "093f6d1371ffb421cef2551d418cda5211c194ab"
           }
         },
@@ -43,7 +43,7 @@
               "client_id": "991014087326-bqiotlpe1v3rrqrjhmgtueqb4iv87hrc.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.marte5.giscoapp"
+                "bundle_id": "it.mesys.gisco"
               }
             }
           ]

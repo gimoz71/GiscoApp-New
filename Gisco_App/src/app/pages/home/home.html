@@ -7,21 +7,21 @@
 	</ion-navbar>
 </ion-header>
 <ion-content>
-	<ion-card>
+	<ion-card *ngIf="listaAttivita.length > 0">
 		<ion-card-header>
 			<ion-card-title padding>
 				Elenco Attività
 			</ion-card-title>
 		</ion-card-header>
 		<ion-card-content no-padding>
-            <ion-list no-padding>
-                <ion-item *ngFor="let attivita of listaAttivita" (click)="goToDetails(attivita)" text-wrap no-padding>
-                    <button no-lines ion-item no-margin clear>
-                        <h3>{{attivita.att_protocollo}} + {{attivita.att_titolo}}</h3>
-                        <p>{{attivita.tab_tipo_scadenza_desc}}</p>
-                    </button>
-                </ion-item>
-            </ion-list>
+			<ion-list no-padding>
+				<ion-item *ngFor="let attivita of listaAttivita" (click)="goToDetails(attivita)" text-wrap no-padding>
+					<button no-lines ion-item no-margin clear>
+						<h3>{{attivita.att_protocollo}} + {{attivita.att_titolo}}</h3>
+						<p>{{attivita.tab_tipo_scadenza_desc}}</p>
+					</button>
+				</ion-item>
+			</ion-list>
 			<!--<ion-list>
 				<ion-item *ngFor="let attivita of listaAttivita" >
 					<ion-label>Sito {{attivita.az_codice_interno}} {{attivita.az_ragione_sociale}}</ion-label>
@@ -40,9 +40,9 @@
 		</ion-card-header>
 		<ion-card-content class="yellow-header" *ngIf="prescrizioniChartVisible">
 			<canvas #doughnutCanvas></canvas>
-        </ion-card-content>
-    </ion-card>
-    <ion-card>
+		</ion-card-content>
+	</ion-card>
+	<ion-card>
 		<ion-card-header *ngIf="attivitaChartVisible">
 			<ion-card-title padding>
 				Situazione Attivita
@@ -54,13 +54,13 @@
 	</ion-card>
 </ion-content>
 <ion-footer>
-    <ion-toolbar>
-        <ion-grid>
-            <ion-row text-center>
-                <ion-col (click)="goToNuovaOsservazione()">
-                    <ion-icon name="add-circle" style="font-size: 2em;"></ion-icon><br>Nuova osservazione
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-    </ion-toolbar>
+	<ion-toolbar>
+		<ion-grid>
+			<ion-row text-center>
+				<ion-col (click)="goToNuovaOsservazione()">
+					<ion-icon name="add-circle" style="font-size: 2em;"></ion-icon><br>Nuova osservazione
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</ion-toolbar>
 </ion-footer>

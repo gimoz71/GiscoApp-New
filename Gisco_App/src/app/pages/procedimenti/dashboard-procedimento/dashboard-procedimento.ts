@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, LoadingController, Content } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, Content, DateTime } from 'ionic-angular';
 
 import { StoreService } from '../../../services/store/store.service';
 import { Login } from '../../../models/login/login.namespace';
@@ -26,13 +26,19 @@ export class DashboardProcedimentoPage {
     selectedFase: any;
     @ViewChild(Content) content: Content;
 
+    public visualizzaDataAvvio: boolean;
+    public visualizzaDataDa: boolean;
+    public visualizzaDataA: boolean;
+
     constructor(public navCtrl: NavController,
         public navParams: NavParams,
         public procedimentiService: ProcedimentiService,
         private storeService: StoreService,
         public loadingCtrl: LoadingController) {
         this.selectedProcedimento = navParams.get('procedimento');
-
+        this.visualizzaDataAvvio = true;
+        this.visualizzaDataDa = true;
+        this.visualizzaDataA = true;
     }
 
     ionViewDidLoad() {
@@ -50,6 +56,7 @@ export class DashboardProcedimentoPage {
                 console.log('ionViewDidLoad DashboardProcedimentoPage getProcedimento');
                 if (r.ErrorMessage.msg_code === 0) {
                     this.selectedProcedimento = r.procedimento;
+                    this.gestioneVisualizzazioneDate(r.procedimento);
                     this.fasi = r.fasi;
                     this.personalizzazioni = r.personalizzazioni;
                 }
@@ -59,6 +66,22 @@ export class DashboardProcedimentoPage {
         });
 
     }
+
+    private gestioneVisualizzazioneDate(procedimento: any): void {
+        var dataAvvio = new Date(procedimento.pro_data_avvio);
+        if (dataAvvio.getFullYear() === 1) {
+            this.visualizzaDataAvvio = false;
+        }
+        // var dataDa = new Date(procedimento.pro_da_data_esecuzione);
+        // if (dataDa.getFullYear() === 1) {
+        //     this.visualizzaDataDa = false;
+        // }
+        // var dataA = new Date(procedimento.pro_a_data_esecuzione);
+        // if (dataA.getFullYear() === 1) {
+        //     this.visualizzaDataA = false;
+        // }
+    }
+
     onSegmentChange() {
         this.content.resize();
     }

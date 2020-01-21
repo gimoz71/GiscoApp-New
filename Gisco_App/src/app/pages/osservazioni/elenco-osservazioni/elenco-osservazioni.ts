@@ -6,7 +6,6 @@ import { Filtro } from '../../../models/filtro/filtro.namespace';
 import { Osservazione } from '../../../models/osservazione/osservazione.namespace';
 import { OsservazioniService } from '../../../services/osservazioni/osservazioni.service';
 import { DashboardOsservazionePage } from '../dashboard-osservazione/dashboard-osservazione';
-import { MyApp } from '../../../app.component';
 import { LoginPage } from '../../login/login';
 
 /**

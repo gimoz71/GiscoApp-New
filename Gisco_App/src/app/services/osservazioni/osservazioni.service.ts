@@ -116,7 +116,10 @@ export class OsservazioniService {
     }
 
     public salvaCommentoOsservazione(serverUrl: string, commento: Osservazione.ws_Commento): Observable<Http.HttpResponse> {
-        return this.httpService.post(GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_SALVA_COMMENTO_KEYWORD
+        console.log('URL: ' + GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_SALVA_COMMENTO_KEYWORD
+            + GlobalVariable.URL_SEPARATOR);
+        console.log('Body: ' + JSON.stringify(commento));
+        return this.httpService.post(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.OSSERVAZIONI_SALVA_COMMENTO_KEYWORD
             + GlobalVariable.URL_SEPARATOR, commento);
     }
 

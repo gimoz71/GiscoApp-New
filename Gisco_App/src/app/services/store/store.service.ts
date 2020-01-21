@@ -154,7 +154,7 @@ export class StoreService {
                                     resolve(val);
                                 } else {
                                     //token non corretto faccio il login
-                                    this.login.login(this.serverUrl, val.token_user, val.token_password).subscribe(
+                                    this.login.login(this.serverUrl, val.token_user, val.token_password, val.firebase_token).subscribe(
                                         (rl: Login.ws_Token) => {
                                             console.log(rl);
                                             console.log("log userdata 1");
@@ -191,7 +191,7 @@ export class StoreService {
                         if (r.ErrorMessage.msg_code == 0) {
                             resolve(this.ud);
                         } else {
-                            this.login.login(this.serverUrl, this.ud.token_user, this.ud.token_password).subscribe(
+                            this.login.login(this.serverUrl, this.ud.token_user, this.ud.token_password, this.ud.firebase_token).subscribe(
                                 //token non valido faccio il login
                                 (rl: Login.ws_Token) => {
                                     console.log("log userdata 3");
