@@ -192,13 +192,6 @@
                                 </button>
                             </ion-item-options>
                         </ion-item-sliding>
-                        <!--<ion-label>{{com.com_nominativo}}</ion-label>
-                            <ion-item>
-                            <ion-label>{{com.com_data}}</ion-label>
-                        </ion-item>
-                        <ion-label>{{com.com_descrizione}}</ion-label>
-                        <button ion-button>elimina</button>
-                        <button ion-button *ngIf="selectedIndexCommento != i" (click)="rispondiCommento(i)">rispondi</button>-->
 
                         <ion-item-sliding *ngFor="let c of com.c_commenti">
                             <ion-item text-wrap class="ion-reply">
@@ -224,15 +217,6 @@
                             </ion-item-options>
                         </ion-item-sliding>
 
-                        <!--<ion-list>
-                            <ion-item>
-                                <ion-label>{{c.com_nominativo}}</ion-label>
-                                <ion-label>{{c.com_data}}</ion-label>
-                            </ion-item>
-                            <ion-label>{{c.com_descrizione}}</ion-label>
-                            <button ion-button *ngIf="myUserKey===com.com_dipendente_key" (click)="eliminaCommento(c, com.c_commenti)">elimina</button>
-                            <button ion-button *ngIf="selectedIndexCommento != i" (click)="rispondiCommento(i)">rispondi</button>
-                        </ion-list>-->
 
                         <div *ngIf="selectedIndexCommento == i">
                             <ion-textarea [(ngModel)]="rispostaTesto"></ion-textarea>

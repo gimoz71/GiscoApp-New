@@ -248,54 +248,56 @@
                 <ion-label>Prescrizioni</ion-label>
             </ion-item>
             <div *ngFor="let prescrizione of selectedComunicazione.prescrizioni" (click)="goToDetails($event, prescrizione)">
-                <ion-item text-wrap>
-                    <ion-grid no-padding>
-                        <ion-row>
-                            <ion-col>
-                                <p>Descrizione</p>
-                            </ion-col>
-                            <ion-col col-8 text-right>
-                                <p>{{prescrizione.pre_descrizione}}</p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-item>
-                <ion-item text-wrap>
-                    <ion-grid no-padding>
-                        <ion-row>
-                            <ion-col>
-                                <p>Tipologia</p>
-                            </ion-col>
-                            <ion-col col-8 text-right>
-                                <p>{{prescrizione.tab_tipo_prescrizione_desc}}</p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-item>
-                <ion-item text-wrap>
-                    <ion-grid no-padding>
-                        <ion-row>
-                            <ion-col>
-                                <p>Scadenza</p>
-                            </ion-col>
-                            <ion-col col-8 text-right>
-                                <p>{{prescrizione.pre_data_scadenza}}</p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-item>
-                <ion-item text-wrap>
-                    <ion-grid no-padding>
-                        <ion-row>
-                            <ion-col>
-                                <p>Stato</p>
-                            </ion-col>
-                            <ion-col col-8 text-right>
-                                <p>{{prescrizione.pre_stato}}</p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-item>
+                <ion-list>
+                    <ion-item text-wrap>
+                        <ion-grid no-padding>
+                            <ion-row>
+                                <ion-col>
+                                    <p>Descrizione</p>
+                                </ion-col>
+                                <ion-col col-8 text-right>
+                                    <p>{{prescrizione.pre_descrizione}}</p>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-item>
+                    <ion-item text-wrap>
+                        <ion-grid no-padding>
+                            <ion-row>
+                                <ion-col>
+                                    <p>Tipologia</p>
+                                </ion-col>
+                                <ion-col col-8 text-right>
+                                    <p>{{prescrizione.tab_tipo_prescrizione_desc}}</p>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-item>
+                    <ion-item text-wrap>
+                        <ion-grid no-padding>
+                            <ion-row>
+                                <ion-col>
+                                    <p>Scadenza</p>
+                                </ion-col>
+                                <ion-col col-8 text-right>
+                                    <p>{{prescrizione.pre_data_scadenza}}</p>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-item>
+                    <ion-item text-wrap>
+                        <ion-grid no-padding>
+                            <ion-row>
+                                <ion-col>
+                                    <p>Stato</p>
+                                </ion-col>
+                                <ion-col col-8 text-right>
+                                    <ion-badge>{{prescrizione.pre_stato}}</ion-badge>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-item>
+                </ion-list>
             </div>
         </ion-list>
     </div>

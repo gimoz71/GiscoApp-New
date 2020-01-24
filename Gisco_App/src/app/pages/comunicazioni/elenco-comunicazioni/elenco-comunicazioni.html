@@ -35,7 +35,7 @@
                 </ion-row>
                 <ion-row class="header-col">
                     <ion-col>ingresso</ion-col>
-                    <ion-col>uscita</ion-col>
+                    <ion-col style="text-align: right">uscita</ion-col>
                 </ion-row>
                 <ion-row *ngFor="let comunicazioni of listaComunicazioni">
                     <ion-col *ngFor="let comunicazione of comunicazioni" (click)="goToDetails($event, comunicazione)" style="width: 50%;">
