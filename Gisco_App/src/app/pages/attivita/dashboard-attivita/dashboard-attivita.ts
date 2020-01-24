@@ -1,6 +1,6 @@
 import { NavController, NavParams, LoadingController, ActionSheetController, DateTime, AlertController } from 'ionic-angular';
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { StoreService } from '../../../services/store/store.service';
 import { Login } from '../../../models/login/login.namespace';
 import { Osservazione } from '../../../models/osservazione/osservazione.namespace';
@@ -12,6 +12,9 @@ import moment from 'moment';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Attivita } from '../../../models/attivita/attivita.namespace';
 import { AttivitaService } from '../../../services/attivita/attivita.service';
+import { BaseComponent } from '../../../components/base/base.component';
+import { SessionService } from '../../../services/shared/sessionService';
+import { AlertService } from '../../../services/shared/alert.service';
 
 
 @Component({
@@ -19,22 +22,20 @@ import { AttivitaService } from '../../../services/attivita/attivita.service';
   templateUrl: 'dashboard-attivita.html'
 })
 
-export class DashboardAttivitaPage {
+export class DashboardAttivitaPage extends BaseComponent {
   public selectedAttivita: Attivita.Attivita;
   color: string;
   icon: string;
   private callbackChiusa: any;
   private ws_Att_Ch: Attivita.ws_Attivita_Chiusura;
-  private ws_Att_Com: Osservazione.ws_Commento;
   public listaCommenti: Array<Osservazione.Commento>;
   public dataInizio: string;
   public note: string;
   public dataFine: string;
   public conclusa: boolean;
-  private whichPage: string;
+  public whichPage: string;
   public commentoTesto: string;
   public rispostaTesto: string;
-  private myUserKey: number;
   selectedIndexCommento: any;
   selectedCommento: any;
   public listaPersonalizzate: Array<Osservazione.ProprietaPersonalizzataChiusura>;
@@ -46,12 +47,16 @@ export class DashboardAttivitaPage {
     public attivitaService: AttivitaService,
     public sitiService: SitiService,
     public dispositiviService: DispositiviService,
-    private storeService: StoreService,
-    private navParams: NavParams,
-    private loadingCtrl: LoadingController,
+    public navParams: NavParams,
+    public loadingCtrl: LoadingController,
     private actionSheetCtrl: ActionSheetController,
-    private alertCtrl: AlertController,
-    private camera: Camera) {
+    public alertCtrl: AlertController,
+    private camera: Camera,
+    public alertService: AlertService,
+    public storeService: StoreService,
+    public sessionService: SessionService) {
+
+    super(sessionService, storeService, navCtrl, loadingCtrl, alertService);
 
     this.ws_Att_Ch = new Attivita.ws_Attivita_Chiusura();
     this.whichPage = 'Attivita';
@@ -62,53 +67,53 @@ export class DashboardAttivitaPage {
     this.listaPersonalizzate = new Array<Osservazione.ProprietaPersonalizzataChiusura>();
   }
 
-  ionViewDidLoad() {
-    let loading = this.loadingCtrl.create({
-      content: 'Caricamento...'
+  private initializePage(): void {
+    this.wsTokenObservable.subscribe(t => {
+      // token ricevuto?
+      if (t) {
+        this.conclusa = this.selectedAttivita.att_conclusa === 'S';
+        this.showLoader()
+        this.attivitaService.getCommentiAttivita(this.storeService.getLocalServerUrl(), this.tokenValue, this.selectedAttivita.attivita_key).subscribe(r => {
+          if (r.ErrorMessage.msg_code === 0) {
+            this.listaCommenti = r.l_lista_commenti;
+            //  if (this.conclusa) {
+            this.attivitaService.getAttivitaChiusura(this.storeService.getLocalServerUrl(), this.selectedAttivita.attivita_key, this.tokenValue).subscribe(r => {
+              if (r.ErrorMessage.msg_code === 0) {
+                this.selectedAttivita = r.attivita;
+                this.dataInizio = r.att_data_inizio_effettiva;
+                this.dataFine = r.att_data_fine_effettiva;
+                this.note = r.att_descrizione;
+
+                this.listaPersonalizzate = r.c_proprieta_personalizzate;
+                this.attivitaService.getListaImmaginiAttivita(this.storeService.getLocalServerUrl(), this.selectedAttivita.attivita_key, this.tokenValue).subscribe(r => {
+                  if (r.ErrorMessage.msg_code === 0) {
+                    this.listaImmagini = r.l_lista_immagini_attivita;
+                  }
+                  this.hideLoader();
+                })
+              } else {
+                this.hideLoader();
+                this.presentAlert("", "errore recupero attivita Chiusura");
+              }
+            });
+            /* } else {
+               loading.dismiss();
+             }*/
+          } else {
+            this.hideLoader();
+            this.presentAlert("", "errore recupero Commenti attivita");
+          }
+
+        });
+      } else {
+        console.log('problemi nell estrazione del token');
+      }
     });
-    loading.present();
-    console.log("this.ws_Oss.attivita " + this.selectedAttivita.att_conclusa);
-    this.conclusa = this.selectedAttivita.att_conclusa === 'S';
-    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
-      var tokenValue = val.token_value;
-      this.myUserKey = val.token_dipendente_key;
-      console.log("setViewAttivita");
-      this.attivitaService.getCommentiAttivita(this.storeService.getLocalServerUrl(), tokenValue, this.selectedAttivita.attivita_key).subscribe(r => {
-        if (r.ErrorMessage.msg_code === 0) {
-          this.listaCommenti = r.l_lista_commenti;
-          //  if (this.conclusa) {
-          this.attivitaService.getAttivitaChiusura(this.storeService.getLocalServerUrl(), this.selectedAttivita.attivita_key, tokenValue).subscribe(r => {
-            if (r.ErrorMessage.msg_code === 0) {
-              this.selectedAttivita = r.attivita;
-              this.dataInizio = r.att_data_inizio_effettiva;
-              this.dataFine = r.att_data_fine_effettiva;
-              this.note = r.att_descrizione;
+  }
 
-              this.listaPersonalizzate = r.c_proprieta_personalizzate;
-              this.attivitaService.getListaImmaginiAttivita(this.storeService.getLocalServerUrl(), this.selectedAttivita.attivita_key, tokenValue).subscribe(r => {
-                if (r.ErrorMessage.msg_code === 0) {
-                  this.listaImmagini = r.l_lista_immagini_attivita;
-                }
-                loading.dismiss();
-              })
-            } else {
-              loading.dismiss();
-              this.presentAlert("", "errore recupero attivita Chiusura");
-            }
-          });
-          /* } else {
-             loading.dismiss();
-           }*/
-        } else {
-          loading.dismiss();
-          this.presentAlert("", "errore recupero Commenti attivita");
-        }
-
-      });
-    });
-
-    console.log("this.conclusa " + this.conclusa);
-
+  ionViewDidEnter() {
+    this.initializePage();
+    this.ngInitializeBase();
   }
 
   back() {
@@ -133,19 +138,13 @@ export class DashboardAttivitaPage {
       if (this.dataFine != undefined) {
         this.ws_Att_Ch.attivita.att_data_fine_effettiva = this.dataFine;
         this.ws_Att_Ch.att_data_fine_effettiva = this.dataFine;
-        console.log("dataInizio " + this.dataInizio);
-        console.log("dataFine " + this.dataFine);
-        console.log(moment(this.dataInizio, "DD-MM-YYYY HH:mm"));
 
         if (moment(this.dataInizio).isBefore(moment(this.dataFine))) {
           this.ws_Att_Ch.attivita.att_conclusa = "S";
           this.ws_Att_Ch.att_descrizione = this.note;
           this.ws_Att_Ch.c_proprieta_personalizzate = this.listaPersonalizzate;
-          let loading = this.loadingCtrl.create({
-            content: 'Caricamento...'
-          });
-          loading.present();
-          console.log("this.ws_Oss.osservazione " + this.selectedAttivita.att_conclusa);
+          this.showLoader();
+
           this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
             this.ws_Att_Ch.token = tokenValue;
@@ -154,22 +153,21 @@ export class DashboardAttivitaPage {
 
               if (r.ErrorMessage.msg_code === 0) {
                 this.conclusa = true;
-                loading.dismiss();
+                this.hideLoader();
               } else {
-                loading.dismiss();
+                this.hideLoader();
                 this.presentAlert("", r.ErrorMessage.msg_testo);
               }
             })
           });
         } else {
-          this.presentAlert("", "deve essere this.dataInizio < this.dataFine");
-
+          this.alertService.presentAlert('deve essere this.dataInizio < this.dataFine');
         }
       } else {
-        this.presentAlert("", "data fine è obbligatoria");
+        this.alertService.presentAlert('data fine è obbligatoria');
       }
     } else {
-      this.presentAlert("", "data inizio è obbligatoria");
+      this.alertService.presentAlert('data inizio è obbligatoria');
     }
   }
 
@@ -186,38 +184,34 @@ export class DashboardAttivitaPage {
     console.log("salvaCommento");
     this.ws_Oss_Com = new Osservazione.ws_Commento();
     if (this.commentoTesto.trim() != "") {
+
       this.ws_Oss_Com.commento = new Osservazione.Commento();
       this.ws_Oss_Com.commento.dipendenti = new Osservazione.Dipendenti();
-      // this.ws_Oss_Com.commento.com_data = new Date().getTime().toString();
       this.ws_Oss_Com.commento.com_data = new Date().toISOString();
       this.ws_Oss_Com.commento.com_descrizione = this.commentoTesto;
       this.ws_Oss_Com.commento.com_foreign_key = this.selectedAttivita.attivita_key;
       this.ws_Oss_Com.commento.c_commenti = new Array<any>();
       this.ws_Oss_Com.commento.com_sito_key = this.selectedAttivita.att_azienda_key;
-      let loading = this.loadingCtrl.create({
-        content: 'Caricamento...'
-      });
-      loading.present();
-      this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
-        var tokenValue = val.token_value;
-        this.ws_Oss_Com.token = tokenValue;
-        this.ws_Oss_Com.commento.dipendenti.dipendenti_key = val.token_dipendente_key;
-        this.ws_Oss_Com.commento.com_dipendente_key = val.token_dipendente_key;
-        console.log("pippo" + JSON.stringify(this.ws_Oss_Com));
-        this.attivitaService.salvaCommentoAttivita(this.storeService.getLocalServerUrl(), this.ws_Oss_Com).subscribe(r => {
-          if (r.ErrorMessage.msg_code === 0) {
-            console.log(r)
-            this.ws_Oss_Com.commento.commenti_key = r.result_key;
-            this.listaCommenti.push(this.ws_Oss_Com.commento);
-            this.commentoTesto = "";
-          } else {
-            this.presentAlert("", r.ErrorMessage.msg_testo);
-          }
-          loading.dismiss();
-        })
-      });
+
+      this.showLoader()
+
+      this.ws_Oss_Com.token = this.tokenValue;
+      this.ws_Oss_Com.commento.dipendenti.dipendenti_key = this.token_dipendente_key;
+      this.ws_Oss_Com.commento.com_dipendente_key = this.token_dipendente_key;
+
+      this.attivitaService.salvaCommentoAttivita(this.storeService.getLocalServerUrl(), this.ws_Oss_Com).subscribe(r => {
+        if (r.ErrorMessage.msg_code === 0) {
+          console.log(r)
+          this.ws_Oss_Com.commento.commenti_key = r.result_key;
+          this.listaCommenti.push(this.ws_Oss_Com.commento);
+          this.commentoTesto = "";
+        } else {
+          this.alertService.presentErrorAlert(r.ErrorMessage.msg_testo);
+        }
+        this.hideLoader();
+      })
     } else {
-      this.presentAlert("", "inserire un commento");
+      this.alertService.presentAlert('inserire un commento');
     }
   }
 
