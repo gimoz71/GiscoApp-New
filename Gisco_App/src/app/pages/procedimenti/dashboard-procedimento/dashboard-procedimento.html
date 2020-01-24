@@ -294,8 +294,8 @@
                                 <p>{{f.tab_fase_procedimento_desc}}</p>
                             </ion-col>
                             <ion-col col-5 text-right>
-                                <ion-badge >{{f.perc_avanzamento}}</ion-badge>
-                                <!--<progress-bar [progress]="f.perc_avanzamento"></progress-bar>-->
+                                <!--<ion-badge >{{f.perc_avanzamento}}</ion-badge>-->
+                                <progress-bar [progress]="f.perc_avanzamento"></progress-bar>
                             </ion-col>
                             <ion-col *ngIf="f.step_avanzamento.length>0" col-1>
                                 <ion-icon padding-left [name]="selectedFase == i ? 'arrow-up' : 'arrow-down'"

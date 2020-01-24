@@ -8,7 +8,6 @@
 </ion-header>
 <ion-content>
   <form (ngSubmit)="saveSettings()" #registerForm="ngForm">
-    
         <ion-list>
             <ion-item color="primary-lighter" class="ion-section-title">
                 <ion-label >Url server</ion-label>
@@ -17,9 +16,17 @@
                 <ion-input placeholder="servername" name="servername" [(ngModel)]="servername"></ion-input>
             </ion-item>
         </ion-list>
-        <ion-list>
-
-            <button ion-button class="btn" full type="submit" [disabled]="!registerForm.form.valid">Salva</button>
-        </ion-list>
   </form>
 </ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-grid>
+            <ion-row text-center>
+                <ion-col (click)="saveSettings()">
+                    <ion-icon name="archive" style="font-size: 2em;"></ion-icon><br>
+                    Salva
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+</ion-footer>
