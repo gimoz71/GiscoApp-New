@@ -25,7 +25,7 @@ export class DashboardChiusuraPage {
   private callbackChiusa: any;
   private ws_Oss_Ch: Osservazione.ws_Osservazione_Chiusura;
   private ws_Oss_Com: Osservazione.ws_Commento;
-  private listaCommenti: Array<Osservazione.Commento>;
+  public listaCommenti: Array<Osservazione.Commento>;
   public dataInizio: string;
   public note: string;
   public dataFine: string;

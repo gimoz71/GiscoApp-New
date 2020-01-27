@@ -293,12 +293,13 @@
                             <ion-col col-6>
                                 <p>{{f.tab_fase_procedimento_desc}}</p>
                             </ion-col>
-                            <ion-col col-5>
+                            <ion-col col-5 text-right>
+                                <!--<ion-badge >{{f.perc_avanzamento}}</ion-badge>-->
                                 <progress-bar [progress]="f.perc_avanzamento"></progress-bar>
                             </ion-col>
                             <ion-col *ngIf="f.step_avanzamento.length>0" col-1>
                                 <ion-icon padding-left [name]="selectedFase == i ? 'arrow-up' : 'arrow-down'"
-                                    float-right (click)="espendiFase($event, f, i)"></ion-icon>
+                                float-right (click)="espendiFase($event, f, i)"></ion-icon>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
@@ -308,13 +309,14 @@
                         <ion-grid no-padding>
                             <ion-row align-items-center>
                                 <ion-col col-6>
-                                    <p>{{s_a.tab_fase_procedimento_step.tab_fase_procedimento_step_desc}} -
+                                    <p style="margin-left: 10px;">{{s_a.tab_fase_procedimento_step.tab_fase_procedimento_step_desc}} -
                                         <small>{{s_a.ps_fine}}</small></p>
-                                </ion-col>
-                                <ion-col col-6>
-                                    <progress-bar class="small"
+                                    </ion-col>
+                                    <ion-col col-6 text-right>
+                                        <ion-badge style="margin-right: 28px;">{{s_a.tab_fase_procedimento_step.tab_fase_procedimento_step_peso}}</ion-badge>
+                                    <!--<progress-bar class="small"
                                         [progress]="s_a.tab_fase_procedimento_step.tab_fase_procedimento_step_peso">
-                                    </progress-bar>
+                                    </progress-bar>-->
                                     <!--<ion-badge>{{s_a.tab_fase_procedimento_step.tab_fase_procedimento_step_peso}}</ion-badge>-->
                                 </ion-col>
                             </ion-row>
