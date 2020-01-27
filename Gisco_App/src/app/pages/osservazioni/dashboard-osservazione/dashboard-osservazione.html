@@ -136,7 +136,7 @@
 
             <ion-list *ngSwitchCase="'Assegnazioni'">
                 <ion-item color="primary-lighter" class="ion-section-title">
-                    <ion-label>Asegnazioni</ion-label>
+                    <ion-label>Assegnazioni</ion-label>
                 </ion-item>
                 <ion-item-sliding *ngFor="let assegnazione of listaAssegnazioni">
                     <ion-item text-wrap>
@@ -148,10 +148,9 @@
                         <p><small>ruolo aziendale</small> {{assegnazione.tab_ruolo_aziendale_desc}}</p>
                         <p><small>responsabile</small> {{(assegnazione.att_dip_scelta==="R" ? "Sì" : "No")}}</p>
                     </ion-item>
-                    <ion-item-options side="left">
-                        <button ion-button color="danger" (click)="goToEliminaAssegnazione(assegnazione)">
-                            <ion-icon name="trash"></ion-icon>
-                            Cestino
+                    <ion-item-options side="left" *ngIf="!conclusa">
+                        <button ion-button color="white" (click)="presentAlertConfirm(assegnazione)">
+                            <ion-icon color="danger" name="trash"></ion-icon>
                         </button>
                     </ion-item-options>
                 </ion-item-sliding>
@@ -193,7 +192,7 @@
         </ion-grid>
     </ion-toolbar>
     <ion-toolbar *ngSwitchCase="'Assegnazioni'">
-        <ion-grid *ngIf="selectedOsservazione">
+        <ion-grid *ngIf="selectedOsservazione && !conclusa">
             <ion-row text-center>
                 <ion-col (click)="goToNuovaAssegnazione()">
                     <ion-icon name="contact" style="font-size: 2em;"></ion-icon><br>Nuova Assegnazione

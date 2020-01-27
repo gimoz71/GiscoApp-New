@@ -157,11 +157,12 @@
                     </ion-item>
                 </div>
             </ion-list>
-            <ion-item>
+            <ion-item *ngIf="osservazione.att_conclusa !== 'S'">
                 <ion-label>Scrivi il tuo commento</ion-label>
                 <ion-textarea [(ngModel)]="commentoTesto"></ion-textarea>
             </ion-item>
-            <button ion-button block outline (click)="salvaCommento()">commenta</button>
+            <button ion-button block outline (click)="salvaCommento()"
+                *ngIf="osservazione.att_conclusa !== 'S'">commenta</button>
         </ion-list>
 
         <ion-list *ngSwitchCase="'Immagini'">

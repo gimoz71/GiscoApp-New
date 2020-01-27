@@ -58,7 +58,7 @@ export class DashboardOsservazionePage {
     private callbackReload: any;
     private reloadOsservazioni: boolean;
     private dataRilevazione: string;
-    private conclusa: boolean;
+    public conclusa: boolean;
 
     private idSitoSelected: string;
 
@@ -500,6 +500,30 @@ export class DashboardOsservazionePage {
         })
     }
 
+    async presentAlertConfirm(assegnazione) {
+        const alert = await this.alertCtrl.create({
+            title: 'Conferma',
+            message: 'Sicuro che vuoi cancellare questa assegnazione?',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: (blah) => {
+                        console.log('Confirm Cancel: blah');
+                    }
+                }, {
+                    text: 'Si',
+                    handler: () => {
+                        this.goToEliminaAssegnazione(assegnazione);
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
+    }
+
     goToEliminaAssegnazione(assegnazione) {
         this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
@@ -515,8 +539,8 @@ export class DashboardOsservazionePage {
             },
                 (error) => {
                     console.log(error);
-                })
-        })
+                });
+        });
     }
 
     goToNuovaAssegnazione() {

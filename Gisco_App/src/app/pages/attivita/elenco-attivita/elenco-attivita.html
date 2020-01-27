@@ -22,12 +22,13 @@
         </ion-select>
     </ion-item>
 </ion-header>
-<ion-content >
+<ion-content>
     <ion-list>
         <ion-item *ngFor="let attivita of listaAttivita" (click)="goToDetails(attivita)" text-wrap no-padding>
             <button no-lines ion-item no-margin clear>
-                <h2>{{attivita.att_protocollo}} + {{attivita.att_titolo}}</h2>
-                <p>{{attivita.tab_tipo_scadenza_desc}}</p>
+                <h2>{{attivita.att_protocollo + ' - ' + attivita.att_titolo}}</h2>
+                <p>{{attivita.az_codice_interno + ' - ' + attivita.az_ragione_sociale}}</p>
+                <p>{{attivita.tab_tipo_attivita_desc + ' - ' + attivita.tab_tipo_scadenza_desc}}</p>
             </button>
         </ion-item>
     </ion-list>

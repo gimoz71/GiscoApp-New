@@ -19,7 +19,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 })
 
 export class DashboardChiusuraPage {
-  private osservazione: Osservazione.Osservazione;
+  public osservazione: Osservazione.Osservazione;
   color: string;
   icon: string;
   private callbackChiusa: any;
