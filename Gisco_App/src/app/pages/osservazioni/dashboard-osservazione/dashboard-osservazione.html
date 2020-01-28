@@ -83,8 +83,8 @@
                 </ion-item>
                 <ion-item>
                     <ion-label stacked>Data rilevazione</ion-label>
-                    <ion-datetime displayFormat="DD/MM/YYYY HH:mm" [(ngModel)]="dataRilevazione"
-                        disabled="{{conclusa}}">
+                    <ion-datetime displayFormat="DD/MM/YYYY HH:mm" [(ngModel)]="dataRilevazione" disabled="{{conclusa}}"
+                        doneText="OK" cancelText="CANCELLA">
                     </ion-datetime>
                 </ion-item>
 
@@ -97,6 +97,7 @@
                     <ion-item *ngIf="pers.ta_tipologia==='D'">
                         <ion-label stacked>{{pers.ta_proprieta}} </ion-label>
                         <ion-datetime disabled="{{conclusa}}" [(ngModel)]="pers.attivita_valori.ta_valore_d"
+                            displayFormat="DD/MM/YYYY HH:mm" doneText="OK" cancelText="CANCELLA"
                             (ionChange)="valoreDChanged($event, pers.tipo_attivita_proprieta_key)"></ion-datetime>
                     </ion-item>
                     <ion-item *ngIf="pers.ta_tipologia==='N'">
@@ -165,7 +166,7 @@
                     <ion-item>
                         <img src="{{imm.img_url+imm.img_file}}">
                         <button *ngIf="!conclusa" ion-button clear item-end
-                            (click)="goToEliminaImmagine(imm)">Elimina</button>
+                            (click)="presentAlertEliminaImmagine(imm)">Elimina</button>
                     </ion-item>
                 </ion-item>
             </ion-list>

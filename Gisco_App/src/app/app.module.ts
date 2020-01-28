@@ -125,6 +125,7 @@ import { GeolocatedService } from './services/shared/geolocated.service';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { GiscoHttpInterceptor } from './interceptor/http.interceptor';
+import { DatePipe } from '@angular/common';
 
 const firebase = {
   // your firebase web config
@@ -250,7 +251,8 @@ const firebase = {
     GeolocatedService,
     CommonService,
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
-    FcmProvider
+    FcmProvider,
+    DatePipe
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: GiscoHttpInterceptor,

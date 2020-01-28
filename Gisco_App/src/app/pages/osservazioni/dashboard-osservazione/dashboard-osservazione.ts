@@ -462,7 +462,14 @@ export class DashboardOsservazionePage {
                 this.osservazioniService.salvaImmagineOsservazione(this.storeService.getLocalServerUrl(), ws_imm).subscribe((r) => {
                     console.log(r);
                     if (r.ErrorMessage.msg_code == 0) {
-                        this.presentAlert("", "immagine è stata salvata correttamente")
+                        this.presentAlert("", "immagine è stata salvata correttamente");
+                        // ricaricare immagini - osservazione
+                        this.osservazioniService.getListaImmaginiOsservazione(this.storeService.getLocalServerUrl(), this.selectedOsservazione.attivita_key, val.token_value).subscribe(r => {
+                            if (r.ErrorMessage.msg_code === 0) {
+                                this.listaImmagini = r.l_lista_immagini;
+                            }
+                            loading.dismiss();
+                        })
                     } else {
                         this.presentAlert("", "errore salvataggio immagine " + r.ErrorMessage.msg_testo);
                     }
@@ -475,6 +482,30 @@ export class DashboardOsservazionePage {
             console.log("err");
         });
 
+    }
+
+    async presentAlertEliminaImmagine(imm: Osservazione.Immagine) {
+        const alert = await this.alertCtrl.create({
+            title: 'Conferma',
+            message: 'Sicuro che vuoi cancellare questa immagine?',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: (blah) => {
+                        console.log('Confirm Cancel: blah');
+                    }
+                }, {
+                    text: 'Si',
+                    handler: () => {
+                        this.goToEliminaImmagine(imm);
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
 
     goToEliminaImmagine(imm: Osservazione.Immagine) {
