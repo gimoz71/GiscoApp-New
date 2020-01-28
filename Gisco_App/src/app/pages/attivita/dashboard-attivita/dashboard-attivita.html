@@ -61,6 +61,19 @@
                     <ion-grid no-padding>
                         <ion-row>
                             <ion-col>
+                                <p>Categoria</p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{selectedAttivita.tab_tipo_attivita_desc }}
+                                </p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
                                 <p>Tipologia</p>
                             </ion-col>
                             <ion-col col-8 text-right>
@@ -251,7 +264,7 @@
                         <img src="{{imm.img_url+imm.img_file}}" style="height: 200px">
                     </ion-item>
                     <ion-item-options side="left">
-                        <button ion-button color="danger" (click)="goToEliminaImmagine(imm)">
+                        <button ion-button color="danger" (click)="presentAlertEliminaImmagine(imm)">
                             <ion-icon name="trash"></ion-icon>
                             Elimina
                         </button>
@@ -278,7 +291,7 @@
     <ion-toolbar *ngSwitchCase="'Commenti'">
         <ion-textarea [(ngModel)]="commentoTesto" placeholder="Scrivi un commento..."
             *ngIf="this.selectedAttivita.att_conclusa !== 'S'"></ion-textarea>
-        <ion-buttons end (click)="salvaCommento()" *ngIf="this.selectedAttivita.att_conclusa !== 'S'">
+        <ion-buttons end *ngIf="this.selectedAttivita.att_conclusa !== 'S'">
             <button ion-button icon-end color="royal" (click)="salvaCommento()">
                 <ion-icon name="send" style="font-size: 2em; padding-right: 15px;"></ion-icon>
             </button>

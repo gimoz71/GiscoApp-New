@@ -11,6 +11,7 @@ import { SitiService } from '../../../services/siti/siti.service';
 import { DispositiviService } from '../../../services/dispositivi/dispositivi.service';
 import moment from 'moment';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -30,8 +31,8 @@ export class DashboardChiusuraPage {
   public note: string;
   public dataFine: string;
   public conclusa: boolean;
-  private whichPage: string;
-  private commentoTesto: string;
+  public whichPage: string;
+  public commentoTesto: string;
   private rispostaTesto: string;
   private myUserKey: number;
   selectedIndexCommento: any;
@@ -51,7 +52,8 @@ export class DashboardChiusuraPage {
     private loadingCtrl: LoadingController,
     private actionSheetCtrl: ActionSheetController,
     private alertCtrl: AlertController,
-    private camera: Camera) {
+    private camera: Camera,
+    private datePipe: DatePipe) {
 
     this.ws_Oss_Ch = new Osservazione.ws_Osservazione_Chiusura();
     this.whichPage = 'Osservazione';
@@ -60,6 +62,9 @@ export class DashboardChiusuraPage {
     this.osservazione = this.navParams.get("osservazione")
     this.callbackChiusa = this.navParams.get("callbackChiusa")
     this.listaPersonalizzate = new Array<Osservazione.ProprietaPersonalizzataChiusura>();
+
+    this.dataInizio = this.datePipe.transform(Date.now(), 'yyyy-MM-ddThh:mm:ss');
+    this.dataFine = this.datePipe.transform(Date.now(), 'yyyy-MM-ddThh:mm:ss');
 
     this.customPickerOptions = {
       buttons: [{
@@ -91,8 +96,12 @@ export class DashboardChiusuraPage {
           this.osservazioniService.getOsservazioneChiusura(this.storeService.getLocalServerUrl(), this.osservazione.attivita_key, tokenValue).subscribe(r => {
             if (r.ErrorMessage.msg_code === 0) {
               this.osservazione = r.osservazione;
-              this.dataInizio = r.att_data_inizio_effettiva;
-              this.dataFine = r.att_data_fine_effettiva;
+              if (this.conclusa) {
+                this.dataInizio = r.att_data_inizio_effettiva;
+                this.dataFine = r.att_data_fine_effettiva;
+              }
+              // this.dataInizio = r.att_data_inizio_effettiva;
+              // this.dataFine = r.att_data_fine_effettiva;
               this.note = r.att_descrizione;
               this.listaPersonalizzate = r.c_proprieta_personalizzate;
               this.osservazioniService.getListaImmaginiOsservazione(this.storeService.getLocalServerUrl(), this.osservazione.attivita_key, tokenValue).subscribe(r => {
@@ -164,6 +173,7 @@ export class DashboardChiusuraPage {
               if (r.ErrorMessage.msg_code === 0) {
                 this.conclusa = true;
                 loading.dismiss();
+                this.presentAlert("", "osservazione chiusa correttamente");
               } else {
                 loading.dismiss();
                 this.presentAlert("", r.ErrorMessage.msg_testo);
@@ -171,7 +181,7 @@ export class DashboardChiusuraPage {
             })
           });
         } else {
-          this.presentAlert("", "deve essere this.dataInizio < this.dataFine");
+          this.presentAlert("", "deve essere this.dataInizio <= this.dataFine");
 
         }
       } else {

@@ -4,6 +4,9 @@
     &:first-of-type {
         border-right: solid 1px #efefef;
     }
+    &:last-of-type {
+        border-left: solid 1px #efefef;
+    }
 }
 .header-col ion-col  {
     background-color: #efefef;

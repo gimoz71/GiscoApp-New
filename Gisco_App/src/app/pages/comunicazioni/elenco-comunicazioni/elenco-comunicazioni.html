@@ -14,22 +14,24 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content >
+<ion-content>
     <ion-card class="rounded-generic-card">
         <ion-card-header class="generic-card-header blue-header">
             <ion-card-title padding text-wrap>
-            {{selectedProcedimento.az_ragione_sociale}}<br>
-            <hr>
-            <small>{{selectedProcedimento.pro_titolo}}</small>
+                {{selectedProcedimento.az_ragione_sociale}}<br>
+                <hr>
+                <small>{{selectedProcedimento.pro_titolo}}</small>
             </ion-card-title>
         </ion-card-header>
         <ion-card-content no-padding>
             <ion-list class="comunicazioni">
                 <ion-row>
                     <ion-col>
-                        <p style="margin-bottom: 5px">Numero di comunicazioni <ion-badge>{{selectedProcedimento.stato_prescrizioni.comunicazioni}}</ion-badge></p>
-                        
-                        <p>Numero di procedimenti <ion-badge>{{procedimentiTot}}</ion-badge></p>
+                        <p style="margin-bottom: 5px">Numero di comunicazioni <ion-badge>
+                                {{selectedProcedimento.stato_prescrizioni.comunicazioni}}</ion-badge>
+                        </p>
+
+                        <!-- <ion-badge>Numero di procedimenti <ion-badge>{{procedimentiTot}}</ion-badge></p> -->
 
                     </ion-col>
                 </ion-row>
@@ -38,11 +40,28 @@
                     <ion-col style="text-align: right">uscita</ion-col>
                 </ion-row>
                 <ion-row *ngFor="let comunicazioni of listaComunicazioni">
-                    <ion-col *ngFor="let comunicazione of comunicazioni" (click)="goToDetails($event, comunicazione)" style="width: 50%;">
-                        <p *ngIf="comunicazione.comunicazioni_key != 0">{{comunicazione.com_titolo}}</p>
+                    <ion-col (click)="goToDetails($event, comunicazioni[0])" style="width: 45%;">
+                        <p *ngIf="comunicazioni[0].comunicazioni_key != 0"
+                            [ngStyle]="{'text-align': (comunicazioni[0].com_in_out === 'I' ? 'left' : 'right')}">
+                            {{comunicazioni[0].com_titolo}}</p>
                         <!-- <ion-label *ngIf="comunicazione.comunicazioni_key != 0">{{comunicazione.tab_fase_procedimento_desc}}</ion-label>
                         <ion-label *ngIf="comunicazione.comunicazioni_key != 0 && comunicazione.com_in_out==='O'">{{comunicazione.com_mittente }}</ion-label>
                         <ion-label *ngIf="comunicazione.comunicazioni_key != 0 && comunicazione.com_in_out!='O'">{{comunicazione.com_destinatario}}</ion-label> -->
+                    </ion-col>
+                    <ion-col style="width: 10%;">
+                        <p>{{(comunicazioni[0].comunicazioni_key === 0 ? comunicazioni[1].com_data : comunicazioni[0].com_data) | date: 'dd-MM-yyyy'}}
+                        </p>
+                        <!-- <ion-label *ngIf="comunicazione.comunicazioni_key != 0">{{comunicazione.tab_fase_procedimento_desc}}</ion-label>
+                                            <ion-label *ngIf="comunicazione.comunicazioni_key != 0 && comunicazione.com_in_out==='O'">{{comunicazione.com_mittente }}</ion-label>
+                                            <ion-label *ngIf="comunicazione.comunicazioni_key != 0 && comunicazione.com_in_out!='O'">{{comunicazione.com_destinatario}}</ion-label> -->
+                    </ion-col>
+                    <ion-col (click)="goToDetails($event, comunicazioni[1])" style="width: 45%;">
+                        <p *ngIf="comunicazioni[1].comunicazioni_key != 0"
+                            [ngStyle]="{'text-align': (comunicazioni[1].com_in_out === 'I' ? 'left' : 'right')}">
+                            {{comunicazioni[1].com_titolo}}</p>
+                        <!-- <ion-label *ngIf="comunicazione.comunicazioni_key != 0">{{comunicazione.tab_fase_procedimento_desc}}</ion-label>
+                                            <ion-label *ngIf="comunicazione.comunicazioni_key != 0 && comunicazione.com_in_out==='O'">{{comunicazione.com_mittente }}</ion-label>
+                                            <ion-label *ngIf="comunicazione.comunicazioni_key != 0 && comunicazione.com_in_out!='O'">{{comunicazione.com_destinatario}}</ion-label> -->
                     </ion-col>
                 </ion-row>
             </ion-list>

@@ -64,14 +64,14 @@
 
             <ion-item>
                 <ion-label stacked>Data inizio effettiva</ion-label>
-                <ion-datetime doneText="OK" cancelText="CHIUDI" displayFormat="DD-MM-YYYY HH:mm"
-                    [(ngModel)]="dataInizio" disabled="{{conclusa}}" item-end>
+                <ion-datetime displayFormat="DD-MM-YYYY HH:mm" [(ngModel)]="dataInizio" disabled="{{conclusa}}"
+                    doneText="OK" cancelText="CANCELLA">
                 </ion-datetime>
             </ion-item>
             <ion-item>
                 <ion-label stacked>Data fine effettiva </ion-label>
-                <ion-datetime doneText="OK" cancelText="CHIUDI" di item-endsplayFormat="DD-MM-YYYY HH:mm"
-                    [(ngModel)]="dataFine" disabled="{{conclusa}}">
+                <ion-datetime displayFormat="DD-MM-YYYY HH:mm" [(ngModel)]="dataFine" disabled="{{conclusa}}"
+                    doneText="OK" cancelText="CANCELLA">
                 </ion-datetime>
             </ion-item>
 
@@ -264,8 +264,9 @@
         </ion-grid>
     </ion-toolbar>
     <ion-toolbar *ngSwitchCase="'Commenti'">
-        <ion-textarea [(ngModel)]="commentoTesto" placeholder="Scrivi un commento..."></ion-textarea>
-        <ion-buttons end (click)="salvaCommento()">
+        <ion-textarea [(ngModel)]="commentoTesto" placeholder="Scrivi un commento..."
+            *ngIf="this.osservazione.att_conclusa !== 'S'"></ion-textarea>
+        <ion-buttons end *ngIf="this.osservazione.att_conclusa !== 'S'">
             <button ion-button icon-end color="royal" (click)="salvaCommento()">
                 <ion-icon name="send" style="font-size: 2em; padding-right: 15px;"></ion-icon>
             </button>

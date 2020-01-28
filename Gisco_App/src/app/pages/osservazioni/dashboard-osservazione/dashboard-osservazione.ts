@@ -654,24 +654,12 @@ export class DashboardOsservazionePage {
     }
 
     valoreOChanged($event, key: number) {
-        var p = this.listaPersonalizzate.find(item => item.tipo_attivita_proprieta_key == key)
-        console.log("key " + key);
-        console.log('event : ' + $event.value);
-        if ($event == true) {
-            p.c_valori[0].ta_selected = "S"
-            p.c_valori[1].ta_selected = "N"
-        } else {
-            p.c_valori[1].ta_selected = "S"
-            p.c_valori[0].ta_selected = "N"
+        for (const entry of this.listaPersonalizzate) {
+            if (entry.tipo_attivita_proprieta_key === key) {
+                entry.c_valori[0].ta_selected = ($event.value ? 'S' : 'N');
+                entry.c_valori[1].ta_selected = ($event.value ? 'N' : 'S');
+            }
         }
-        /* for (var i = 0; i < p.c_valori.length; i++) {
-           if (p.c_valori[i].ta_selected == undefined || p.c_valori[i].ta_selected != "S") {
-             p.c_valori[i].ta_selected = "S"
-           } else {
-             p.c_valori[i].ta_selected = "N"
-           }
-         }*/
-        //   p.attivita_valori.ta_valore_n = event.value;
     }
 
     presentAlert(title: string, mess: string) {
@@ -681,5 +669,10 @@ export class DashboardOsservazionePage {
             buttons: ['Ok']
         });
         alert.present();
+    }
+
+    hideDate(dateString: string) {
+        const date = new Date(dateString);
+        return date.getFullYear() === 1;
     }
 }

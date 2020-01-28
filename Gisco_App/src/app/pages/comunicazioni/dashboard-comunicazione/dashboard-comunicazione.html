@@ -59,8 +59,8 @@
             </ion-item>
             <ion-item>
                 <ion-label stacked>Data Comunicazione</ion-label>
-                <ion-note item-end>
-                    <p>{{selectedComunicazione.com_data}}</p>
+                <ion-note item-end *ngIf="!hideDate(selectedComunicazione.com_data)">
+                    <p>{{selectedComunicazione.com_data | date:'dd/MM/yyyy'}}</p>
                 </ion-note>
             </ion-item>
             <ion-item>
@@ -119,8 +119,8 @@
             </ion-item>
             <ion-item>
                 <ion-label stacked>Protocollo data</ion-label>
-                <ion-note item-end>
-                    <p>{{selectedComunicazione.com_protocollo_data}}</p>
+                <ion-note item-end *ngIf="!hideDate(selectedComunicazione.com_protocollo_data)">
+                    <p>{{selectedComunicazione.com_protocollo_data | date:'dd/MM/yyyy'}}</p>
                 </ion-note>
             </ion-item>
             <ion-item>
@@ -152,7 +152,8 @@
                 <ion-label>Prescrizioni</ion-label>
             </ion-item>
             <ion-list>
-                <div *ngFor="let prescrizione of selectedComunicazione.prescrizioni" (click)="goToDetails($event, prescrizione)">
+                <div *ngFor="let prescrizione of selectedComunicazione.prescrizioni"
+                    (click)="goToDetails($event, prescrizione)">
                     <ion-list-header color="light">
                         <ion-label stacked>Descrizione</ion-label>
                         <ion-note item-end>
@@ -179,7 +180,7 @@
                         </ion-note>
                     </ion-item>
                 </div>
-                </ion-list>
+            </ion-list>
         </ion-list>
     </div>
 

@@ -126,6 +126,7 @@ import { GeolocatedService } from './services/shared/geolocated.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { GiscoHttpInterceptor } from './interceptor/http.interceptor';
 import { DatePipe } from '@angular/common';
+import { PipesModule } from './pipes/pipes.module';
 
 const firebase = {
   // your firebase web config
@@ -185,7 +186,8 @@ const firebase = {
       apiKey: 'AIzaSyC0ZS8b6gni8cmzaP6wANluaN7XWCvNtBc'
     }),
     AngularFireModule.initializeApp(firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    PipesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -260,7 +262,8 @@ const firebase = {
     // }
   ],
   exports: [
-    ComponentsModule
+    ComponentsModule,
+    PipesModule
   ]
 })
 export class AppModule { }

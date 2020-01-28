@@ -30,7 +30,7 @@ export class DashboardAttivitaPage {
   public note: string;
   public dataFine: string;
   public conclusa: boolean;
-  private whichPage: string;
+  public whichPage: string;
   public commentoTesto: string;
   public rispostaTesto: string;
   private myUserKey: number;
@@ -160,6 +160,7 @@ export class DashboardAttivitaPage {
               if (r.ErrorMessage.msg_code === 0) {
                 this.conclusa = true;
                 loading.dismiss();
+                this.presentAlert("", "attività chiusa correttamente");
               } else {
                 loading.dismiss();
                 this.presentAlert("", r.ErrorMessage.msg_testo);
@@ -467,7 +468,14 @@ export class DashboardAttivitaPage {
         this.attivitaService.salvaImmagineAttivita(this.storeService.getLocalServerUrl(), ws_imm).subscribe((r) => {
           console.log(r);
           if (r.ErrorMessage.msg_code == 0) {
-            this.presentAlert("", "immagine è stata salvata correttamente")
+            this.presentAlert("", "immagine è stata salvata correttamente");
+            this.attivitaService.getListaImmaginiAttivita(this.storeService.getLocalServerUrl(), this.selectedAttivita.attivita_key, val.token_value).subscribe(imm => {
+              if (imm.ErrorMessage.msg_code == 0) {
+                this.listaImmagini = imm.l_lista_immagini;
+              } else {
+                this.presentAlert("ERROR", "si è verificato un problema nel reload delle immagini");
+              }
+            });
           } else {
             this.presentAlert("", "errore salvataggio immagine " + r.ErrorMessage.msg_testo);
           }
@@ -480,6 +488,30 @@ export class DashboardAttivitaPage {
       console.log("err");
     });
 
+  }
+
+  async presentAlertEliminaImmagine(imm: Attivita.Immagine) {
+    const alert = await this.alertCtrl.create({
+      title: 'Conferma',
+      message: 'Sicuro che vuoi cancellare questa immagine?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Si',
+          handler: () => {
+            this.goToEliminaImmagine(imm);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   goToEliminaImmagine(imm: Attivita.Immagine) {

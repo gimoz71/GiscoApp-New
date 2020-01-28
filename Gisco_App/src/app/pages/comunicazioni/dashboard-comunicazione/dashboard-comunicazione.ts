@@ -74,4 +74,9 @@ export class DashboardComunicazionePage {
   back() {
     this.navCtrl.pop();
   }
+
+  hideDate(dateString: string) {
+    const date = new Date(dateString);
+    return date.getFullYear() === 1;
+  }
 }
