@@ -1,11 +1,66 @@
-.comunicazioni ion-col{
-    border-bottom: solid 1px #efefef; 
-    padding: 10px;
-    &:first-of-type {
-        border-right: solid 1px #efefef;
+.comunicazioni {
+    ion-col {
+        padding: 10px;
+        
+        &:first-of-type {
+            border-right: solid 1px #efefef;
+        }
+        &:last-of-type {
+            border-left: solid 1px #efefef;
+        }
     }
-    &:last-of-type {
-        border-left: solid 1px #efefef;
+    .com-list  {
+        position: relative; margin-top: 40px;
+        .data {
+            background: #efefef;
+            position: absolute;
+            left: 0;
+            top: -19px;
+            width: 100px;
+            left: 50%;
+            margin-left: -50px;
+            text-align: center;
+            font-size: 11px;
+            padding: 2px 5px;
+            border-radius: 10px 10px 0 0;
+            border-right: solid 1px #ccc;
+                border-left: solid 1px #ccc; 
+            border-top: solid 1px #ccc;
+        }
+        ion-col {
+            position: relative;
+            p {
+                font-size: 12px;
+                line-height: 13px;
+                padding-bottom: 15px;
+            }
+            ion-icon {
+                position: absolute;
+                bottom: 5px;
+            }
+            &.ingresso {
+                border-right: solid 1px #ccc;
+                border-bottom: solid 1px #ccc; 
+            border-top: solid 1px #ccc;
+                ion-icon {
+                    left: 10px;
+                }
+            }
+            &.uscita {
+                border-left: solid 1px #ccc;
+                border-bottom: solid 1px #ccc; 
+        border-top: solid 1px #ccc;
+                ion-icon {
+                    right: 10px;
+                }
+            }
+            /*&.data {
+                font-style: italic;
+                color: #666;
+            }*/
+        }
+        
+
     }
 }
 .header-col ion-col  {
