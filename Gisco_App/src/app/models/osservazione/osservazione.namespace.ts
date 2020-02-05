@@ -26,6 +26,7 @@ export namespace Osservazione {
         public num_non_conformita_nonris: number;
         public num_non_conformita_ris: number;
         public att_protocollo: string;
+        public att_stato_attivita: string;
     }
 
     export class Assegnazione {
@@ -113,7 +114,7 @@ export namespace Osservazione {
         public ta_testo: any;
         public ta_valore: any;
     }
- 
+
     export class Valore {
         public attivita_proprieta: AttivitaProprieta;
         public ta_selected: string;
@@ -175,7 +176,7 @@ export namespace Osservazione {
         public tab_unita_misura_desc: any;
     }
 
-    
+
     export class ValoreChiusura {
         public attivita_modulo_proprieta: AttivitaModuloProprietaChiusura;
         public tam_selected: string;

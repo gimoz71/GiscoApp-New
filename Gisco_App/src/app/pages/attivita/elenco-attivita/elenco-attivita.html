@@ -21,12 +21,21 @@
                 {{tipologia.tab_tipo_scadenza_desc}}</ion-option>
         </ion-select>
     </ion-item>
+    <ion-item class="ion-filters">
+        <ion-label>Stato</ion-label>
+        <ion-select [(ngModel)]="statoSelezionato" (ionChange)="setStatoFiltro()">
+            <ion-option [value]="'N'" selected>APERTE</ion-option>
+            <ion-option [value]="'S'">CHIUSE</ion-option>
+            <ion-option [value]="'A'">TUTTE</ion-option>
+        </ion-select>
+    </ion-item>
 </ion-header>
 <ion-content>
     <ion-list>
         <ion-item *ngFor="let attivita of listaAttivita" (click)="goToDetails(attivita)" text-wrap no-padding>
             <button no-lines ion-item no-margin clear>
-                <h2>{{attivita.att_protocollo + ' - ' + attivita.att_titolo}}</h2>
+                <h2><img [src]="getDotPath(attivita)"
+                        class="list-dot">{{attivita.att_protocollo + ' - ' + attivita.att_titolo}}</h2>
                 <p>{{attivita.az_codice_interno + ' - ' + attivita.az_ragione_sociale}}</p>
                 <p>{{attivita.tab_tipo_attivita_desc + ' - ' + attivita.tab_tipo_scadenza_desc}}</p>
             </button>
