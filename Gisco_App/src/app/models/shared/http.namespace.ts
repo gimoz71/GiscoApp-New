@@ -16,6 +16,11 @@ export namespace Http {
         public Success: boolean;        // Esito della chiamata
         public ErrorMessage: Error.ErrorMessage;       // oggetto errore 
         public Message: string;
+
+        public mp_latitude: string;
+        public mp_longitude: string;
+        public mp_zoom: string;
+
         public result: string;
         public result_key: number; // la chiave di un'osservazione salvata
 

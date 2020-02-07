@@ -9,14 +9,19 @@
     </ion-navbar>
     <ion-buttons end>
         <div class="icon-section">
-            <i [ngClass]="icon" [ngStyle]="{'color' : color }"></i>
+            <i [ngClass]="{'icon': true}" [ngStyle]="{'color' : color }"></i>
         </div>
     </ion-buttons>
-    <ion-searchbar placeholder="campo libero Sito" (ionInput)="setSitoFiltro($event)"></ion-searchbar>
+    <ion-searchbar placeholder="campo libero" (ionInput)="setSitoFiltro($event)"></ion-searchbar>
     <ion-searchbar placeholder="campo libero Documento" (ionInput)="setDocumentoFiltro($event)"></ion-searchbar>
 </ion-header>
-<ion-content >
+<ion-content>
     <ion-list>
+        <ion-item>
+            <ion-label>
+                {{selectedCartella.tab_cartelle_documenti_desc + ' -> ' + selectedCartella.tab_tipo_documento_desc}}
+            </ion-label>
+        </ion-item>
         <ion-item *ngFor="let documento of listaDocumenti" (click)="goToDocumento($event, documento)" text-wrap>
             <ion-thumbnail item-start>
                 <img src="/assets/imgs/ios-doc-icon.png">
@@ -46,7 +51,8 @@
         </ion-row>
     </ion-grid>-->
 
-    <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Caricamento Documenti...">
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles"
+        loadingText="Caricamento Documenti...">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>
 

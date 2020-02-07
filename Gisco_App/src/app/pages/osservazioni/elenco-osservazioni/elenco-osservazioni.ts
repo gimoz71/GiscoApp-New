@@ -6,7 +6,6 @@ import { Filtro } from '../../../models/filtro/filtro.namespace';
 import { Osservazione } from '../../../models/osservazione/osservazione.namespace';
 import { OsservazioniService } from '../../../services/osservazioni/osservazioni.service';
 import { DashboardOsservazionePage } from '../dashboard-osservazione/dashboard-osservazione';
-import { MyApp } from '../../../app.component';
 import { LoginPage } from '../../login/login';
 
 /**
@@ -30,6 +29,7 @@ export class ElencoOsservazioniPage {
   public tipologiaSelezionata: Filtro.TipologiaOsservazione;
   public listaTipologie: Array<Filtro.TipologiaOsservazione>;
 
+  public statoSelezionato: string;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -40,6 +40,7 @@ export class ElencoOsservazioniPage {
     this.listaOsservazioni = new Array<Osservazione.Osservazione>();
     this.campoLiberoSito = "A";
     this.campoLiberoProtocollo = "A";
+    this.statoSelezionato = 'N';
   }
 
   ionViewDidLoad() {
@@ -77,7 +78,7 @@ export class ElencoOsservazioniPage {
     this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.osservazioniService.getListaOsservazioni(this.storeService.getLocalServerUrl(), tokenValue, this.tipologiaSelezionata.tab_tipo_scadenza_cod, this.campoLiberoSito, this.campoLiberoProtocollo,
-        this.numOsservazioni, this.numOsservazioni + 19).subscribe(r => {
+        this.numOsservazioni, this.numOsservazioni + 19, this.statoSelezionato).subscribe(r => {
           console.log('getOsservazioni');
           if (r.ErrorMessage.msg_code === 0) {
             console.log(r.ErrorMessage.msg_code);
@@ -95,6 +96,25 @@ export class ElencoOsservazioniPage {
           loading.dismiss();
         });
     });
+  }
+
+  public getDotPath(osservazione: Osservazione.Osservazione): string {
+    switch (osservazione.att_stato_attivita) {
+      case 'KO':
+        return '/assets/imgs/dot_rosso.png';
+      case 'OK':
+        return '/assets/imgs/dot_verde.png';
+      default:
+        return '/assets/imgs/dot_verde.png';
+    }
+  }
+
+  public setStatoFiltro(event) {
+    if (event != undefined) {
+      this.statoSelezionato = event;
+    }
+    this.numOsservazioni = 1;
+    this.getOsservazioni();
   }
 
   public setSitoFiltro(event) {

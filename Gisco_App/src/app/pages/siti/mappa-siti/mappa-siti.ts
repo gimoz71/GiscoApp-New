@@ -65,9 +65,9 @@ export class MappaSitiPage {
                     this.listaSiti = r.l_lista_siti;
 
                     //genero il modello da passare al componente MAPPA
-                    this.mapModel.centerLat = 41.893056;
-                    this.mapModel.centerLon = 12.482778;
-                    this.mapModel.initialZoom = 12;
+                    this.mapModel.centerLat = parseFloat(r.mp_latitude);
+                    this.mapModel.centerLon = parseFloat(r.mp_longitude);
+                    this.mapModel.initialZoom = parseFloat(r.mp_zoom);
 
                     for (let sito of this.listaSiti) {
                         var marker = new Common.MapMarker();

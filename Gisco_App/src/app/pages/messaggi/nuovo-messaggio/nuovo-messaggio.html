@@ -17,12 +17,14 @@
 <ion-content>
     <ion-item>
         <ion-label stacked>Destinatario</ion-label>
-        <ionic-selectable item-content [(ngModel)]="destinatarioSelezionato" [items]="listaDestinatari" itemTextField="nomeCognome" [canSearch]="true" (onSearch)="destinatarioChange($event)">
+        <ionic-selectable item-content [(ngModel)]="destinatarioSelezionato" [items]="listaDestinatari"
+            itemTextField="nomeCognome" [canSearch]="true" (onSearch)="destinatarioChange($event)">
         </ionic-selectable>
     </ion-item>
     <ion-item>
         <ion-label stacked>Per conoscenza</ion-label>
-        <ionic-selectable item-content [(ngModel)]="conoscenzeSelezionate" [items]="listaDestinatari" itemTextField="nomeCognome" [canSearch]="true" [isMultiple]="true" (onSearch)="conoscenzaChange($event)">
+        <ionic-selectable item-content [(ngModel)]="conoscenzeSelezionate" [items]="listaDestinatari"
+            itemTextField="nomeCognome" [canSearch]="true" [isMultiple]="true" (onSearch)="conoscenzaChange($event)">
         </ionic-selectable>
     </ion-item>
 

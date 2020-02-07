@@ -1,4 +1,5 @@
 import { Societa } from '../societa/societa.namespace';
+import { DateTime } from 'ionic-angular';
 
 export namespace Procedimento {
 
@@ -16,15 +17,15 @@ export namespace Procedimento {
         public pr_scadute: number;
         public pr_in_scadenza: number;
         public pr_prossime: number;
-        public pro_data_avvio: string;
+        public pro_data_avvio: Date;
         public az_codice_interno: string;
         public az_ragione_sociale: string;
         public comunicazioni: number;
         public stato_prescrizioni: StatoPrescrizioni;
         public pro_azienda_key: number;
         public procedimento_key: number;
-        public pro_da_data_esecuzione: string;
-        public pro_a_data_esecuzione: string;
+        public pro_da_data_esecuzione: Date;
+        public pro_a_data_esecuzione: Date;
         public pro_descrizione: string;
         public pro_chiuso_autocertificazione: string;
         public pro_note: string;
@@ -33,7 +34,7 @@ export namespace Procedimento {
         public ente_controllo: string;
     }
 
-  export class StatoPrescrizioni {
+    export class StatoPrescrizioni {
         public com_azienda_key: number;
         public com_procedimento_key: number;
         public pro_titolo: string;
@@ -97,7 +98,7 @@ export namespace Procedimento {
     }
 
     export class Personalizzazione {
-        public tp_valori:Array<PersonalizzazioneValore>;
+        public tp_valori: Array<PersonalizzazioneValore>;
         public tp_valore: string;
         public tab_tipo_procedimento_cod: number;
         public tp_scheda_testo: string;

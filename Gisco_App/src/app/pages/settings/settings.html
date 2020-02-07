@@ -7,27 +7,26 @@
 	</ion-navbar>
 </ion-header>
 <ion-content>
-  <form (ngSubmit)="saveSettings()" #registerForm="ngForm" class="container">
-    <div class="card mx-auto mt-5">
-        <ion-row class="card-header">
-            <ion-col>
-              <div class="logo">Gisco</div>
-            </ion-col>
-          </ion-row>
-          <ion-row class="card-body">
-            <ion-col>
-              <ion-list inset>
-                <div class="form-group">
-                  <input type="text" placeholder="servername" name="servername" [(ngModel)]="servername"/>
-                </div>
-              </ion-list>
-            </ion-col>
-          </ion-row>
-        <ion-row>
-          <ion-col>
-            <button ion-button class="btn" full type="submit" [disabled]="!registerForm.form.valid">Salva</button>
-          </ion-col>
-        </ion-row>
-    </div>
+  <form (ngSubmit)="saveSettings()" #registerForm="ngForm">
+        <ion-list>
+            <ion-item color="primary-lighter" class="ion-section-title">
+                <ion-label >Url server</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-input placeholder="servername" name="servername" [(ngModel)]="servername"></ion-input>
+            </ion-item>
+        </ion-list>
   </form>
 </ion-content>
+<ion-footer>
+    <ion-toolbar>
+        <ion-grid>
+            <ion-row text-center>
+                <ion-col (click)="saveSettings()">
+                    <ion-icon name="archive" style="font-size: 2em;"></ion-icon><br>
+                    Salva
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-toolbar>
+</ion-footer>

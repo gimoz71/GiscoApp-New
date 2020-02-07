@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, LoadingController, ActionSheetController, AlertController, Content } from 'ionic-angular';
 
 import { StoreService } from '../../../services/store/store.service';
-import { Dipendente } from '../../../models/dipendente/dipendente.namespace';
 import { Login } from '../../../models/login/login.namespace';
 import { Osservazione } from '../../../models/osservazione/osservazione.namespace';
 import { OsservazioniService } from '../../../services/osservazioni/osservazioni.service';
@@ -16,7 +15,6 @@ import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@io
 import { NuovaAssegnazionePage } from '../nuova-assegnazione/nuova-assegnazione';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { DashboardChiusuraPage } from '../dashboard-chiusura/dashboard-chiusura';
-import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 
 
 @Component({
@@ -25,6 +23,9 @@ import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 })
 
 export class DashboardOsservazionePage {
+
+    private wsToken: Login.ws_Token;
+
     public listaTipologieOss: Array<Filtro.TipologiaOsservazione>;
     public listaTipologieDisp: Array<Filtro.TipologiaDispositivo>;
     public listaDispositivi: Array<Dispositivo.Dispositivo>;
@@ -40,12 +41,12 @@ export class DashboardOsservazionePage {
     public protocollo: string;
     private relativo: boolean;
     private options: GeolocationOptions;
-    private currentPos: Geoposition;
-    private whichPage: string;
+    public whichPage: string;
+    public currentPos: Geoposition;
 
     public isInserimento: boolean;
 
-    private listaAssegnazioni: Array<Osservazione.Assegnazione>;
+    public listaAssegnazioni: Array<Osservazione.Assegnazione>;
     private listaImmagini: Array<Osservazione.Immagine>;
     private listaPersonalizzate: Array<Osservazione.ProprietaPersonalizzata>;
 
@@ -53,12 +54,15 @@ export class DashboardOsservazionePage {
 
     color: string;
     icon: string;
+
     private callbackReload: any;
     private reloadOsservazioni: boolean;
     private dataRilevazione: string;
-    private conclusa: boolean;
-    @ViewChild(Content) content: Content;
+    public conclusa: boolean;
 
+    private idSitoSelected: string;
+
+    @ViewChild(Content) content: Content;
 
     constructor(private navCtrl: NavController,
         private osservazioniService: OsservazioniService,
@@ -71,6 +75,7 @@ export class DashboardOsservazionePage {
         private alertCtrl: AlertController,
         private camera: Camera,
         private geolocation: Geolocation) {
+
         this.selectedOsservazione = this.navParams.get("selectedOsservazione");
         if (this.selectedOsservazione === undefined) {
             this.isInserimento = true;
@@ -83,61 +88,68 @@ export class DashboardOsservazionePage {
         this.whichPage = 'Osservazione';
         this.listaPersonalizzate = new Array<Osservazione.ProprietaPersonalizzata>();
 
+        this.idSitoSelected = '0';
+
     }
 
-    ionViewDidLoad() {
+    ionViewDidEnter() {
         this.getUserPosition();
         this.reloadOsservazioni = false;
         let loading = this.loadingCtrl.create({
-            content: 'Caricamento...'
+            content: 'Caricamento...',
+            duration: 10000
         });
         loading.present();
         this.relativo = false;
         this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
-            var tokenValue = val.token_value;
-            this.osservazioniService.getListaTipologieOsservazione(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
-                this.listaTipologieOss = r.l_lista_tipologie;
-                this.dispositiviService.getListaTipologieDispositivo(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
-                    this.listaTipologieDisp = r.l_lista_tipologie;
-                    this.sitiService.getListaSitiAll(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
-                        this.listaSiti = r.l_lista_siti;
-                        for (let i = 0; i < this.listaSiti.length; i++) {
-                            this.listaSiti[i].azCodiceRagione = this.listaSiti[i].az_codice_interno + " " + this.listaSiti[i].az_ragione_sociale;
-                        }
-                        if (this.selectedOsservazione != undefined) {
-                            this.getOsservazione(tokenValue, this.selectedOsservazione.attivita_key);
-                        } else {
-                            this.conclusa = false;
-                            this.dataRilevazione = new Date().toISOString();
-                        }
-                        loading.dismiss();
-                        this.content.resize();
-
-                    }, (error) => {
-                        loading.dismiss();
-                        this.presentAlert("", "errore recupero Lista Siti");
-                    })
-                }, (error) => {
-                    loading.dismiss();
-                    this.presentAlert("", "errore recupero Lista Tipologie Dispositivo");
-
-                })
-            }, (error) => {
-                loading.dismiss();
-                this.presentAlert("", "errore recupero Lista Tipologie Osservazione");
-            })
+            this.wsToken = val;
+            loading.dismiss();
+            this.inizializePage();
         });
     }
+
+    private inizializePage(): void {
+        let loading = this.loadingCtrl.create({
+            content: 'Caricamento...',
+            duration: 10000
+        });
+        this.osservazioniService.getListaTipologieOsservazione(this.storeService.getLocalServerUrl(), this.wsToken.token_value).subscribe(r => {
+            this.listaTipologieOss = r.l_lista_tipologie;
+            this.sitiService.getListaSitiAll(this.storeService.getLocalServerUrl(), this.wsToken.token_value).subscribe(r3 => {
+                this.listaSiti = r3.l_lista_siti;
+                for (let i = 0; i < this.listaSiti.length; i++) {
+                    this.listaSiti[i].azCodiceRagione = this.listaSiti[i].az_codice_interno + " " + this.listaSiti[i].az_ragione_sociale;
+                }
+                if (this.selectedOsservazione != undefined) {
+                    this.getOsservazione(this.selectedOsservazione.attivita_key);
+                } else {
+                    this.conclusa = false;
+                    this.dataRilevazione = new Date().toISOString();
+                }
+                loading.dismiss();
+                this.content.resize();
+
+            }, (error) => {
+                loading.dismiss();
+                this.presentAlert("", "errore recupero Lista Siti");
+            })
+        }, (error) => {
+            loading.dismiss();
+            this.presentAlert("", "errore recupero Lista Tipologie Osservazione");
+        })
+    }
+
     onSegmentChange() {
         this.content.resize();
     }
-    getOsservazione(tokenValue: string, attivita_key: number) {
+    getOsservazione(attivita_key: number) {
         console.log("setViewOsservazione");
         let loading = this.loadingCtrl.create({
-            content: 'Caricamento...'
+            content: 'Caricamento...',
+            duration: 10000
         });
         loading.present();
-        this.osservazioniService.getOsservazione(this.storeService.getLocalServerUrl(), attivita_key, tokenValue).subscribe(r => {
+        this.osservazioniService.getOsservazione(this.storeService.getLocalServerUrl(), attivita_key, this.wsToken.token_value).subscribe(r => {
             console.log('ionViewDidLoad DashboardOsservazionePage getOsservazione');
             if (r.ErrorMessage.msg_code === 0) {
                 this.selectedOsservazione = r.osservazione;
@@ -145,7 +157,7 @@ export class DashboardOsservazionePage {
                 this.listaPersonalizzate = r.c_proprieta_personalizzate;
                 console.log('getOsservazione ' + this.listaPersonalizzate.length);
                 this.setViewOsservazione();
-                this.osservazioniService.getListaImmaginiOsservazione(this.storeService.getLocalServerUrl(), this.selectedOsservazione.attivita_key, tokenValue).subscribe(r => {
+                this.osservazioniService.getListaImmaginiOsservazione(this.storeService.getLocalServerUrl(), this.selectedOsservazione.attivita_key, this.wsToken.token_value).subscribe(r => {
                     if (r.ErrorMessage.msg_code === 0) {
                         this.listaImmagini = r.l_lista_immagini;
                     }
@@ -161,18 +173,40 @@ export class DashboardOsservazionePage {
 
     setViewOsservazione() {
         this.sitoSelezionato = this.listaSiti.find(sito => sito.azienda_key === this.selectedOsservazione.att_azienda_key)
+        this.idSitoSelected = this.sitoSelezionato.azienda_key + '';
         this.tipologiaOssSelezionata = this.listaTipologieOss.find(tipo => tipo.tab_tipo_scadenza_cod === this.selectedOsservazione.att_tipo_scadenza_cod)
         this.titolo = this.selectedOsservazione.att_titolo;
         this.descrizione = this.selectedOsservazione.att_descrizione;
         this.protocollo = this.selectedOsservazione.att_protocollo;
         this.dataRilevazione = this.selectedOsservazione.data_segnalazione;
-        if (this.selectedOsservazione.att_dispositivo_key > 0) {
-            this.relativo = true;
-            this.tipologiaDispSelezionata = this.listaTipologieDisp.find(tipo => tipo.tab_tipo_dispositivo_desc === this.selectedOsservazione.tab_tipo_dispositivo_desc)
-            this.setTipologiaDispositivo();
-        } else {
-            this.relativo = false;
-        }
+
+        // col sito devo recuperare la lista delle tipologie
+        let loading = this.loadingCtrl.create({
+            content: 'Caricamento...',
+            duration: 10000
+        });
+        this.dispositiviService.getListaTipologieDispositivo(this.storeService.getLocalServerUrl(), this.wsToken.token_value, this.idSitoSelected).subscribe(r2 => {
+            this.listaTipologieDisp = r2.l_lista_tipologie;
+
+            if (this.selectedOsservazione.att_dispositivo_key > 0) {
+                this.relativo = true;
+                if (this.listaTipologieDisp) {
+                    this.tipologiaDispSelezionata = this.listaTipologieDisp.find(tipo => tipo.tab_tipo_dispositivo_desc === this.selectedOsservazione.tab_tipo_dispositivo_desc);
+                }
+
+                if (this.tipologiaDispSelezionata) {
+                    this.setTipologiaDispositivo();
+                }
+
+            } else {
+                this.relativo = false;
+            }
+        }, (error) => {
+            loading.dismiss();
+            this.presentAlert("", "errore recupero Lista Tipologie Dispositivo");
+        })
+
+
 
         this.selectedOsservazione.att_conclusa === "S" ? this.conclusa = true : this.conclusa = false;
         console.log("this.conclusa " + this.conclusa);
@@ -198,6 +232,22 @@ export class DashboardOsservazionePage {
         });
     }
 
+    sitoSelected(event) {
+        let loading = this.loadingCtrl.create({
+            content: 'Caricamento...',
+            duration: 10000
+        });
+
+        this.idSitoSelected = event.item.azienda_key;
+        this.dispositiviService.getListaTipologieDispositivo(this.storeService.getLocalServerUrl(), this.wsToken.token_value, this.idSitoSelected).subscribe(r2 => {
+            this.listaTipologieDisp = r2.l_lista_tipologie;
+
+        }, (error) => {
+            loading.dismiss();
+            this.presentAlert("", "errore recupero Lista Tipologie Dispositivo");
+        })
+    }
+
     sitoChange(event: {
         component: IonicSelectableComponent,
         text: string
@@ -218,41 +268,38 @@ export class DashboardOsservazionePage {
     tipologiaChanged() {
         this.dispositivoSelezionato = undefined;
         let loading = this.loadingCtrl.create({
+            content: 'Caricamento...',
+            duration: 10000
         });
         loading.present();
-        this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
-            var tokenValue = val.token_value;
-            this.osservazioniService.getOsservazionePersonalizzati(this.storeService.getLocalServerUrl(), this.tipologiaOssSelezionata.tab_tipo_scadenza_cod, tokenValue).subscribe(r => {
-                this.listaPersonalizzate = r.c_proprieta_personalizzate;
-                console.log("llistaPersonalizzate.le " + this.listaPersonalizzate.length);
-                loading.dismiss();
-            }, (error) => {
-                loading.dismiss();
-                this.presentAlert("", "errore recupero risorsa");
-            })
+        this.osservazioniService.getOsservazionePersonalizzati(this.storeService.getLocalServerUrl(), this.tipologiaOssSelezionata.tab_tipo_scadenza_cod, this.wsToken.token_value).subscribe(r => {
+            this.listaPersonalizzate = r.c_proprieta_personalizzate;
+            console.log("llistaPersonalizzate.le " + this.listaPersonalizzate.length);
+            loading.dismiss();
+        }, (error) => {
+            loading.dismiss();
+            this.presentAlert("", "errore recupero risorsa");
         });
     }
 
     setTipologiaDispositivo() {
         this.dispositivoSelezionato = undefined;
         let loading = this.loadingCtrl.create({
+            content: 'Caricamento',
+            duration: 10000
         });
         loading.present();
-        this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
-            var tokenValue = val.token_value;
-            if (this.tipologiaDispSelezionata.tab_tipo_dispositivo_cod == 0) {
-                this.tipologiaDispSelezionata.tab_tipo_dispositivo_cod = "A";
-            }
-            this.dispositiviService.getListaDispositivi(this.storeService.getLocalServerUrl(), tokenValue, this.tipologiaDispSelezionata.tab_tipo_dispositivo_cod, "A", "A").subscribe(r => {
-                this.listaDispositivi = r.l_lista_dispositivi;
-                if (this.selectedOsservazione) {
-                    this.dispositivoSelezionato = this.listaDispositivi.find(disp => disp.dispositivi_key === this.selectedOsservazione.att_dispositivo_key)
-                } loading.dismiss();
-            }, (error) => {
-                loading.dismiss();
-                this.presentAlert("", "errore recupero risorsa");
-            })
-
+        if (this.tipologiaDispSelezionata && this.tipologiaDispSelezionata.tab_tipo_dispositivo_cod == 0) {
+            this.tipologiaDispSelezionata.tab_tipo_dispositivo_cod = "A";
+        }
+        this.dispositiviService.getListaDispositiviSito(this.storeService.getLocalServerUrl(), this.wsToken.token_value, this.tipologiaDispSelezionata.tab_tipo_dispositivo_cod, this.idSitoSelected).subscribe(r => {
+            this.listaDispositivi = r.l_lista_dispositivi;
+            if (this.selectedOsservazione) {
+                this.dispositivoSelezionato = this.listaDispositivi.find(disp => disp.dispositivi_key === this.selectedOsservazione.att_dispositivo_key)
+            } loading.dismiss();
+        }, (error) => {
+            loading.dismiss();
+            this.presentAlert("", "errore recupero risorsa");
         });
     }
 
@@ -298,21 +345,18 @@ export class DashboardOsservazionePage {
                         console.log("this.ws_Oss.osservazione " + this.tipologiaOssSelezionata.tab_tipo_scadenza_desc);
                         this.ws_Oss.c_proprieta_personalizzate = this.listaPersonalizzate;
 
-                        this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
-                            var tokenValue = val.token_value;
-                            this.ws_Oss.token = tokenValue;
-                            this.osservazioniService.salvaOsservazione(this.storeService.getLocalServerUrl(), this.ws_Oss).subscribe(r => {
-                                console.log("salvaOsservazione " + JSON.stringify(this.ws_Oss));
-                                if (r.ErrorMessage.msg_code == 0) {
-                                    this.reloadOsservazioni = true;
-                                    this.presentAlert("", "Osservazione è stata salvata correttamente");
-                                    this.getOsservazione(tokenValue, r.result_key);
-                                } else {
-                                    this.presentAlert("", "Errore nell'salvataggio dell'osservazione");
+                        this.ws_Oss.token = this.wsToken.token_value;
+                        this.osservazioniService.salvaOsservazione(this.storeService.getLocalServerUrl(), this.ws_Oss).subscribe(r => {
+                            console.log("salvaOsservazione " + JSON.stringify(this.ws_Oss));
+                            if (r.ErrorMessage.msg_code == 0) {
+                                this.reloadOsservazioni = true;
+                                this.presentAlert("", "Osservazione è stata salvata correttamente");
+                                this.getOsservazione(r.result_key);
+                            } else {
+                                this.presentAlert("", "Errore nell'salvataggio dell'osservazione");
 
-                                }
-                            });
-                        })
+                            }
+                        });
                     } else {
                         this.presentAlert("", "devi selezionare un dispositivo");
                     }
@@ -385,7 +429,8 @@ export class DashboardOsservazionePage {
 
     addImmagine(mode) {
         let loading = this.loadingCtrl.create({
-            content: 'Caricamento...'
+            content: 'Caricamento...',
+            duration: 10000
         });
         loading.present();
         let options: CameraOptions;
@@ -417,7 +462,14 @@ export class DashboardOsservazionePage {
                 this.osservazioniService.salvaImmagineOsservazione(this.storeService.getLocalServerUrl(), ws_imm).subscribe((r) => {
                     console.log(r);
                     if (r.ErrorMessage.msg_code == 0) {
-                        this.presentAlert("", "immagine è stata salvata correttamente")
+                        this.presentAlert("", "immagine è stata salvata correttamente");
+                        // ricaricare immagini - osservazione
+                        this.osservazioniService.getListaImmaginiOsservazione(this.storeService.getLocalServerUrl(), this.selectedOsservazione.attivita_key, val.token_value).subscribe(r => {
+                            if (r.ErrorMessage.msg_code === 0) {
+                                this.listaImmagini = r.l_lista_immagini;
+                            }
+                            loading.dismiss();
+                        })
                     } else {
                         this.presentAlert("", "errore salvataggio immagine " + r.ErrorMessage.msg_testo);
                     }
@@ -432,9 +484,34 @@ export class DashboardOsservazionePage {
 
     }
 
+    async presentAlertEliminaImmagine(imm: Osservazione.Immagine) {
+        const alert = await this.alertCtrl.create({
+            title: 'Conferma',
+            message: 'Sicuro che vuoi cancellare questa immagine?',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: (blah) => {
+                        console.log('Confirm Cancel: blah');
+                    }
+                }, {
+                    text: 'Si',
+                    handler: () => {
+                        this.goToEliminaImmagine(imm);
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
+    }
+
     goToEliminaImmagine(imm: Osservazione.Immagine) {
         let loading = this.loadingCtrl.create({
-            content: 'Caricamento...'
+            content: 'Caricamento...',
+            duration: 10000
         });
         loading.present();
         var ws_imm = new Osservazione.ws_Immagine();
@@ -454,6 +531,30 @@ export class DashboardOsservazionePage {
         })
     }
 
+    async presentAlertConfirm(assegnazione) {
+        const alert = await this.alertCtrl.create({
+            title: 'Conferma',
+            message: 'Sicuro che vuoi cancellare questa assegnazione?',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: (blah) => {
+                        console.log('Confirm Cancel: blah');
+                    }
+                }, {
+                    text: 'Si',
+                    handler: () => {
+                        this.goToEliminaAssegnazione(assegnazione);
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
+    }
+
     goToEliminaAssegnazione(assegnazione) {
         this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
@@ -469,12 +570,25 @@ export class DashboardOsservazionePage {
             },
                 (error) => {
                     console.log(error);
-                })
-        })
+                });
+        });
     }
 
     goToNuovaAssegnazione() {
-        this.navCtrl.push(NuovaAssegnazionePage, { osservazione: this.selectedOsservazione });
+        if (this.idSitoSelected === undefined || this.idSitoSelected === '0') {
+            this.presentAlert("", "Necessario selezionare un sito per associare una assegnazione");
+        } else {
+            this.navCtrl.push(NuovaAssegnazionePage, { osservazione: this.selectedOsservazione, callbackReload: this.reloadOsservazioneCallbackFunction, idSitoSelected: this.idSitoSelected });
+        }
+
+    }
+
+    reloadOsservazioneCallbackFunction = (result_key, oss: Osservazione.Osservazione) => {
+        return new Promise((resolve, reject) => {
+            //  this.test = _params;
+            this.getOsservazione(result_key);
+            resolve();
+        });
     }
 
     goToEliminaOsservazione() {
@@ -540,24 +654,12 @@ export class DashboardOsservazionePage {
     }
 
     valoreOChanged($event, key: number) {
-        var p = this.listaPersonalizzate.find(item => item.tipo_attivita_proprieta_key == key)
-        console.log("key " + key);
-        console.log('event : ' + $event.value);
-        if ($event == true) {
-            p.c_valori[0].ta_selected = "S"
-            p.c_valori[1].ta_selected = "N"
-        } else {
-            p.c_valori[1].ta_selected = "S"
-            p.c_valori[0].ta_selected = "N"
+        for (const entry of this.listaPersonalizzate) {
+            if (entry.tipo_attivita_proprieta_key === key) {
+                entry.c_valori[0].ta_selected = ($event.value ? 'S' : 'N');
+                entry.c_valori[1].ta_selected = ($event.value ? 'N' : 'S');
+            }
         }
-        /* for (var i = 0; i < p.c_valori.length; i++) {
-           if (p.c_valori[i].ta_selected == undefined || p.c_valori[i].ta_selected != "S") {
-             p.c_valori[i].ta_selected = "S"
-           } else {
-             p.c_valori[i].ta_selected = "N"
-           }
-         }*/
-        //   p.attivita_valori.ta_valore_n = event.value;
     }
 
     presentAlert(title: string, mess: string) {
@@ -567,5 +669,10 @@ export class DashboardOsservazionePage {
             buttons: ['Ok']
         });
         alert.present();
+    }
+
+    hideDate(dateString: string) {
+        const date = new Date(dateString);
+        return date.getFullYear() === 1;
     }
 }

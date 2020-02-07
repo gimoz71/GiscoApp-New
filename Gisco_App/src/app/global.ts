@@ -1,17 +1,19 @@
 export const GlobalVariable = Object.freeze({
-    BASE_API_URL: '/services/',
+    BASE_API_URL: '/app/services/',
     //BASE_API_URL: 'http://testapp.piattaformagisco.com/services/',
     URL_SEPARATOR: '/',
     URL_TOKEN_PLACEHOLDER: 'TOKEN',
     URL_CHECK_TOKEN: 'checktoken',
 
     PING_KEYWORD: 'ping',
+    LOGIN_KEYWORD: 'login',
 
     SITI_GET_ELENCO_KEYWORD: 'get_elenco_siti',
     SITI_GET_TIPOLOGIE_KEYWORD: 'get_tipologie_siti',
     SITI_GET_KEYWORD: 'get_sito',
 
     DISPOSITIVI_GET_ELENCO_KEYWORD: 'get_elenco_dispositivi',
+    DISPOSITIVI_GET_ELENCO_SITO_KEYWORD: 'get_combo_dispositivi',
     DISPOSITIVI_GET_KEYWORD: 'get_dispositivo',
     DISPOSITIVI_GET_TIPOLOGIE_KEYWORD: 'get_tipologie_dispositivi',
 
@@ -29,7 +31,8 @@ export const GlobalVariable = Object.freeze({
     MESSAGGI_SET_DELETED_KEYWORD: 'set_deleted_message',//Mette nel cestino
     MESSAGGI_DELET_KEYWORD: 'del_message',//Cancella dal cestino
     MESSAGGI_SALVA_KEYWORD: 'put_message',//Salva un nuovo messagio
-    MESSAGGI_GET_CONTATTI_KEYWORD: 'get_elenco_dipendenti',//get lista contatti
+    MESSAGGI_GET_ELENCO_DIPENDENTI_KEYWORD: 'get_elenco_dipendenti',//get lista contatti
+    MESSAGGI_GET_COMBO_DIPENDENTI_KEYWORD: 'get_combo_dipendenti',//get lista contatti
 
     PROFILO_GET_SCHEDA_KEYWORD: 'get_scheda_dipendente',
     PROFILO_CHANGE_PSW_KEYWORD: 'change_password',
@@ -62,16 +65,16 @@ export const GlobalVariable = Object.freeze({
 
     ATTIVITA_GET_ELENCO_KEYWORD: "get_elenco_attivita",///{token}/{from}/{to}/{categoria}/{tipo}/{sito}"
     ATTIVITA_GET_MIE_ELENCO_KEYWORD: "get_mie_attivita",
-    ATTIVITA_GET_CATEGORIE_KEYWORD:"get_categorie_attivita", //filtro attività nel elenco attività
-    ATTIVITA_GET_TIPOLOGIE_KEYWORD:"get_tipologie_attivita", //filtro tipologie nel elenco attività
-    ATTIVITA_GET_IMMAGINI_KEYWORD:"get_attivita_immagini",
+    ATTIVITA_GET_CATEGORIE_KEYWORD: "get_categorie_attivita", //filtro attività nel elenco attività
+    ATTIVITA_GET_TIPOLOGIE_KEYWORD: "get_tipologie_attivita", //filtro tipologie nel elenco attività
+    ATTIVITA_GET_IMMAGINI_KEYWORD: "get_attivita_immagini",
     ATTIVITA_SALVA_IMMAGINE_KEYWORD: "put_attivita_image",
-    ATTIVITA_DELET_IMMAGINE_KEYWORD:"del_attivita_image",
-    ATTIVITA_GET_KEYWORD:"get_attivita", ///{token}/{key} key = chiave //forse non mi serve perche tutti i dati dovrebbero essere nella get attivita chiusura
-    ATTIVITA_GET_CHIUSURA_KEYWORD:"get_attivita_chiusura", // key = chiave
-    ATTIVITA_SALVA_CHIUSURA_KEYWORD:"put_attivita_chiusura",
-    
-    
+    ATTIVITA_DELET_IMMAGINE_KEYWORD: "del_attivita_image",
+    ATTIVITA_GET_KEYWORD: "get_attivita", ///{token}/{key} key = chiave //forse non mi serve perche tutti i dati dovrebbero essere nella get attivita chiusura
+    ATTIVITA_GET_CHIUSURA_KEYWORD: "get_attivita_chiusura", // key = chiave
+    ATTIVITA_SALVA_CHIUSURA_KEYWORD: "put_attivita_chiusura",
+
+
 
     ATTIVITA_GET_COMMENTI_KEYWORD: 'get_commenti_attivita',
     ATTIVITA_SALVA_COMMENTO_KEYWORD: 'put_commento_attivita',

@@ -32,6 +32,8 @@ export class ElencoAttivitaPage {
   public categoriaSelezionata: Filtro.CategoriaAttivita;
   public listaCategorie: Array<Filtro.CategoriaAttivita>;
 
+  public statoSelezionato: string;
+
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public attivitaService: AttivitaService,
@@ -42,6 +44,7 @@ export class ElencoAttivitaPage {
     this.listaAttivita = new Array<Attivita.Attivita>();
     this.campoLiberoSito = "A";
     this.campoLiberoProtocollo = "A";
+    this.statoSelezionato = 'N';
   }
 
   ionViewDidLoad() {
@@ -81,7 +84,7 @@ export class ElencoAttivitaPage {
     this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       //(token: string, categoria: any, tipo_cod: any, sito_cod: string, from: number, to: number)
-      this.attivitaService.getListaAttivita(this.storeService.getLocalServerUrl(), tokenValue, this.categoriaSelezionata.tab_tipo_attivita_cod, this.tipologiaSelezionata.tab_tipo_scadenza_cod, this.campoLiberoSito, this.campoLiberoProtocollo, this.numAttivita, this.numAttivita + 19).subscribe(r => {
+      this.attivitaService.getListaAttivita(this.storeService.getLocalServerUrl(), tokenValue, this.categoriaSelezionata.tab_tipo_attivita_cod, this.tipologiaSelezionata.tab_tipo_scadenza_cod, this.campoLiberoSito, this.campoLiberoProtocollo, this.numAttivita, this.numAttivita + 19, this.statoSelezionato).subscribe(r => {
         console.log('getAttivita');
         if (r.ErrorMessage.msg_code === 0) {
           console.log(r.ErrorMessage.msg_code);
@@ -99,6 +102,29 @@ export class ElencoAttivitaPage {
         loading.dismiss();
       });
     });
+  }
+
+  public getDotPath(osservazione: Attivita.Attivita): string {
+    switch (osservazione.att_stato_attivita) {
+      case 'FU':
+        return '/assets/imgs/dot_blu.png';
+      case 'SC':
+        return '/assets/imgs/dot_giallo.png';
+      case 'KO':
+        return '/assets/imgs/dot_rosso.png';
+      case 'OK':
+        return '/assets/imgs/dot_verde.png';
+      default:
+        return '/assets/imgs/dot_giallo.png';
+    }
+  }
+
+  public setStatoFiltro(event) {
+    if (event != undefined) {
+      this.statoSelezionato = event;
+    }
+    this.numAttivita = 1;
+    this.getAttivita();
   }
 
   public setSitoFiltro(event) {

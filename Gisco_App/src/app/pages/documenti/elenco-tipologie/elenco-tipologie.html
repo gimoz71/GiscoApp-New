@@ -14,7 +14,7 @@
         </ion-buttons>
         <ion-buttons end>
             <div class="icon-section">
-                <i [ngClass]="icon" [ngStyle]="{'color' : color }"></i>
+                <i [ngClass]="{'icon': true }" [ngStyle]="{'color' : color }"></i>
             </div>
         </ion-buttons>
         <ion-title>Tipologie Documenti</ion-title>
@@ -23,12 +23,13 @@
 
 <ion-content>
     <ion-item>
-        <ion-label>{{selectedCartella.doc_foreign_type}}</ion-label>
+        <ion-label>{{selectedCartella.tab_cartelle_documenti_desc}}</ion-label>
     </ion-item>
     <ion-grid>
         <ion-row>
-            <ion-col col-4 class="icon-folder" *ngFor="let cartella of listaCartelle" (click)="goToElencoDocumenti($event, cartella)">
-                <ion-label>{{cartella.tab_cartelle_documenti_desc}}</ion-label>
+            <ion-col col-4 class="icon-folder" *ngFor="let cartella of listaCartelle"
+                (click)="goToElencoDocumenti($event, cartella)">
+                <ion-label>{{cartella.tab_tipo_documento_desc}}</ion-label>
                 <ion-badge>{{cartella.sistemi}}</ion-badge>
             </ion-col>
         </ion-row>

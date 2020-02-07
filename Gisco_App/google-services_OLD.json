@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:991014087326:android:7f6942539089f2c2",
         "android_client_info": {
-          "package_name": "com.marte5.giscoapp"
+          "package_name": "it.mesys.gisco"
         }
       },
       "oauth_client": [
@@ -35,7 +35,7 @@
               "client_id": "991014087326-bqiotlpe1v3rrqrjhmgtueqb4iv87hrc.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.marte5.giscoapp"
+                "bundle_id": "it.mesys.gisco"
               }
             }
           ]

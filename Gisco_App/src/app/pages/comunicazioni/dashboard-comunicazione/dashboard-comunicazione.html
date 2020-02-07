@@ -36,200 +36,104 @@
             <ion-item color="primary-lighter" class="ion-section-title">
                 <ion-label>Comunicazione</ion-label>
             </ion-item>
-            <ion-list-header text-wrap>
+            <ion-list-header color="light">
                 <h3>{{selectedComunicazione.pro_titolo}}</h3>
             </ion-list-header>
-            <ion-item text-wrap>
-                <ion-grid no-padding>
-                    <ion-row>
-                        <ion-col>
-                            <p>Codice Sito </p>
-                        </ion-col>
-                        <ion-col col-8 text-right>
-                            <p>{{procedimento.az_codice_interno}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+            <ion-item>
+                <ion-label stacked>Codice sito</ion-label>
+                <ion-note item-end>
+                    <p>{{procedimento.az_codice_interno}}</p>
+                </ion-note>
             </ion-item>
-            <ion-item text-wrap>
-                <ion-grid no-padding>
-                    <ion-row>
-                        <ion-col>
-                            <p>Sito</p>
-                        </ion-col>
-                        <ion-col col-8 text-right>
-                            <p>{{procedimento.az_ragione_sociale}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+            <ion-item>
+                <ion-label stacked>sito</ion-label>
+                <ion-note item-end>
+                    <p>{{procedimento.az_ragione_sociale}}</p>
+                </ion-note>
             </ion-item>
-            <ion-item text-wrap>
-                <ion-grid no-padding>
-                    <ion-row>
-                        <ion-col>
-                            <p>Titolo procedimento</p>
-                        </ion-col>
-                        <ion-col col-8 text-right>
-                            <p>{{selectedComunicazione.pro_titolo}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+            <ion-item>
+                <ion-label stacked>Titolo procedimento</ion-label>
+                <ion-note item-end>
+                    <p>{{selectedComunicazione.pro_titolo}}</p>
+                </ion-note>
             </ion-item>
-            <ion-item text-wrap>
-                <ion-grid no-padding>
-                    <ion-row>
-                        <ion-col>
-                            <p>Data Comunicazione</p>
-                        </ion-col>
-                        <ion-col col-8 text-right>
-                            <p>{{selectedComunicazione.com_data}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+            <ion-item>
+                <ion-label stacked>Data Comunicazione</ion-label>
+                <ion-note item-end *ngIf="!hideDate(selectedComunicazione.com_data)">
+                    <p>{{selectedComunicazione.com_data | date:'dd/MM/yyyy'}}</p>
+                </ion-note>
             </ion-item>
-            <ion-item text-wrap>
-                <ion-grid no-padding>
-                    <ion-row>
-                        <ion-col>
-                            <p>Tipologia</p>
-                        </ion-col>
-                        <ion-col col-8 text-right>
-                            <p>{{selectedComunicazione.tab_tipo_comunicazione_desc}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+            <ion-item>
+                <ion-label stacked>Tipologia</ion-label>
+                <ion-note item-end>
+                    <p>{{selectedComunicazione.tab_tipo_comunicazione_desc}}</p>
+                </ion-note>
             </ion-item>
-            <ion-item text-wrap>
-                <ion-grid no-padding>
-                    <ion-row>
-                        <ion-col>
-                            <p>Titolo</p>
-                        </ion-col>
-                        <ion-col col-8 text-right>
-                            <p>{{selectedComunicazione.com_titolo}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+            <ion-item>
+                <ion-label stacked>Titolo</ion-label>
+                <ion-note item-end>
+                    <p>{{selectedComunicazione.com_titolo}}</p>
+                </ion-note>
             </ion-item>
-            <ion-item text-wrap>
-                <ion-grid no-padding>
-                    <ion-row>
-                        <ion-col>
-                            <p>Descrizione</p>
-                        </ion-col>
-                        <ion-col col-8 text-right>
-                            <p>{{selectedComunicazione.com_descrizione}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+            <ion-item>
+                <ion-label stacked>Descrizione</ion-label>
+                <ion-note item-end>
+                    <p>{{selectedComunicazione.com_descrizione}}</p>
+                </ion-note>
             </ion-item>
-            <ion-item text-wrap>
-                <ion-grid no-padding>
-                    <ion-row>
-                        <ion-col>
-                            <p>Mittente</p>
-                        </ion-col>
-                        <ion-col col-8 text-right>
-                            <p>{{selectedComunicazione.com_mittente}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+            <ion-item>
+                <ion-label stacked>Mittente</ion-label>
+                <ion-note item-end>
+                    <p>{{selectedComunicazione.com_mittente}}</p>
+                </ion-note>
             </ion-item>
-            <ion-item text-wrap>
-                <ion-grid no-padding>
-                    <ion-row>
-                        <ion-col>
-                            <p>Destinatario</p>
-                        </ion-col>
-                        <ion-col col-8 text-right>
-                            <p>{{selectedComunicazione.com_destinatario}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+            <ion-item>
+                <ion-label stacked>Destinatario</ion-label>
+                <ion-note item-end>
+                    <p>{{selectedComunicazione.com_destinatario}}</p>
+                </ion-note>
             </ion-item>
-            <ion-item text-wrap>
-                <ion-grid no-padding>
-                    <ion-row>
-                        <ion-col>
-                            <p>Ingresso / Uscita</p>
-                        </ion-col>
-                        <ion-col col-8 text-right>
-                            <p>{{selectedComunicazione.com_in_out}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+            <ion-item>
+                <ion-label stacked>Ingresso / Uscita</ion-label>
+                <ion-note item-end>
+                    <p>{{selectedComunicazione.com_in_out}}</p>
+                </ion-note>
             </ion-item>
-            <ion-item text-wrap>
-                <ion-grid no-padding>
-                    <ion-row>
-                        <ion-col>
-                            <p>Verso</p>
-                        </ion-col>
-                        <ion-col col-8 text-right>
-                            <p>{{selectedComunicazione.tab_verso_comunicazione_desc}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+            <ion-item>
+                <ion-label stacked>Verso</ion-label>
+                <ion-note item-end>
+                    <p>{{selectedComunicazione.tab_verso_comunicazione_desc}}</p>
+                </ion-note>
             </ion-item>
-            <ion-item text-wrap>
-                <ion-grid no-padding>
-                    <ion-row>
-                        <ion-col>
-                            <p>Fase procedimento</p>
-                        </ion-col>
-                        <ion-col col-8 text-right>
-                            <p>{{selectedComunicazione.tab_fase_procedimento_desc}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+            <ion-item>
+                <ion-label stacked>Fase procedimento</ion-label>
+                <ion-note item-end>
+                    <p>{{selectedComunicazione.tab_fase_procedimento_desc}}</p>
+                </ion-note>
             </ion-item>
-            <ion-item text-wrap>
-                <ion-grid no-padding>
-                    <ion-row>
-                        <ion-col>
-                            <p>Tipo documento</p>
-                        </ion-col>
-                        <ion-col col-8 text-right>
-                            <p>{{selectedComunicazione.tab_tipo_documento_desc}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+            <ion-item>
+                <ion-label stacked>Tipo documento</ion-label>
+                <ion-note item-end>
+                    <p>{{selectedComunicazione.tab_tipo_documento_desc}}</p>
+                </ion-note>
             </ion-item>
-            <ion-item text-wrap>
-                <ion-grid no-padding>
-                    <ion-row>
-                        <ion-col>
-                            <p>Protocollo data</p>
-                        </ion-col>
-                        <ion-col col-8 text-right>
-                            <p>{{selectedComunicazione.com_protocollo_data}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+            <ion-item>
+                <ion-label stacked>Protocollo data</ion-label>
+                <ion-note item-end *ngIf="!hideDate(selectedComunicazione.com_protocollo_data)">
+                    <p>{{selectedComunicazione.com_protocollo_data | date:'dd/MM/yyyy'}}</p>
+                </ion-note>
             </ion-item>
-            <ion-item text-wrap>
-                <ion-grid no-padding>
-                    <ion-row>
-                        <ion-col>
-                            <p>Protocollo codice</p>
-                        </ion-col>
-                        <ion-col col-8 text-right>
-                            <p>{{selectedComunicazione.com_protocollo_cod}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+            <ion-item>
+                <ion-label stacked>Protocollo codice</ion-label>
+                <ion-note item-end>
+                    <p>{{selectedComunicazione.com_protocollo_cod}}</p>
+                </ion-note>
             </ion-item>
-            <ion-item text-wrap>
-                <ion-grid no-padding>
-                    <ion-row>
-                        <ion-col>
-                            <p>Codice interno</p>
-                        </ion-col>
-                        <ion-col col-8 text-right>
-                            <p>{{selectedComunicazione.com_codice_interno}}</p>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
+            <ion-item>
+                <ion-label stacked>Codice interno</ion-label>
+                <ion-note item-end>
+                    <p>{{selectedComunicazione.com_codice_interno}}</p>
+                </ion-note>
             </ion-item>
         </ion-list>
         <ion-list *ngSwitchCase="'Files'">
@@ -247,56 +151,37 @@
             <ion-item color="primary-lighter" class="ion-section-title">
                 <ion-label>Prescrizioni</ion-label>
             </ion-item>
-            <div *ngFor="let prescrizione of selectedComunicazione.prescrizioni" (click)="goToDetails($event, prescrizione)">
-                <ion-item text-wrap>
-                    <ion-grid no-padding>
-                        <ion-row>
-                            <ion-col>
-                                <p>Descrizione</p>
-                            </ion-col>
-                            <ion-col col-8 text-right>
-                                <p>{{prescrizione.pre_descrizione}}</p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-item>
-                <ion-item text-wrap>
-                    <ion-grid no-padding>
-                        <ion-row>
-                            <ion-col>
-                                <p>Tipologia</p>
-                            </ion-col>
-                            <ion-col col-8 text-right>
-                                <p>{{prescrizione.tab_tipo_prescrizione_desc}}</p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-item>
-                <ion-item text-wrap>
-                    <ion-grid no-padding>
-                        <ion-row>
-                            <ion-col>
-                                <p>Scadenza</p>
-                            </ion-col>
-                            <ion-col col-8 text-right>
-                                <p>{{prescrizione.pre_data_scadenza}}</p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-item>
-                <ion-item text-wrap>
-                    <ion-grid no-padding>
-                        <ion-row>
-                            <ion-col>
-                                <p>Stato</p>
-                            </ion-col>
-                            <ion-col col-8 text-right>
-                                <p>{{prescrizione.pre_stato}}</p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-item>
-            </div>
+            <ion-list>
+                <div *ngFor="let prescrizione of selectedComunicazione.prescrizioni"
+                    (click)="goToDetails($event, prescrizione)">
+                    <ion-list-header color="light">
+                        <ion-label stacked>Descrizione</ion-label>
+                        <ion-note item-end>
+                            <p>{{prescrizione.pre_descrizione}}</p>
+                        </ion-note>
+                    </ion-list-header>
+                    <ion-item>
+                        <ion-label stacked>Tipologia</ion-label>
+                        <ion-note item-end>
+                            <p>{{prescrizione.tab_tipo_prescrizione_desc}}</p>
+                        </ion-note>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label stacked>Scadenza</ion-label>
+                        <ion-note item-end>
+                            <p>{{prescrizione.pre_data_scadenza}}</p>
+                        </ion-note>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label stacked>Stato</ion-label>
+                        <ion-note item-end>
+                            <ion-icon name="alert" color="danger"></ion-icon>
+                            <!--<ion-badge>{{prescrizione.pre_stato}}</ion-badge>-->
+                        </ion-note>
+                    </ion-item>
+                </div>
+            </ion-list>
         </ion-list>
     </div>
 

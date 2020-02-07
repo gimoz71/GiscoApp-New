@@ -5,6 +5,7 @@ import { StoreService } from '../../../services/store/store.service';
 import { NuovoMessaggioPage } from '../nuovo-messaggio/nuovo-messaggio';
 import { Login } from '../../../models/login/login.namespace';
 import { MessaggiService } from '../../../services/messaggi/messaggi.service';
+import { ElencoMessaggiPage } from '../elenco-messaggi/elenco-messaggi';
 
 
 
@@ -66,6 +67,7 @@ export class DetailsMessaggioPage {
       var tokenValue = val.token_value;
       this.messaggiService.setDeleteMessage(this.storeService.getLocalServerUrl(), mess.messaggi_key, tokenValue).subscribe(r => {
         console.log(r);
+        this.navCtrl.push(ElencoMessaggiPage);
       },
         (error) => {
           console.log(error);

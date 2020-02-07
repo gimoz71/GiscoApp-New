@@ -17,10 +17,13 @@ export class LoginService {
     constructor(private httpService: HttpService) {
     };
 
-    public login(serverUrl: string, username: string, password: string): Observable<Login.ws_Token> {
-        return this.httpService.getToken(serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.URL_TOKEN_PLACEHOLDER
-            + GlobalVariable.URL_SEPARATOR + username 
-            + GlobalVariable.URL_SEPARATOR + password);
+    public login(serverUrl: string, username: string, password: string, phoneid: string): Observable<Login.ws_Token> {
+        const loginRequest = new Login.LoginRequest();
+        loginRequest.user = username;
+        loginRequest.password = password;
+        loginRequest.phoneid = phoneid;
+        const url = serverUrl + GlobalVariable.BASE_API_URL + GlobalVariable.LOGIN_KEYWORD
+        return this.httpService.getToken(url, loginRequest);
     };
 
     public checkServerValidity(serverUrl: string): Observable<Http.HttpResponse> {

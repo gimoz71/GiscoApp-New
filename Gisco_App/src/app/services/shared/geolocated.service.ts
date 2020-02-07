@@ -1,4 +1,4 @@
-import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@ionic-native/geolocation/ngx';
+import { Geolocation, GeolocationOptions, Geoposition } from '@ionic-native/geolocation/ngx';
 import { Subject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 

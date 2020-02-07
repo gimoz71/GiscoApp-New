@@ -4,14 +4,13 @@ import { Component } from '@angular/core';
 import { StoreService } from '../../../services/store/store.service';
 import { Login } from '../../../models/login/login.namespace';
 import { Osservazione } from '../../../models/osservazione/osservazione.namespace';
-import { Filtro } from '../../../models/filtro/filtro.namespace';
-import { Sito } from '../../../models/sito/sito.namespace';
 import { SitiService } from '../../../services/siti/siti.service';
 import { DispositiviService } from '../../../services/dispositivi/dispositivi.service';
 import moment from 'moment';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Attivita } from '../../../models/attivita/attivita.namespace';
 import { AttivitaService } from '../../../services/attivita/attivita.service';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -31,7 +30,7 @@ export class DashboardAttivitaPage {
   public note: string;
   public dataFine: string;
   public conclusa: boolean;
-  private whichPage: string;
+  public whichPage: string;
   public commentoTesto: string;
   public rispostaTesto: string;
   private myUserKey: number;
@@ -51,7 +50,8 @@ export class DashboardAttivitaPage {
     private loadingCtrl: LoadingController,
     private actionSheetCtrl: ActionSheetController,
     private alertCtrl: AlertController,
-    private camera: Camera) {
+    private camera: Camera,
+    private datePipe: DatePipe) {
 
     this.ws_Att_Ch = new Attivita.ws_Attivita_Chiusura();
     this.whichPage = 'Attivita';
@@ -60,6 +60,9 @@ export class DashboardAttivitaPage {
     this.selectedAttivita = this.navParams.get("selectedAttivita")
     this.callbackChiusa = this.navParams.get("callbackChiusa")
     this.listaPersonalizzate = new Array<Osservazione.ProprietaPersonalizzataChiusura>();
+
+    this.dataInizio = this.datePipe.transform(Date.now(), 'yyyy-MM-ddThh:mm:ss');
+    this.dataFine = this.datePipe.transform(Date.now(), 'yyyy-MM-ddThh:mm:ss');
   }
 
   ionViewDidLoad() {
@@ -80,8 +83,10 @@ export class DashboardAttivitaPage {
           this.attivitaService.getAttivitaChiusura(this.storeService.getLocalServerUrl(), this.selectedAttivita.attivita_key, tokenValue).subscribe(r => {
             if (r.ErrorMessage.msg_code === 0) {
               this.selectedAttivita = r.attivita;
-              this.dataInizio = r.att_data_inizio_effettiva;
-              this.dataFine = r.att_data_fine_effettiva;
+              if (this.conclusa) {
+                this.dataInizio = r.att_data_inizio_effettiva;
+                this.dataFine = r.att_data_fine_effettiva;
+              }
               this.note = r.att_descrizione;
 
               this.listaPersonalizzate = r.c_proprieta_personalizzate;
@@ -137,7 +142,7 @@ export class DashboardAttivitaPage {
         console.log("dataFine " + this.dataFine);
         console.log(moment(this.dataInizio, "DD-MM-YYYY HH:mm"));
 
-        if (moment(this.dataInizio).isBefore(moment(this.dataFine))) {
+        if (moment(this.dataInizio).isSameOrBefore(moment(this.dataFine))) {
           this.ws_Att_Ch.attivita.att_conclusa = "S";
           this.ws_Att_Ch.att_descrizione = this.note;
           this.ws_Att_Ch.c_proprieta_personalizzate = this.listaPersonalizzate;
@@ -155,6 +160,7 @@ export class DashboardAttivitaPage {
               if (r.ErrorMessage.msg_code === 0) {
                 this.conclusa = true;
                 loading.dismiss();
+                this.presentAlert("", "attività chiusa correttamente");
               } else {
                 loading.dismiss();
                 this.presentAlert("", r.ErrorMessage.msg_testo);
@@ -462,7 +468,14 @@ export class DashboardAttivitaPage {
         this.attivitaService.salvaImmagineAttivita(this.storeService.getLocalServerUrl(), ws_imm).subscribe((r) => {
           console.log(r);
           if (r.ErrorMessage.msg_code == 0) {
-            this.presentAlert("", "immagine è stata salvata correttamente")
+            this.presentAlert("", "immagine è stata salvata correttamente");
+            this.attivitaService.getListaImmaginiAttivita(this.storeService.getLocalServerUrl(), this.selectedAttivita.attivita_key, val.token_value).subscribe(imm => {
+              if (imm.ErrorMessage.msg_code == 0) {
+                this.listaImmagini = imm.l_lista_immagini;
+              } else {
+                this.presentAlert("ERROR", "si è verificato un problema nel reload delle immagini");
+              }
+            });
           } else {
             this.presentAlert("", "errore salvataggio immagine " + r.ErrorMessage.msg_testo);
           }
@@ -475,6 +488,30 @@ export class DashboardAttivitaPage {
       console.log("err");
     });
 
+  }
+
+  async presentAlertEliminaImmagine(imm: Attivita.Immagine) {
+    const alert = await this.alertCtrl.create({
+      title: 'Conferma',
+      message: 'Sicuro che vuoi cancellare questa immagine?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Si',
+          handler: () => {
+            this.goToEliminaImmagine(imm);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   goToEliminaImmagine(imm: Attivita.Immagine) {

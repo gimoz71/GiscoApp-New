@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>Ionic App</title>
-  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport"
+    content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="format-detection" content="telephone=no">
   <meta name="msapplication-tap-highlight" content="no">
 
@@ -18,6 +20,23 @@
   <!-- cordova.js required for cordova apps (remove if not needed) -->
   <script src="cordova.js"></script>
 
+  <script>
+    // If your app runs this program on browser,
+    // you need to set `API_KEY_FOR_BROWSER_RELEASE` and `API_KEY_FOR_BROWSER_DEBUG`
+    // before `plugin.google.maps.Map.getMap()`
+    //
+    //   API_KEY_FOR_BROWSER_RELEASE for `https:` protocol
+    //   API_KEY_FOR_BROWSER_DEBUG for `http:` protocol
+    //
+    plugin.google.maps.environment.setEnv({
+      'API_KEY_FOR_BROWSER_RELEASE': 'AIzaSyC0ZS8b6gni8cmzaP6wANluaN7XWCvNtBc',
+      'API_KEY_FOR_BROWSER_DEBUG': 'AIzaSyC0ZS8b6gni8cmzaP6wANluaN7XWCvNtBc'
+    });
+
+    // Create a Google Maps native view under the map_canvas div.
+    var map = plugin.google.maps.Map.getMap(div);
+  </script>
+
   <!-- un-comment this code to enable service worker
   <script>
     if ('serviceWorker' in navigator) {
@@ -30,6 +49,7 @@
   <link href="build/main.css" rel="stylesheet">
 
 </head>
+
 <body>
 
   <!-- Ionic's root component and where the app will load -->
@@ -44,6 +64,7 @@
 
   <!-- The main bundle js is generated during the build process -->
   <script src="build/main.js"></script>
-    
+
 </body>
+
 </html>

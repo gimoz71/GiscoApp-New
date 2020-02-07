@@ -11,6 +11,7 @@ import { SitiService } from '../../../services/siti/siti.service';
 import { DispositiviService } from '../../../services/dispositivi/dispositivi.service';
 import moment from 'moment';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -19,19 +20,19 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 })
 
 export class DashboardChiusuraPage {
-  private osservazione: Osservazione.Osservazione;
+  public osservazione: Osservazione.Osservazione;
   color: string;
   icon: string;
   private callbackChiusa: any;
   private ws_Oss_Ch: Osservazione.ws_Osservazione_Chiusura;
   private ws_Oss_Com: Osservazione.ws_Commento;
-  private listaCommenti: Array<Osservazione.Commento>;
-  private dataInizio: string;
-  private note: string;
-  private dataFine: string;
-  private conclusa: boolean;
-  private whichPage: string;
-  private commentoTesto: string;
+  public listaCommenti: Array<Osservazione.Commento>;
+  public dataInizio: string;
+  public note: string;
+  public dataFine: string;
+  public conclusa: boolean;
+  public whichPage: string;
+  public commentoTesto: string;
   private rispostaTesto: string;
   private myUserKey: number;
   selectedIndexCommento: any;
@@ -39,6 +40,8 @@ export class DashboardChiusuraPage {
   private listaPersonalizzate: Array<Osservazione.ProprietaPersonalizzataChiusura>;
   private valoreSKey: number;
   private listaImmagini: Array<Osservazione.Immagine>;
+
+  public customPickerOptions: any;
 
   constructor(public navCtrl: NavController,
     public osservazioniService: OsservazioniService,
@@ -49,7 +52,8 @@ export class DashboardChiusuraPage {
     private loadingCtrl: LoadingController,
     private actionSheetCtrl: ActionSheetController,
     private alertCtrl: AlertController,
-    private camera: Camera) {
+    private camera: Camera,
+    private datePipe: DatePipe) {
 
     this.ws_Oss_Ch = new Osservazione.ws_Osservazione_Chiusura();
     this.whichPage = 'Osservazione';
@@ -58,6 +62,20 @@ export class DashboardChiusuraPage {
     this.osservazione = this.navParams.get("osservazione")
     this.callbackChiusa = this.navParams.get("callbackChiusa")
     this.listaPersonalizzate = new Array<Osservazione.ProprietaPersonalizzataChiusura>();
+
+    this.dataInizio = this.datePipe.transform(Date.now(), 'yyyy-MM-ddThh:mm:ss');
+    this.dataFine = this.datePipe.transform(Date.now(), 'yyyy-MM-ddThh:mm:ss');
+
+    this.customPickerOptions = {
+      buttons: [{
+        text: 'Ok'
+      }, {
+        text: 'Chiudi',
+        handler: () => {
+          return false;
+        }
+      }]
+    }
   }
 
   ionViewDidLoad() {
@@ -78,8 +96,12 @@ export class DashboardChiusuraPage {
           this.osservazioniService.getOsservazioneChiusura(this.storeService.getLocalServerUrl(), this.osservazione.attivita_key, tokenValue).subscribe(r => {
             if (r.ErrorMessage.msg_code === 0) {
               this.osservazione = r.osservazione;
-              this.dataInizio = r.att_data_inizio_effettiva;
-              this.dataFine = r.att_data_fine_effettiva;
+              if (this.conclusa) {
+                this.dataInizio = r.att_data_inizio_effettiva;
+                this.dataFine = r.att_data_fine_effettiva;
+              }
+              // this.dataInizio = r.att_data_inizio_effettiva;
+              // this.dataFine = r.att_data_fine_effettiva;
               this.note = r.att_descrizione;
               this.listaPersonalizzate = r.c_proprieta_personalizzate;
               this.osservazioniService.getListaImmaginiOsservazione(this.storeService.getLocalServerUrl(), this.osservazione.attivita_key, tokenValue).subscribe(r => {
@@ -133,7 +155,7 @@ export class DashboardChiusuraPage {
         console.log(moment(this.dataInizio, "DD-MM-YYYY HH:mm"));
         console.log("this.ws_Oss.osservazione " + JSON.stringify(this.ws_Oss_Ch));
 
-        if (moment(this.dataInizio).isBefore(moment(this.dataFine))) {
+        if (moment(this.dataInizio).isSameOrBefore(moment(this.dataFine))) {
           this.ws_Oss_Ch.osservazione.att_conclusa = "S";
           this.ws_Oss_Ch.att_descrizione = this.note;
           this.ws_Oss_Ch.c_proprieta_personalizzate = this.listaPersonalizzate;
@@ -151,6 +173,7 @@ export class DashboardChiusuraPage {
               if (r.ErrorMessage.msg_code === 0) {
                 this.conclusa = true;
                 loading.dismiss();
+                this.presentAlert("", "osservazione chiusa correttamente");
               } else {
                 loading.dismiss();
                 this.presentAlert("", r.ErrorMessage.msg_testo);
@@ -158,7 +181,7 @@ export class DashboardChiusuraPage {
             })
           });
         } else {
-          this.presentAlert("", "deve essere this.dataInizio < this.dataFine");
+          this.presentAlert("", "deve essere this.dataInizio <= this.dataFine");
 
         }
       } else {
