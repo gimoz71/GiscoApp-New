@@ -89,26 +89,26 @@
                     </ion-row>
                 </ion-grid>
             </ion-item>
-            <ion-item text-wrap>
+            <ion-item text-wrap *ngIf="!selectedDispositivo.dis_data_attivazione.includes('0001')">
                 <ion-grid no-padding>
                     <ion-row>
                         <ion-col>
                             <p>Data attivazione </p>
                         </ion-col>
                         <ion-col col-8 text-right>
-                            <p>{{selectedDispositivo.dis_data_attivazione}}</p>
+                            <p>{{selectedDispositivo.dis_data_attivazione | date:'dd/MM/yyyy'}}</p>
                         </ion-col>
                     </ion-row>
                 </ion-grid>
             </ion-item>
-            <ion-item text-wrap>
+            <ion-item text-wrap *ngIf="!selectedDispositivo.dis_data_disattivazione.includes('0001')">
                 <ion-grid no-padding>
                     <ion-row>
                         <ion-col>
                             <p>Data disattivazione </p>
                         </ion-col>
                         <ion-col col-8 text-right>
-                            <p>{{selectedDispositivo.dis_data_disattivazione}}</p>
+                            <p>{{selectedDispositivo.dis_data_disattivazione | date:'dd/MM/yyyy'}}</p>
                         </ion-col>
                     </ion-row>
                 </ion-grid>
@@ -160,26 +160,26 @@
                         </ion-row>
                     </ion-grid>
                 </ion-item>
-                <ion-item text-wrap>
+                <ion-item text-wrap *ngIf="!t.dis_da_data.includes('0001')">
                     <ion-grid no-padding>
                         <ion-row>
                             <ion-col>
                                 <p>dal</p>
                             </ion-col>
                             <ion-col col-8 text-right>
-                                <p>{{t.dis_da_data}}</p>
+                                <p>{{t.dis_da_data | date:'dd/MM/yyyy'}}</p>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
                     </ion-item>
-                <ion-item text-wrap>
-                <ion-grid no-padding>
+                <ion-item text-wrap *ngIf="!t.dis_a_data.includes('0001')">
+                    <ion-grid no-padding>
                         <ion-row>
                             <ion-col>
                                 <p>al</p>
                             </ion-col>
                             <ion-col col-8 text-right>
-                                <p>{{t.dis_a_data}}</p>
+                                <p>{{t.dis_a_data | date:'dd/MM/yyyy'}}</p>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
@@ -195,9 +195,66 @@
                     <p>Nessuna autorizzazione</p>
                 </ion-item>
             </div>
-            <div *ngFor="let autorizzazione of autorizzazioni">
+            <div *ngFor="let aut of autorizzazioni">
                 <ion-item>
-                    {{ autorizzazione }}
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Numero</p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                {{aut.dp_emissione_numero}}
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Tipologia</p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{aut.tab_tipologia_autorizzazioni_desc}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Ente</p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{aut.ec_nominativo}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap *ngIf="!aut.dp_emissione_data.includes('0001')">
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Data emissione</p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{aut.dp_emissione_data | date:'dd/MM/yyyy'}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap *ngIf="!aut.dp_scadenza_data.includes('0001')">
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Data scadenza</p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{aut.dp_scadenza_data | date:'dd/MM/yyyy'}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
                 </ion-item>
             </div>
         </ion-list>

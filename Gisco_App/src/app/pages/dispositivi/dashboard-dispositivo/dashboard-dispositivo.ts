@@ -22,7 +22,7 @@ export class DashboardDispositivoPage {
 
     public selectedDispositivo: Dispositivo.Dispositivo;
     public titolarita: Array<Dispositivo.Titolarita>;
-    public autorizzazioni: Array<Dispositivo.Autorizzazione>;
+    public autorizzazioni: Array<Dispositivo.Autorizzazioni>;
     public whichPage: string;
 
     public mapModel: Common.MapModel;
@@ -66,7 +66,9 @@ export class DashboardDispositivoPage {
 
                     this.mapModel.centerLat = marker.lat;
                     this.mapModel.centerLon = marker.lgn;
-                    this.mapModel.initialZoom = 12;
+                    this.mapModel.initialZoom = parseFloat(r.mp_zoom);
+                    this.mapModel.type = "satellite";
+                    
                     this.showMap = true;
                 }
             })
@@ -77,7 +79,7 @@ export class DashboardDispositivoPage {
         console.log('segmentDispositivoClicked');
     }
     segmentTitolaritaClicked(event) {
-        console.log('segmentTitolaritaClicked ' + this.titolarita);
+        console.log('segmentTitolaritaClicked');
     }
     segmentAutorizzazioniClicked(event) {
         console.log('segmentAutorizzazioniClicked');

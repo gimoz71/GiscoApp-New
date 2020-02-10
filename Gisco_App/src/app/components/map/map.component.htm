@@ -2,8 +2,10 @@
   [latitude]="lat"
   [longitude]="lng"
   [zoom]="zoom"
+  [mapTypeId]="type"
   [disableDefaultUI]="false"
   [zoomControl]="false"
+  [showDefaultInfoWindow]="info"
   (mapClick)="mapClicked($event)">
 
   <agm-marker 
@@ -15,9 +17,9 @@
       [markerDraggable]="m.draggable"
       (dragEnd)="markerDragEnd(m, $event)">
       
-    <agm-info-window>
+    <!--agm-info-window>
       <strong>InfoWindow content</strong>
-    </agm-info-window>
+    </agm-info-window-->
     
   </agm-marker>
   

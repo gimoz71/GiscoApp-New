@@ -5,8 +5,8 @@
         </button>
         <ion-title>Elenco Procedimenti</ion-title>
     </ion-navbar>
-    <ion-searchbar placeholder="Sito" (ionInput)="setSitoFiltro($event)"></ion-searchbar>
-    <ion-searchbar placeholder="Titolo" (ionInput)="setTitoloFiltro($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Ricerca sito..." (ionInput)="setSitoFiltro($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Ricerca..." (ionInput)="setTitoloFiltro($event)"></ion-searchbar>
     <ion-item class="ion-filters">
         <ion-label>Tipologia</ion-label>
         <ion-select [(ngModel)]="tipologiaSelezionata" (ionChange)="setTipologiaFiltro()">
@@ -20,7 +20,8 @@
         <ion-item *ngFor="let procedimento of listaProcedimenti" (click)="goToDetails($event, procedimento)" text-wrap no-padding>
             <button no-lines ion-item no-margin clear>
                 <h2>{{procedimento.pro_titolo}}</h2>
-                <p>{{procedimento.az_codice_interno}} - {{procedimento.az_ragione_sociale}}</p>
+                <p>{{procedimento.tab_tipo_procedimento_desc}}</p>
+                <p class="indirizzo_sito">{{procedimento.az_codice_interno}} - {{procedimento.az_ragione_sociale}}</p>
             </button>
         </ion-item>
     </ion-list>

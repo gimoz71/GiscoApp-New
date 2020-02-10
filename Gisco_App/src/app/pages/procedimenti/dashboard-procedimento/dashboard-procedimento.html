@@ -95,7 +95,7 @@
                         </ion-row>
                     </ion-grid>
                 </ion-item> -->
-                <ion-item text-wrap>
+                <ion-item text-wrap  *ngIf="selectedProcedimento.pro_descrizione !== ''">
                     <ion-grid no-padding>
                         <ion-row>
                             <ion-col>
@@ -119,7 +119,7 @@
                         </ion-row>
                     </ion-grid>
                 </ion-item>
-                <ion-item text-wrap>
+                <ion-item text-wrap *ngIf="selectedProcedimento.pro_note !== ''">
                     <ion-grid no-padding>
                         <ion-row>
                             <ion-col>

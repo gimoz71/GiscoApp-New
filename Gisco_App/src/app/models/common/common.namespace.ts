@@ -14,6 +14,7 @@ export namespace Common {
         public centerLat: number;
         public centerLon: number;
         public initialZoom: number;
+        public type: string;
         public markers: MapMarker[];
     }
 

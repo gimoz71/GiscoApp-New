@@ -77,7 +77,7 @@
 
             <ion-item>
                 <ion-label stacked>Note sulla chiusura </ion-label>
-                <ion-textarea disabled="{{conclusa}}" [(ngModel)]="note" item-end></ion-textarea>
+                <ion-textarea disabled="{{conclusa}}" [(ngModel)]="note"></ion-textarea>
             </ion-item>
 
             <div *ngFor="let pers of listaPersonalizzate">
@@ -231,7 +231,9 @@
 
 
                     <div *ngIf="selectedIndexCommento == i">
-                        <ion-textarea [(ngModel)]="rispostaTesto"></ion-textarea>
+                        <div style="padding-left: 10px;">
+                            <ion-textarea [(ngModel)]="rispostaTesto"></ion-textarea>
+                        </div>
                         <ion-item>
                             <button ion-button (click)="chiudiCommento()">chiudi</button>
                             <button ion-button (click)="inviaRispostaCommento(com)">rispondi</button>

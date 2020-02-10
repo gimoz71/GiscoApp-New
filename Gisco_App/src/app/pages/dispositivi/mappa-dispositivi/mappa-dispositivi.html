@@ -15,7 +15,7 @@
 
 
 <ion-content >
-  <ion-searchbar placeholder="campo libero" (ionInput)="getDispositivi($event)"></ion-searchbar>
+  <ion-searchbar placeholder="Ricerca.." (ionInput)="getDispositivi($event)"></ion-searchbar>
   <ion-item  class="ion-filters">
     <ion-label>Tipologia</ion-label>
     <ion-select [(ngModel)]="tipologiaSelezionata" (ionChange)="getDispositivi()">

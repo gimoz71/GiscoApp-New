@@ -3,7 +3,7 @@ import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { Procedimento } from '../../../models/procedimento/procedimento.namespace';
 import { StoreService } from '../../../services/store/store.service';
 import { Login } from '../../../models/login/login.namespace';
-import { DashboardProcedimentoPage } from '../../procedimenti/dashboard-procedimento/dashboard-procedimento';
+//import { DashboardProcedimentoPage } from '../../procedimenti/dashboard-procedimento/dashboard-procedimento';
 import { Comunicazione } from '../../../models/comunicazione/comunicazione.namespace';
 import { ComunicazioniService } from '../../../services/comunicazioni/comunicazioni.service';
 import { DashboardComunicazionePage } from '../dashboard-comunicazione/dashboard-comunicazione';
@@ -64,6 +64,36 @@ export class ElencoComunicazioniPage {
     console.log("goToDetailsComunicazione click" + comunicazione.comunicazioni_key);
     if (comunicazione.comunicazioni_key != 0) {
       this.navCtrl.push(DashboardComunicazionePage, { comunicazione: comunicazione })
+    }
+  }
+
+  public getPreColor(comunicazione: Comunicazione.Comunicazione): string {
+    
+    if (comunicazione.pr_scadute > 0){
+      return 'danger';
+    }
+    else{
+      if (comunicazione.pr_in_scadenza > 0){
+        return 'alert';
+      }
+      else{
+        return 'done';
+      }
+    }
+  }
+
+  public getPreIcon(comunicazione: Comunicazione.Comunicazione): string {
+    
+    if (comunicazione.pr_scadute > 0){
+      return 'alert';
+    }
+    else{
+      if (comunicazione.pr_in_scadenza > 0){
+        return 'time';
+      }
+      else{
+        return 'checkmark-circle';
+      }
     }
   }
 

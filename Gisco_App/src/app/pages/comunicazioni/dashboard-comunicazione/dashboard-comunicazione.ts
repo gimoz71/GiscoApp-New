@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { NavParams, NavController } from 'ionic-angular';
-import { Dispositivo } from '../../../models/dispositivo/dispositivo.namespace';
+//import { Dispositivo } from '../../../models/dispositivo/dispositivo.namespace';
 
-import { DispositiviService } from '../../../services/dispositivi/dispositivi.service';
+//import { DispositiviService } from '../../../services/dispositivi/dispositivi.service';
 import { StoreService } from '../../../services/store/store.service';
 import { Login } from '../../../models/login/login.namespace';
-import { Common } from '../../../models/common/common.namespace';
+//import { Common } from '../../../models/common/common.namespace';
 import { Comunicazione } from '../../../models/comunicazione/comunicazione.namespace';
 import { ComunicazioniService } from '../../../services/comunicazioni/comunicazioni.service';
 import { DashboardPrescrizionePage } from '../../prescrizioni/dashboard-prescrizione/dashboard-prescrizione';
@@ -79,4 +79,56 @@ export class DashboardComunicazionePage {
     const date = new Date(dateString);
     return date.getFullYear() === 1;
   }
+
+  public getPreColor(prescrizione: Comunicazione.Prescrizione): string {
+    switch (prescrizione.pre_stato) {
+      case 'S':
+        return 'danger';
+      case 'I':
+        return 'alert';
+      case 'F':
+        return 'future';
+      case 'D':
+        return 'no-date';
+      case 'V':
+        return 'vincolate';
+      default:
+        return 'done';
+    }
+
+    // <ion-icon name="alert" color="danger" item-start></ion-icon>
+    // <ion-icon name="time" color="alert" item-start></ion-icon>
+    // <ion-icon name="information-circle" color="future" item-start></ion-icon>
+    // <ion-icon name="help-circle" color="no-date" item-start></ion-icon>
+    // <ion-icon name="time" color="vincolate" item-start></ion-icon>
+    // <ion-icon name="checkmark-circle" color="done" item-start></ion-icon>
+
+  }
+
+  public getPreIcon(prescrizione: Comunicazione.Prescrizione): string {
+
+    switch (prescrizione.pre_stato) {
+      case 'S':
+        return 'alert';
+      case 'I':
+        return 'time';
+      case 'F':
+        return 'information-circle';
+      case 'D':
+        return 'help-circle';
+      case 'V':
+        return 'time';
+      default:
+        return 'checkmark-circle';
+    }
+
+    // <ion-icon name="alert" color="danger" item-start></ion-icon>
+    // <ion-icon name="time" color="alert" item-start></ion-icon>
+    // <ion-icon name="information-circle" color="future" item-start></ion-icon>
+    // <ion-icon name="help-circle" color="no-date" item-start></ion-icon>
+    // <ion-icon name="time" color="vincolate" item-start></ion-icon>
+    // <ion-icon name="checkmark-circle" color="done" item-start></ion-icon>
+
+  }
+
 }

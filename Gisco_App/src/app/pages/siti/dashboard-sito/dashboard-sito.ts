@@ -6,7 +6,7 @@ import { SitiService } from '../../../services/siti/siti.service';
 import { StoreService } from '../../../services/store/store.service';
 import { Login } from '../../../models/login/login.namespace';
 import { Common } from '../../../models/common/common.namespace';
-import { NavigationContainer } from 'ionic-angular/umd/navigation/navigation-container';
+//import { NavigationContainer } from 'ionic-angular/umd/navigation/navigation-container';
 /**
  * Generated class for the DashboardSitoPage page.
  *
@@ -69,7 +69,9 @@ export class DashboardSitoPage {
 
                     this.mapModel.centerLat = marker.lat;
                     this.mapModel.centerLon = marker.lgn;
-                    this.mapModel.initialZoom = 12;
+                    this.mapModel.initialZoom = parseFloat(r.mp_zoom);
+                    this.mapModel.type = "satellite";
+                    
                     this.showMap = true;
                 }
                 loading.dismiss();

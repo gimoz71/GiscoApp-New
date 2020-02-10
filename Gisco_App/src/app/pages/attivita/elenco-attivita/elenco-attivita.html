@@ -5,8 +5,8 @@
         </button>
         <ion-title>Elenco Attivit&agrave;</ion-title>
     </ion-navbar>
-    <ion-searchbar placeholder="Sito" (ionInput)="setSitoFiltro($event)"></ion-searchbar>
-    <ion-searchbar placeholder="Protocollo" (ionInput)="setProtocolloFiltro($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Ricerca sito..." (ionInput)="setSitoFiltro($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Ricerca..." (ionInput)="setProtocolloFiltro($event)"></ion-searchbar>
     <ion-item class="ion-filters">
         <ion-label>Categoria</ion-label>
         <ion-select [(ngModel)]="categoriaSelezionata" (ionChange)="setCategoriaFiltro()">
@@ -24,9 +24,9 @@
     <ion-item class="ion-filters">
         <ion-label>Stato</ion-label>
         <ion-select [(ngModel)]="statoSelezionato" (ionChange)="setStatoFiltro()">
-            <ion-option [value]="'N'" selected>APERTE</ion-option>
-            <ion-option [value]="'S'">CHIUSE</ion-option>
-            <ion-option [value]="'A'">TUTTE</ion-option>
+            <ion-option [value]="'N'" selected>Aperte</ion-option>
+            <ion-option [value]="'S'">Chiuse</ion-option>
+            <ion-option [value]="'A'">Tutte</ion-option>
         </ion-select>
     </ion-item>
 </ion-header>
@@ -35,9 +35,9 @@
         <ion-item *ngFor="let attivita of listaAttivita" (click)="goToDetails(attivita)" text-wrap no-padding>
             <button no-lines ion-item no-margin clear>
                 <h2><img [src]="getDotPath(attivita)"
-                        class="list-dot">{{attivita.att_protocollo + ' - ' + attivita.att_titolo}}</h2>
-                <p>{{attivita.az_codice_interno + ' - ' + attivita.az_ragione_sociale}}</p>
+                        class="attivita-dot">{{attivita.att_protocollo + ' - ' + attivita.att_titolo}}</h2>
                 <p>{{attivita.tab_tipo_attivita_desc + ' - ' + attivita.tab_tipo_scadenza_desc}}</p>
+                <p class="indirizzo_sito">{{attivita.az_codice_interno + ' - ' + attivita.az_ragione_sociale}}</p>
             </button>
         </ion-item>
     </ion-list>

@@ -46,7 +46,8 @@
                             [ngStyle]="{'text-align': (comunicazioni[0].com_in_out === 'I' ? 'left' : 'right')}">
                             {{comunicazioni[0].com_titolo}}
                         </p>
-                        <ion-icon name="alert" color="danger"></ion-icon>
+                        <ion-icon [name]="getPreIcon(comunicazioni[0])" [color]="getPreColor(comunicazioni[0])" 
+                                  *ngIf="comunicazioni[0].pr_totali>0"></ion-icon>
                         <!-- <ion-label *ngIf="comunicazione.comunicazioni_key != 0">{{comunicazione.tab_fase_procedimento_desc}}</ion-label>
                             <ion-label *ngIf="comunicazione.comunicazioni_key != 0 && comunicazione.com_in_out==='O'">{{comunicazione.com_mittente }}</ion-label>
                                 <ion-label *ngIf="comunicazione.comunicazioni_key != 0 && comunicazione.com_in_out!='O'">{{comunicazione.com_destinatario}}</ion-label> -->
@@ -62,7 +63,8 @@
                         <p *ngIf="comunicazioni[1].comunicazioni_key != 0"
                         [ngStyle]="{'text-align': (comunicazioni[1].com_in_out === 'I' ? 'left' : 'right')}">
                         {{comunicazioni[1].com_titolo}}</p>
-                        <ion-icon name="alert" color="danger"></ion-icon>
+                        <ion-icon [name]="getPreIcon(comunicazioni[1])" [color]="getPreColor(comunicazioni[1])" 
+                                  *ngIf="comunicazioni[1].pr_totali>0"></ion-icon>
                         <!-- <ion-label *ngIf="comunicazione.comunicazioni_key != 0">{{comunicazione.tab_fase_procedimento_desc}}</ion-label>
                             <ion-label *ngIf="comunicazione.comunicazioni_key != 0 && comunicazione.com_in_out==='O'">{{comunicazione.com_mittente }}</ion-label>
                             <ion-label *ngIf="comunicazione.comunicazioni_key != 0 && comunicazione.com_in_out!='O'">{{comunicazione.com_destinatario}}</ion-label> -->
