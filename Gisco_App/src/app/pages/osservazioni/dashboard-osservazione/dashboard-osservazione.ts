@@ -43,6 +43,7 @@ export class DashboardOsservazionePage {
     private options: GeolocationOptions;
     public whichPage: string;
     public currentPos: Geoposition;
+    public esiste_dispositivo: boolean;
 
     public isInserimento: boolean;
 
@@ -89,6 +90,9 @@ export class DashboardOsservazionePage {
         this.listaPersonalizzate = new Array<Osservazione.ProprietaPersonalizzata>();
 
         this.idSitoSelected = '0';
+
+        this.listaTipologieDisp = new Array<Filtro.TipologiaDispositivo>();
+        this.esiste_dispositivo = false;
 
     }
 
@@ -241,7 +245,16 @@ export class DashboardOsservazionePage {
         this.idSitoSelected = event.item.azienda_key;
         this.dispositiviService.getListaTipologieDispositivo(this.storeService.getLocalServerUrl(), this.wsToken.token_value, this.idSitoSelected).subscribe(r2 => {
             this.listaTipologieDisp = r2.l_lista_tipologie;
-
+            this.esiste_dispositivo = false;
+            if (this.listaTipologieDisp.length > 0) 
+            {
+                this.esiste_dispositivo = true;
+            }
+            else
+            {
+                this.tipologiaDispSelezionata = null;
+                this.dispositivoSelezionato = null;
+            }
         }, (error) => {
             loading.dismiss();
             this.presentAlert("", "errore recupero Lista Tipologie Dispositivo");

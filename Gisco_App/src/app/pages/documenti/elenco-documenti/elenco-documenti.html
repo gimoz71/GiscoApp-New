@@ -12,8 +12,8 @@
             <i [ngClass]="{'icon': true}" [ngStyle]="{'color' : color }"></i>
         </div>
     </ion-buttons>
-    <ion-searchbar placeholder="campo libero" (ionInput)="setSitoFiltro($event)"></ion-searchbar>
-    <ion-searchbar placeholder="campo libero Documento" (ionInput)="setDocumentoFiltro($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Ricerca sito..." (ionInput)="setSitoFiltro($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Ricerca..." (ionInput)="setDocumentoFiltro($event)"></ion-searchbar>
 </ion-header>
 <ion-content>
     <ion-list>

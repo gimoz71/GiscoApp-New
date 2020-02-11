@@ -10,15 +10,17 @@
 	<ion-card *ngIf="listaAttivita.length > 0">
 		<ion-card-header>
 			<ion-card-title padding>
-				Elenco Attività
+				Elenco delle mie attività
 			</ion-card-title>
 		</ion-card-header>
 		<ion-card-content no-padding>
 			<ion-list no-padding>
 				<ion-item *ngFor="let attivita of listaAttivita" (click)="goToDetails(attivita)" text-wrap no-padding>
 					<button no-lines ion-item no-margin clear>
-						<h3>{{attivita.att_protocollo}} + {{attivita.att_titolo}}</h3>
-						<p>{{attivita.tab_tipo_scadenza_desc}}</p>
+						<h2><img [src]="getDotPath(attivita)"
+							class="home-dot"> {{attivita.att_protocollo}} - {{attivita.att_titolo}}</h2>
+						<p>{{attivita.az_codice_interno + ' - ' + attivita.az_ragione_sociale}}</p>
+						<p>{{attivita.tab_tipo_attivita_desc + ' - ' + attivita.tab_tipo_scadenza_desc}}</p>
 					</button>
 				</ion-item>
 			</ion-list>
@@ -32,20 +34,20 @@
 			</ion-list>-->
 		</ion-card-content>
 	</ion-card>
-	<ion-card>
-		<ion-card-header *ngIf="prescrizioniChartVisible">
+	<ion-card *ngIf="prescrizioniChartVisible">
+		<ion-card-header>
 			<ion-card-title padding>
-				Situazione Prescrizioni
+				Situazione prescrizioni
 			</ion-card-title>
 		</ion-card-header>
 		<ion-card-content class="yellow-header" *ngIf="prescrizioniChartVisible">
 			<canvas #doughnutCanvas></canvas>
 		</ion-card-content>
 	</ion-card>
-	<ion-card>
-		<ion-card-header *ngIf="attivitaChartVisible">
+	<ion-card *ngIf="attivitaChartVisible">
+		<ion-card-header>
 			<ion-card-title padding>
-				Situazione Attivita
+				Situazione attivita
 			</ion-card-title>
 		</ion-card-header>
 		<ion-card-content class="yellow-header" *ngIf="attivitaChartVisible">

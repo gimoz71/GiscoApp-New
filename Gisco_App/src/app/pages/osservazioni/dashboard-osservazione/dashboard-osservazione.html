@@ -35,7 +35,7 @@
                     <ion-label stacked>Sito</ion-label>
                     <ionic-selectable item-content [(ngModel)]="sitoSelezionato" [items]="listaSiti"
                         disabled="{{conclusa}}" itemTextField="azCodiceRagione" [canSearch]="true"
-                        (onSelect)="sitoSelected($event)" (onSearch)="sitoChange($event)">
+                        (onSelect)="sitoSelected($event)" (onSearch)="sitoChange($event)" searchPlaceholder="Ricerca...">
                     </ionic-selectable>
                 </ion-item>
                 <ion-item>
@@ -57,11 +57,11 @@
                     <ion-input [(ngModel)]="titolo" placeholder="campo obbligatorio" disabled="{{conclusa}}" text-left>
                     </ion-input>
                 </ion-item>
-                <ion-item>
+                <ion-item *ngIf="esiste_dispositivo">
                     <ion-label>Relativa ad un dispositivo</ion-label>
                     <ion-toggle false [(ngModel)]="relativo" disabled="{{conclusa}}"></ion-toggle>
                 </ion-item>
-                <ion-item *ngIf="relativo">
+                <ion-item *ngIf="relativo && esiste_dispositivo">
                     <ion-label stacked>tipologia dispositivo </ion-label>
                     <ion-select [(ngModel)]="tipologiaDispSelezionata" (ionChange)="setTipologiaDispositivo()"
                         disabled="{{conclusa}}">
@@ -69,7 +69,7 @@
                             {{tipologiaDisp.tab_tipo_dispositivo_desc}}</ion-option>
                     </ion-select>
                 </ion-item>
-                <ion-item *ngIf="tipologiaDispSelezionata && relativo">
+                <ion-item *ngIf="tipologiaDispSelezionata && relativo && esiste_dispositivo">
                     <ion-label stacked>dispositivo</ion-label>
                     <ion-select [(ngModel)]="dispositivoSelezionato" disabled="{{conclusa}}">
                         <ion-option *ngFor="let disp of listaDispositivi" [value]="disp">

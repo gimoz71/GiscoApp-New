@@ -5,7 +5,7 @@
         </button>
         <ion-title>Elenco Dispositivi</ion-title>
     </ion-navbar>
-    <ion-searchbar placeholder="campo libero" (ionInput)="getDispositivi($event)" debounce="1000"></ion-searchbar>
+    <ion-searchbar placeholder="Ricerca..." (ionInput)="getDispositivi($event)" debounce="1000"></ion-searchbar>
     <ion-item class="ion-filters">
         <ion-label>Tipologia</ion-label>
         <ion-select [(ngModel)]="tipologiaSelezionata" (ionChange)="getDispositivi()">
@@ -26,7 +26,8 @@
         <ion-item *ngFor="let dispositivo of listaDispositivi" (click)="goToDetails($event, dispositivo)" text-wrap no-padding>
             <button no-lines ion-item no-margin clear>
                 <h2>{{dispositivo.dis_titolo}}</h2>
-                <p>{{dispositivo.az_codice_interno}} - {{dispositivo.az_ragione_sociale}}<!--{{sito.indirizzo_completo}}--></p>
+                <p>{{dispositivo.tab_tipo_dispositivo_desc}}</p>
+                <p class="indirizzo_sito">{{dispositivo.az_codice_interno}} - {{dispositivo.az_ragione_sociale}}<!--{{sito.indirizzo_completo}}--></p>
             </button>
             <!--<h3>
                

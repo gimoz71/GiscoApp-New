@@ -68,6 +68,7 @@ export class MappaSitiPage {
                     this.mapModel.centerLat = parseFloat(r.mp_latitude);
                     this.mapModel.centerLon = parseFloat(r.mp_longitude);
                     this.mapModel.initialZoom = parseFloat(r.mp_zoom);
+                    this.mapModel.type = "roadmap";
 
                     for (let sito of this.listaSiti) {
                         var marker = new Common.MapMarker();
@@ -144,7 +145,7 @@ export class MappaSitiPage {
 
                         marker.lat = sito.az_baricentro_n;
                         marker.lgn = sito.az_baricentro_e;
-                        marker.lab = sito.az_ragione_sociale;
+                        //marker.lab = sito.az_ragione_sociale;
                         marker.draggable = false;
 
                         this.mapModel.markers.push(marker);

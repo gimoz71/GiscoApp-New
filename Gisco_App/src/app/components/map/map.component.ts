@@ -20,6 +20,11 @@ export class MapComponent implements OnInit{
     lat: number;
     lng: number;
 
+    // type of map: "roadmap" | "hybrid" | "satellite" | "terrain" | string
+    type:string = "roadmap";
+
+    info:boolean = false; 
+
     public markers: Array<Common.MapMarker>;
 
     constructor(){}
@@ -29,6 +34,7 @@ export class MapComponent implements OnInit{
         this.lat = this.mapModel.centerLat;
         this.lng = this.mapModel.centerLon;
         this.zoom = this.mapModel.initialZoom;
+        this.type = this.mapModel.type;
     }
 
     public clickedMarker(label: string, index: number): void  {

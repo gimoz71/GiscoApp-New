@@ -5,7 +5,7 @@
         </button>
         <ion-title>Elenco Siti</ion-title>
     </ion-navbar>
-    <ion-searchbar placeholder="campo libero" (ionInput)="getSiti($event)" debounce="1000"></ion-searchbar>
+    <ion-searchbar placeholder="Ricerca..." (ionInput)="getSiti($event)" debounce="1000"></ion-searchbar>
     <ion-item class="ion-filters">
         <ion-label>Tipologia</ion-label>
         <ion-select [(ngModel)]="tipologiaSelezionata" (ionChange)="getSiti()">
@@ -27,7 +27,8 @@
         <ion-item *ngFor="let sito of listaSiti" (click)="goToDetails($event, sito)" text-wrap no-padding>
             <button no-lines ion-item no-margin clear>
                 <h2>{{sito.az_codice_interno}} - {{sito.az_ragione_sociale}}</h2>
-                <p>{{sito.indirizzo_completo}}</p>
+                <p>{{sito.tab_tipologia_sito_desc}}</p>
+                <p class="indirizzo_sito">{{sito.indirizzo_completo}}</p>
             </button>
         </ion-item>
     </ion-list>

@@ -129,18 +129,12 @@
                 </ion-item>
             </div>
             <div *ngFor="let c of catastale">
-                <ion-item text-wrap>
-                    <ion-grid no-padding>
-                        <ion-row>
-                            <ion-col>
-                                <p>Settore </p>
-                            </ion-col>
-                            <ion-col col-8 text-right>
-                                <p>{{c.azc_settore}}</p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-item>
+                <ion-list-header color="light">
+                    <ion-label stacked>Settore</ion-label>
+                    <ion-note item-end>
+                        <p text-right>{{c.azc_settore}}</p>
+                    </ion-note>
+                </ion-list-header>
                 <ion-item text-wrap>
                     <ion-grid no-padding>
                         <ion-row>
@@ -191,17 +185,24 @@
                 </ion-item>
             </div>
             <div *ngFor="let procedimento of procedimenti">
-                <ion-list-header text-wrap>
-                    <h3>{{procedimento.pro_titolo}}</h3>
+                <ion-list-header color="light" text-wrap>
+                    <ion-note item-end>
+                        <p text-right>{{procedimento.pro_titolo}}</p>
+                    </ion-note>
                 </ion-list-header>
                 <ion-item text-wrap>
                     <ion-grid no-padding>
                         <ion-row>
                             <ion-col>
-                                <p>Stato propriet&agrave; </p>
+                                <p>Stato</p>
                             </ion-col>
                             <ion-col col-8 text-right>
-                                <p>{{xxx}}</p>
+                                <p *ngIf="procedimento.pro_chiuso != 'S'">
+                                    Aperto
+                                </p>
+                                <p *ngIf="procedimento.pro_chiuso == 'S'">
+                                    Chiuso
+                                </p>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
@@ -210,44 +211,52 @@
                     <ion-grid no-padding>
                         <ion-row>
                             <ion-col>
-                                <p>Tipo </p>
+                                <p>Tipo</p>
                             </ion-col>
                             <ion-col col-8 text-right>
-                                <p>{{xxx}}</p>
+                                <p>{{procedimento.tab_tipo_procedimento_desc}}</p>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
                 </ion-item>
-                <ion-item text-wrap>
+                <ion-item text-wrap
+                    *ngIf="procedimento && procedimento.pr_scadute > 0">
                     <ion-icon name="alert" color="danger" item-start></ion-icon>
                     Scadute
                     <ion-badge item-end color="danger">{{procedimento.pr_scadute}}</ion-badge>
                 </ion-item>
-                <ion-item text-wrap>
+                <ion-item text-wrap
+                    *ngIf="procedimento && procedimento.pr_in_scadenza > 0">
                     <ion-icon name="time" color="alert" item-start></ion-icon>
                     In scadenza
                     <ion-badge item-end color="alert">{{procedimento.pr_in_scadenza}}</ion-badge>
                 </ion-item>
-                <ion-item text-wrap>
+                <ion-item text-wrap
+                    *ngIf="procedimento && procedimento.pr_prossime > 0">
                     <ion-icon name="information-circle" color="future" item-start></ion-icon>
                     Future
                     <ion-badge item-end color="future">{{procedimento.pr_prossime}}</ion-badge>
                 </ion-item>
-                <ion-item text-wrap>
+                <ion-item text-wrap
+                    *ngIf="procedimento && procedimento.pr_senza_data > 0">
                     <ion-icon name="help-circle" color="no-date" item-start></ion-icon>
                     Senza data
                     <ion-badge item-end color="no-date">{{procedimento.pr_senza_data}}</ion-badge>
                 </ion-item>
-                <ion-item text-wrap>
+                <ion-item text-wrap
+                    *ngIf="procedimento && procedimento.pr_vincolate > 0">
                     <ion-icon name="time" color="vincolate" item-start></ion-icon>
                     Vincolate
                     <ion-badge item-end color="vincolate">{{procedimento.pr_vincolate}}</ion-badge>
                 </ion-item>
-                <ion-item text-wrap>
+                <ion-item text-wrap
+                    *ngIf="procedimento && procedimento.pr_ottemperate > 0">
                     <ion-icon name="checkmark-circle" color="done" item-start></ion-icon>
                     Ottemperate
                     <ion-badge item-end color="done">{{procedimento.pr_ottemperate}}</ion-badge>
                 </ion-item>
+
+                <div style="margin-top: 20px;"></div>
             </div>
         </ion-list>
         <ion-list *ngSwitchCase="'Grafico'">

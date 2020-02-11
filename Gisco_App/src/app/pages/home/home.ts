@@ -202,6 +202,21 @@ export class HomePage {
     });
   }
 
+  public getDotPath(osservazione: Attivita.Attivita): string {
+    switch (osservazione.att_stato_attivita) {
+      case 'FU':
+        return '/assets/imgs/dot_blu.png';
+      case 'SC':
+        return '/assets/imgs/dot_giallo.png';
+      case 'KO':
+        return '/assets/imgs/dot_rosso.png';
+      case 'OK':
+        return '/assets/imgs/dot_verde.png';
+      default:
+        return '/assets/imgs/dot_giallo.png';
+    }
+  }
+  
   public goToNuovaOsservazione() {
     console.log("goToNuovaOsservazione click");
     this.navCtrl.push(DashboardOsservazionePage)

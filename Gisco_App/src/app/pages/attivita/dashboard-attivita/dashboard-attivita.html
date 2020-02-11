@@ -107,18 +107,6 @@
                         </ion-row>
                     </ion-grid>
                 </ion-item>
-                <ion-item text-wrap>
-                    <ion-grid no-padding>
-                        <ion-row>
-                            <ion-col>
-                                <p>Data rilevazione</p>
-                            </ion-col>
-                            <ion-col col-8 text-right>
-                                <p>{{selectedAttivita.data_segnalazione}}</p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-item>
                 <ion-item item-start>
                     <ion-label stacked>Data inizio effettiva</ion-label>
                     <ion-datetime displayFormat="DD-MM-YYYY HH:mm" [(ngModel)]="dataInizio" disabled="{{conclusa}}"

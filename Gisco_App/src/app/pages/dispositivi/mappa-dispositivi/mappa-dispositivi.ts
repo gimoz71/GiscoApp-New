@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, Platform } from 'ionic-angular';
+import { NavController, NavParams, LoadingController} from 'ionic-angular';
 
 import { StoreService } from '../../../services/store/store.service';
 import { DispositiviService } from '../../../services/dispositivi/dispositivi.service';
@@ -67,9 +67,10 @@ export class MappaDispositiviPage {
                     this.listaDispositivi = r.l_lista_dispositivi;
 
                     //genero il modello da passare al componente MAPPA
-                    this.mapModel.centerLat = 41.893056;
-                    this.mapModel.centerLon = 12.482778;
-                    this.mapModel.initialZoom = 12;
+                    this.mapModel.centerLat = parseFloat(r.mp_latitude);
+                    this.mapModel.centerLon = parseFloat(r.mp_longitude);
+                    this.mapModel.initialZoom = parseFloat(r.mp_zoom);
+                    this.mapModel.type = "roadmap"; 
 
                     for (let dispositivo of this.listaDispositivi) {
                         var marker = new Common.MapMarker();
@@ -86,7 +87,7 @@ export class MappaDispositiviPage {
                 loading.dismiss();
             })
 
-            this.dispositiviService.getListaTipologieDispositivo(this.storeService.getLocalServerUrl(), '0', tokenValue).subscribe(r => {
+            this.dispositiviService.getListaTipologieDispositivo(this.storeService.getLocalServerUrl(), tokenValue, '0').subscribe(r => {
                 if (r.ErrorMessage.msg_code === 0) {
                     console.log(r.ErrorMessage.msg_code);
                     this.listaTipologie = r.l_lista_tipologie;
@@ -147,7 +148,7 @@ export class MappaDispositiviPage {
 
                             marker.lat = dispositivo.dis_baricentro_n;
                             marker.lgn = dispositivo.dis_baricentro_e;
-                            marker.lab = dispositivo.az_ragione_sociale;
+                            //marker.lab = dispositivo.az_ragione_sociale;
                             marker.draggable = false;
 
                             this.mapModel.markers.push(marker);

@@ -1,9 +1,3 @@
-<!--
-  Generated template for the DashboardSitoPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
     <ion-navbar hideBackButton>
         <ion-buttons left>
@@ -18,31 +12,26 @@
         </ion-buttons>
         <ion-title>Prescrizione</ion-title>
     </ion-navbar>
+
+    <ion-segment [(ngModel)]="whichPage">
+        <ion-segment-button value="Prescrizione" checked (ionSelect)="segmentPrescrizioneClicked($event)">
+            <ion-icon name="list"></ion-icon>
+            <ion-label>Prescrizione</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="Allegati" (ionSelect)="segmentAllegatiClicked($event)">
+            <ion-icon name="document"></ion-icon>
+            <ion-label>Allegati</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="Attività" (ionSelect)="segmentAttivitaClicked($event)" hidden>
+            <ion-icon name="locate"></ion-icon>
+        </ion-segment-button>
+    </ion-segment>
+
 </ion-header>
 
-<ion-segment [(ngModel)]="whichPage">
-    <ion-segment-button value="Prescrizione" checked (ionSelect)="segmentPrescrizioneClicked($event)">
-        <ion-icon name="list"></ion-icon>
-        <ion-label>Prescrizione</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="Allegati" (ionSelect)="segmentAllegatiClicked($event)">
-        <ion-icon name="document"></ion-icon>
-        <ion-label>Allegati</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="Attività" (ionSelect)="segmentAttivitaClicked($event)">
-        <ion-icon name="locate"></ion-icon>
-    </ion-segment-button>
-    <!-- <ion-segment-button value="Proroghe" (ionSelect)="segmentProrogheClicked($event)">
-<ion-label>Proroghe</ion-label>
-</ion-segment-button> -->
-</ion-segment>
-
-<ion-content padding>
+<ion-content>
     <div [ngSwitch]="whichPage">
         <ion-list *ngSwitchCase="'Prescrizione'">
-            <ion-item color="primary-lighter" class="ion-section-title">
-                <ion-label>Prescrizione</ion-label>
-            </ion-item>
             <div *ngIf="selectedPrescrizione">
                 <ion-list-header text-wrap>
                     <h3>{{comunicazioneTitolo}}</h3>
@@ -78,7 +67,7 @@
                                 <p>Data </p>
                             </ion-col>
                             <ion-col col-8 text-right>
-                                <p>{{selectedPrescrizione.pre_data_emissione}}</p>
+                                <p>{{selectedPrescrizione.pre_data_emissione | date:'dd/MM/yyyy'}}</p>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
@@ -150,7 +139,7 @@
                                 <p>Data di scadenza </p>
                             </ion-col>
                             <ion-col col-8 text-right>
-                                <p>{{selectedPrescrizione.pre_data_scadenza}}</p>
+                                <p  *ngIf="!selectedPrescrizione.pre_data_scadenza.includes('0001')">{{selectedPrescrizione.pre_data_scadenza | date:'dd/MM/yyyy'}}</p>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
@@ -162,7 +151,7 @@
                                 <p>Data di realizzazione </p>
                             </ion-col>
                             <ion-col col-8 text-right>
-                                <p>{{selectedPrescrizione.pre_data_realizzazione}}</p>
+                                <p  *ngIf="!selectedPrescrizione.pre_data_realizzazione.includes('0001')">{{selectedPrescrizione.pre_data_realizzazione | date:'dd/MM/yyyy'}}</p>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
@@ -183,7 +172,7 @@
         </ion-list>
         <ion-list *ngSwitchCase="'Allegati'">
             <ion-item color="primary-lighter" class="ion-section-title">
-                <ion-label>Allegati</ion-label>
+                <ion-label>Files</ion-label>
             </ion-item>
             <ion-item *ngFor="let f of selectedPrescrizione.pre_files">
                 <ion-thumbnail item-start>
@@ -192,11 +181,10 @@
                 <h3>{{f.prf_file}}</h3>
             </ion-item>
         </ion-list>
-        <ion-list *ngSwitchCase="'Attività'">
+        <ion-list *ngSwitchCase="'Attività'" hidden>
             <ion-item color="primary-lighter" class="ion-section-title">
-                <ion-label>Attivit&agrave;</ion-label>
+                <ion-label>Attivita</ion-label>
             </ion-item>
-            
             <div *ngFor="let a of selectedPrescrizione.pre_attivita">
                 <ion-item text-wrap>
                     <ion-grid no-padding>

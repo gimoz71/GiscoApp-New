@@ -14,7 +14,7 @@
 </ion-header>
 
 <ion-content >
-    <ion-searchbar placeholder="az_ragione_sociale/titolo" (ionInput)="getSiti($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Ricerca..." (ionInput)="getSiti($event)"></ion-searchbar>
     <ion-item  class="ion-filters">
         <ion-label>Tipologia</ion-label>
         <ion-select [(ngModel)]="tipologiaSelezionata" (ionChange)="getSiti()">

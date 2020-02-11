@@ -5,8 +5,8 @@
         </button>
         <ion-title>Elenco Osservazioni</ion-title>
     </ion-navbar>
-    <ion-searchbar placeholder="Sito" (ionInput)="setSitoFiltro($event)"></ion-searchbar>
-    <ion-searchbar placeholder="Protocollo" (ionInput)="setProtocolloFiltro($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Ricerca sito..." (ionInput)="setSitoFiltro($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Ricerca..." (ionInput)="setProtocolloFiltro($event)"></ion-searchbar>
     <ion-item class="ion-filters">
         <ion-label>Tipologia</ion-label>
         <ion-select [(ngModel)]="tipologiaSelezionata" (ionChange)="setTipologiaFiltro()">
@@ -18,9 +18,9 @@
     <ion-item class="ion-filters">
         <ion-label>Stato</ion-label>
         <ion-select [(ngModel)]="statoSelezionato" (ionChange)="setStatoFiltro()">
-            <ion-option [value]="'N'" selected>APERTE</ion-option>
-            <ion-option [value]="'S'">CHIUSE</ion-option>
-            <ion-option [value]="'A'">TUTTE</ion-option>
+            <ion-option [value]="'N'" selected>Aperte</ion-option>
+            <ion-option [value]="'S'">Chiuse</ion-option>
+            <ion-option [value]="'A'">Tutte</ion-option>
         </ion-select>
     </ion-item>
 </ion-header>
@@ -31,7 +31,8 @@
             <button no-lines ion-item no-margin clear>
                 <h2><img [src]="getDotPath(osservazione)" class="list-dot">{{(osservazione.att_protocollo)}} -
                     {{osservazione.att_titolo}}</h2>
-                <p>{{osservazione.az_codice_interno}} {{osservazione.az_ragione_sociale}}</p>
+                    <p>{{osservazione.tab_tipo_scadenza_desc}}</p>
+                <p class="indirizzo_sito">{{osservazione.az_codice_interno}} {{osservazione.az_ragione_sociale}}</p>
             </button>
         </ion-item>
     </ion-list>

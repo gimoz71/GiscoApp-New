@@ -70,8 +70,16 @@ export namespace Dispositivo {
         public di_ragione_sociale: string;
     }
 
-    export class Autorizzazione {
-        
+    export class Autorizzazioni {
+        public disp_autorizzazioni_key: number;
+        public dis_dispositivo_key: number;
+        public dp_documento_key: number;
+        public dp_emissione_numero: number;
+        public dp_emissione_data: string;
+        public dp_scadenza_data: string;
+        public ec_nominativo: string;
+        public tab_tipologia_autorizzazioni_desc: string;
+        public doc_titolo: string;
     }
 
 }
