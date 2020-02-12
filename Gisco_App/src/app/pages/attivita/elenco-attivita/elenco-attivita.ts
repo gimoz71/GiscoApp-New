@@ -3,7 +3,6 @@ import { NavController, NavParams, LoadingController, AlertController } from 'io
 import { StoreService } from '../../../services/store/store.service';
 import { Login } from '../../../models/login/login.namespace';
 import { Filtro } from '../../../models/filtro/filtro.namespace';
-import { MyApp } from '../../../app.component';
 import { LoginPage } from '../../login/login';
 import { AttivitaService } from '../../../services/attivita/attivita.service';
 import { Attivita } from '../../../models/attivita/attivita.namespace';
@@ -66,11 +65,17 @@ export class ElencoAttivitaPage {
             this.presentAlert("", "Errore caricamento categorie");
           }
           loading.dismiss();
+        }, err => {
+          this.presentAlert("", err.statusText);
+          loading.dismiss();
         })
       } else {
         this.navCtrl.setRoot(LoginPage);
         loading.dismiss();
       }
+    }, err => {
+      this.presentAlert("", err.statusText);
+      loading.dismiss();
     });
   }
 
@@ -100,7 +105,13 @@ export class ElencoAttivitaPage {
           console.log("getAttivita totali", this.listaAttivita.length);
         }
         loading.dismiss();
+      }, err => {
+        this.presentAlert("", err.statusText);
+        loading.dismiss();
       });
+    }, err => {
+      this.presentAlert("", err.statusText);
+      loading.dismiss();
     });
   }
 
@@ -129,7 +140,7 @@ export class ElencoAttivitaPage {
 
   public setSitoFiltro(event) {
     if (event != undefined) {
-      this.campoLiberoSito = event.srcElement.value;
+      this.campoLiberoSito = event.value;
     }
     if (this.campoLiberoSito === "") {
       this.campoLiberoSito = "A";
@@ -140,7 +151,7 @@ export class ElencoAttivitaPage {
 
   public setProtocolloFiltro(event) {
     if (event != undefined) {
-      this.campoLiberoProtocollo = event.srcElement.value;
+      this.campoLiberoProtocollo = event.value;
     }
     if (this.campoLiberoProtocollo === "") {
       this.campoLiberoProtocollo = "A";
@@ -178,7 +189,13 @@ export class ElencoAttivitaPage {
           this.presentAlert("", "Errore caricamento tipologie");
         }
         loading.dismiss();
+      }, err => {
+        this.presentAlert("", err.statusText);
+        loading.dismiss();
       });
+    }, err => {
+      this.presentAlert("", err.statusText);
+      loading.dismiss();
     });
   }
 

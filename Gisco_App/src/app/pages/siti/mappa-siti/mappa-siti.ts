@@ -116,7 +116,7 @@ export class MappaSitiPage {
         });
         loading.present();
         if (event != undefined) {
-            this.campoLibero = event.srcElement.value;
+            this.campoLibero = event.value;
         }
         if (this.campoLibero === "") {
             this.campoLibero = "A";

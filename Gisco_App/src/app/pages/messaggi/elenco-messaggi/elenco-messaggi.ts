@@ -76,7 +76,7 @@ export class ElencoMessaggiPage {
 
     public setMessaggiFiltro(event) {
         if (event != undefined) {
-            this.campoLibero = event.srcElement.value;
+            this.campoLibero = event.value;
         }
         if (this.campoLibero === "") {
             this.campoLibero = "A";
@@ -102,12 +102,6 @@ export class ElencoMessaggiPage {
         this.navCtrl.push(UscitaMessaggiPage)
     }
 
-
-    public goToDetails(mess) {
-        this.navCtrl.push(DetailsMessaggioPage, { mess: mess });
-    }
-
-
     goToImportantiMessaggi() {
         this.navCtrl.push(ImportantiMessaggiPage)
     }
@@ -115,7 +109,13 @@ export class ElencoMessaggiPage {
         this.navCtrl.push(CestinoMessaggiPage)
     }
 
-    setStar(mess: Messaggio.Messaggio, stato) {
+    public goToDetails(mess) {
+        this.navCtrl.push(DetailsMessaggioPage, { mess: mess });
+    }
+
+    setStar(mess: Messaggio.Messaggio) {
+
+        var stato = ((mess.preferito === '' || mess.preferito === 'N') ? 'S' : 'N');
         this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
             this.messaggiService.setStarMessage(this.storeService.getLocalServerUrl(), mess.messaggi_key, stato, tokenValue).subscribe(r => {

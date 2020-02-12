@@ -5,6 +5,9 @@ import { StoreService } from '../../../services/store/store.service';
 import { DetailsMessaggioPage } from '../details-messaggio/details-messaggio';
 import { MessaggiService } from '../../../services/messaggi/messaggi.service';
 import { Login } from '../../../models/login/login.namespace';
+import { NuovoMessaggioPage } from '../nuovo-messaggio/nuovo-messaggio';
+import { UscitaMessaggiPage } from '../uscita-messaggi/uscita-messaggi';
+import { ImportantiMessaggiPage } from '../importanti-messaggi/importanti-messaggi';
 
 
 
@@ -70,7 +73,7 @@ export class CestinoMessaggiPage {
 
   public setMessaggiFiltro(event) {
     if (event != undefined) {
-      this.campoLibero = event.srcElement.value;
+      this.campoLibero = event.value;
     }
     if (this.campoLibero === "") {
       this.campoLibero = "A";
@@ -152,4 +155,18 @@ export class CestinoMessaggiPage {
     alert.present();
   }
 
+  goToNuovoMessaggio() {
+    this.navCtrl.push(NuovoMessaggioPage);
+  }
+
+  goToUscitaMessaggi() {
+    this.navCtrl.push(UscitaMessaggiPage)
+  }
+
+  goToImportantiMessaggi() {
+    this.navCtrl.push(ImportantiMessaggiPage)
+  }
+  goToCestinoMessaggio() {
+    this.navCtrl.push(CestinoMessaggiPage)
+  }
 }

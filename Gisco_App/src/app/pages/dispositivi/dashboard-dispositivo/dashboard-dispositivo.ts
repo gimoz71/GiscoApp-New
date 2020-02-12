@@ -23,6 +23,7 @@ export class DashboardDispositivoPage {
     public selectedDispositivo: Dispositivo.Dispositivo;
     public titolarita: Array<Dispositivo.Titolarita>;
     public autorizzazioni: Array<Dispositivo.Autorizzazioni>;
+    public personalizzazioni: Array<Dispositivo.Personalizzazione>;
     public whichPage: string;
 
     public mapModel: Common.MapModel;
@@ -54,6 +55,7 @@ export class DashboardDispositivoPage {
                     this.selectedDispositivo = r.dispositivo;
                     this.titolarita = r.titolarita;
                     this.autorizzazioni = r.autorizzazioni;
+                    this.personalizzazioni = r.dis_personalizzazioni;
                     console.log('titolarita ' + this.titolarita.length);
 
                     var marker = new Common.MapMarker();
@@ -68,7 +70,7 @@ export class DashboardDispositivoPage {
                     this.mapModel.centerLon = marker.lgn;
                     this.mapModel.initialZoom = parseFloat(r.mp_zoom);
                     this.mapModel.type = "satellite";
-                    
+
                     this.showMap = true;
                 }
             })

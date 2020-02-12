@@ -125,6 +125,57 @@
                     </ion-row>
                 </ion-grid>
             </ion-item>
+            <ion-item color="primary-lighter" class="ion-section-title">
+                <ion-label>Personalizzazioni</ion-label>
+            </ion-item>
+            <div *ngFor="let p of personalizzazioni">
+                <ion-item text-wrap *ngIf="p.dis_tipo_campo==='T'|| p.dis_tipo_campo==='S'">
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>{{p.dis_scheda_testo}}</p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{p.dis_valore_t}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+
+                <ion-item text-wrap *ngIf="p.dis_tipo_campo==='D'">
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>{{p.dis_scheda_testo}}</p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{p.dis_valore_d}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+
+                <ion-item text-wrap *ngIf="p.dis_tipo_campo==='N'">
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>{{p.dis_scheda_testo}}</p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{p.dis_valore_n}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+
+                <div *ngIf="p.dis_tipo_campo==='M'">
+                    <ion-list-header color="light"> {{p.dis_scheda_testo}}</ion-list-header>
+                    <ion-item *ngFor="let v of p.dis_valori">
+                        <ion-label><small>{{v.dis_testo}} {{v.dis_valore}}</small></ion-label>
+                        <ion-checkbox slot="end" disabled="true" [checked]="v.dis_valore_scelto!=='N'"></ion-checkbox>
+                    </ion-item>
+                </div>
+            </div>
         </ion-list>
         <ion-list *ngSwitchCase="'Titolarita'">
             <ion-item color="primary-lighter" class="ion-section-title">
@@ -171,7 +222,7 @@
                             </ion-col>
                         </ion-row>
                     </ion-grid>
-                    </ion-item>
+                </ion-item>
                 <ion-item text-wrap *ngIf="!t.dis_a_data.includes('0001')">
                     <ion-grid no-padding>
                         <ion-row>
@@ -262,7 +313,8 @@
             <ion-item color="primary-lighter" class="ion-section-title">
                 <ion-label>Mappa</ion-label>
             </ion-item>
-            <map-component [mapModel]="mapModel" *ngIf="showMap" (onMarkerClicked)="markerClicked($event)"></map-component>
+            <map-component [mapModel]="mapModel" *ngIf="showMap" (onMarkerClicked)="markerClicked($event)">
+            </map-component>
         </ion-list>
         <ion-list *ngSwitchCase="'Immagini'">
             <ion-item color="primary-lighter" class="ion-section-title">

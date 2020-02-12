@@ -82,4 +82,29 @@ export namespace Dispositivo {
         public doc_titolo: string;
     }
 
+    export class Personalizzazione {
+        public dis_valori: Array<PersonalizzazioneValore>;
+        public dis_valore: string;
+        public tab_tipo_dispositivo_cod: number;
+        public dis_scheda_testo: string;
+        public dis_tipo_campo: string;
+        public dis_order: number;
+        public dis_dispositivo_key: number;
+        public dis_valore_d: string;
+        public dis_valore_n: number;
+        public dis_valore_t: any;
+    }
+
+    export class PersonalizzazioneValore {
+        public dis_valore_scelto: string;
+        public disp_proprieta_key: number;
+        public tipo_procedimento_proprieta_key: number;
+        public dis_proprieta: string;
+        public dis_tipologia: string;
+        public dis_order: number;
+        public dis_dispositivo_key: number;
+        public disp_altri_dati_key: number;
+        public dis_testo: string;
+        public dis_valore: string;
+    }
 }

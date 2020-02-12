@@ -6,6 +6,9 @@ import { StoreService } from '../../../services/store/store.service';
 import { DetailsMessaggioPage } from '../details-messaggio/details-messaggio';
 import { MessaggiService } from '../../../services/messaggi/messaggi.service';
 import { Login } from '../../../models/login/login.namespace';
+import { NuovoMessaggioPage } from '../nuovo-messaggio/nuovo-messaggio';
+import { UscitaMessaggiPage } from '../uscita-messaggi/uscita-messaggi';
+import { CestinoMessaggiPage } from '../cestino-messaggi/cestino-messaggi';
 
 
 
@@ -75,7 +78,7 @@ export class ImportantiMessaggiPage {
 
   public setMessaggiFiltro(event) {
     if (event != undefined) {
-      this.campoLibero = event.srcElement.value;
+      this.campoLibero = event.value;
     }
     if (this.campoLibero === "") {
       this.campoLibero = "A";
@@ -93,14 +96,13 @@ export class ImportantiMessaggiPage {
     }
   }
 
-  setStar(mess: Messaggio.Messaggio, stato) {
+  setStar(mess: Messaggio.Messaggio) {
+
+    var stato = ((mess.preferito === '' || mess.preferito === 'N') ? 'S' : 'N');
     this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.messaggiService.setStarMessage(this.storeService.getLocalServerUrl(), mess.messaggi_key, stato, tokenValue).subscribe(r => {
-        /*   this.numMess = 1;
-           this.getMessaggi();*/
-        this.listaMessaggi.splice(this.listaMessaggi.indexOf(mess), 1);
-        this.numMess = this.numMess - 1;
+        mess.preferito = stato;
       },
         (error) => {
           console.log(error);
@@ -165,6 +167,21 @@ export class ImportantiMessaggiPage {
 
   public goToDetails(mess) {
     this.navCtrl.push(DetailsMessaggioPage, { mess: mess, callback: this.eliminaMessCallbackFunction, onlyNotImportant: false });
+  }
+
+  goToNuovoMessaggio() {
+    this.navCtrl.push(NuovoMessaggioPage);
+  }
+
+  goToUscitaMessaggi() {
+    this.navCtrl.push(UscitaMessaggiPage)
+  }
+
+  goToImportantiMessaggi() {
+    this.navCtrl.push(ImportantiMessaggiPage)
+  }
+  goToCestinoMessaggio() {
+    this.navCtrl.push(CestinoMessaggiPage)
   }
 
 }

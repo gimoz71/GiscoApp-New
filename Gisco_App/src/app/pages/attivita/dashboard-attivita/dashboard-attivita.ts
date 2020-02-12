@@ -61,8 +61,8 @@ export class DashboardAttivitaPage {
     this.callbackChiusa = this.navParams.get("callbackChiusa")
     this.listaPersonalizzate = new Array<Osservazione.ProprietaPersonalizzataChiusura>();
 
-    this.dataInizio = this.datePipe.transform(Date.now(), 'yyyy-MM-ddThh:mm:ss');
-    this.dataFine = this.datePipe.transform(Date.now(), 'yyyy-MM-ddThh:mm:ss');
+    this.dataInizio = this.datePipe.transform(Date.now(), 'yyyy-MM-ddTHH:mm:ss');
+    this.dataFine = this.datePipe.transform(Date.now(), 'yyyy-MM-ddTHH:mm:ss');
   }
 
   ionViewDidLoad() {
@@ -165,7 +165,13 @@ export class DashboardAttivitaPage {
                 loading.dismiss();
                 this.presentAlert("", r.ErrorMessage.msg_testo);
               }
+            }, err => {
+              this.presentAlert("", err.statusText);
+              loading.dismiss();
             })
+          }, err => {
+            this.presentAlert("", err.statusText);
+            loading.dismiss();
           });
         } else {
           this.presentAlert("", "deve essere this.dataInizio < this.dataFine");
@@ -220,7 +226,13 @@ export class DashboardAttivitaPage {
             this.presentAlert("", r.ErrorMessage.msg_testo);
           }
           loading.dismiss();
+        }, err => {
+          this.presentAlert("", err.statusText);
+          loading.dismiss();
         })
+      }, err => {
+        this.presentAlert("", err.statusText);
+        loading.dismiss();
       });
     } else {
       this.presentAlert("", "inserire un commento");
@@ -272,7 +284,13 @@ export class DashboardAttivitaPage {
           this.presentAlert("", r.ErrorMessage.msg_testo);
         }
         loading.dismiss();
+      }, err => {
+        this.presentAlert("", err.statusText);
+        loading.dismiss();
       })
+    }, err => {
+      this.presentAlert("", err.statusText);
+      loading.dismiss();
     });
 
   }
@@ -322,7 +340,13 @@ export class DashboardAttivitaPage {
           console.log("pippo")
           loading.dismiss();
           console.log("pippo")
+        }, err => {
+          this.presentAlert("", err.statusText);
+          loading.dismiss();
         })
+      }, err => {
+        this.presentAlert("", err.statusText);
+        loading.dismiss();
       });
     } else {
       this.presentAlert("", "inserire un commento");
@@ -475,12 +499,21 @@ export class DashboardAttivitaPage {
               } else {
                 this.presentAlert("ERROR", "si è verificato un problema nel reload delle immagini");
               }
+            }, err => {
+              this.presentAlert("", err.statusText);
+              loading.dismiss();
             });
           } else {
             this.presentAlert("", "errore salvataggio immagine " + r.ErrorMessage.msg_testo);
           }
           loading.dismiss();
+        }, err => {
+          this.presentAlert("", err.statusText);
+          loading.dismiss();
         });
+      }, err => {
+        this.presentAlert("", err.statusText);
+        loading.dismiss();
       })
     }, (err) => {
       loading.dismiss();
@@ -532,7 +565,13 @@ export class DashboardAttivitaPage {
           this.presentAlert("", "errore eliminazione immagine " + r.ErrorMessage.msg_testo);
         }
         loading.dismiss();
+      }, err => {
+        this.presentAlert("", err.statusText);
+        loading.dismiss();
       });
+    }, err => {
+      this.presentAlert("", err.statusText);
+      loading.dismiss();
     })
   }
 

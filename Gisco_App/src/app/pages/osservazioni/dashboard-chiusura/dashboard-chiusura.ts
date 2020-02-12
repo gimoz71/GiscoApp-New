@@ -63,8 +63,8 @@ export class DashboardChiusuraPage {
     this.callbackChiusa = this.navParams.get("callbackChiusa")
     this.listaPersonalizzate = new Array<Osservazione.ProprietaPersonalizzataChiusura>();
 
-    this.dataInizio = this.datePipe.transform(Date.now(), 'yyyy-MM-ddThh:mm:ss');
-    this.dataFine = this.datePipe.transform(Date.now(), 'yyyy-MM-ddThh:mm:ss');
+    this.dataInizio = this.datePipe.transform(Date.now(), 'yyyy-MM-ddTHH:mm:ss');
+    this.dataFine = this.datePipe.transform(Date.now(), 'yyyy-MM-ddTHH:mm:ss');
 
     this.customPickerOptions = {
       buttons: [{

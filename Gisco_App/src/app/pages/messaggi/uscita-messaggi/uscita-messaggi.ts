@@ -5,6 +5,9 @@ import { StoreService } from '../../../services/store/store.service';
 import { MessaggiService } from '../../../services/messaggi/messaggi.service';
 import { Login } from '../../../models/login/login.namespace';
 import { DetailsMessaggioPage } from '../details-messaggio/details-messaggio';
+import { NuovoMessaggioPage } from '../nuovo-messaggio/nuovo-messaggio';
+import { ImportantiMessaggiPage } from '../importanti-messaggi/importanti-messaggi';
+import { CestinoMessaggiPage } from '../cestino-messaggi/cestino-messaggi';
 
 
 @Component({
@@ -72,7 +75,7 @@ export class UscitaMessaggiPage {
 
   public setMessaggiFiltro(event) {
     if (event != undefined) {
-      this.campoLibero = event.srcElement.value;
+      this.campoLibero = event.value;
     }
     if (this.campoLibero === "") {
       this.campoLibero = "A";
@@ -115,6 +118,21 @@ export class UscitaMessaggiPage {
     });
   }
 
+  setStar(mess: Messaggio.Messaggio) {
+
+    var stato = ((mess.preferito === '' || mess.preferito === 'N') ? 'S' : 'N');
+    this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
+      var tokenValue = val.token_value;
+      this.messaggiService.setStarMessage(this.storeService.getLocalServerUrl(), mess.messaggi_key, stato, tokenValue).subscribe(r => {
+        mess.preferito = stato;
+      },
+        (error) => {
+          console.log(error);
+        }
+      )
+    });
+  }
+
   public deleteConfirm(mess: Messaggio.Messaggio) {
     let alert = this.alertCtrl.create({
       title: 'Conferma',
@@ -138,4 +156,18 @@ export class UscitaMessaggiPage {
     alert.present();
   }
 
+  goToNuovoMessaggio() {
+    this.navCtrl.push(NuovoMessaggioPage);
+  }
+
+  goToUscitaMessaggi() {
+    this.navCtrl.push(UscitaMessaggiPage)
+  }
+
+  goToImportantiMessaggi() {
+    this.navCtrl.push(ImportantiMessaggiPage)
+  }
+  goToCestinoMessaggio() {
+    this.navCtrl.push(CestinoMessaggiPage)
+  }
 }

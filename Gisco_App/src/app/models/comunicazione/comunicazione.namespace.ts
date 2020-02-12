@@ -50,7 +50,7 @@ export namespace Comunicazione {
         public cancellato_il: string;
         public int_titolo: string;
         public com_com_titolo: any;
-        public pr_totali:number;
+        public pr_totali: number;
     }
 
     export class Prescrizione {
@@ -111,6 +111,7 @@ export namespace Comunicazione {
         public comunicazioni_file_key: number;
         public cof_comunicazioni_key: number;
         public cof_file: string;
+        public cof_url: string;
         public inserito_da: string;
         public inserito_il: string;
         public modificato_da: string;
@@ -124,6 +125,7 @@ export namespace Comunicazione {
         public prescrizione_file_key: number;
         public prf_prescrizione_key: number;
         public prf_file: string;
+        public prf_url: string;
         public inserito_da: string;
         public inserito_il: string;
         public modificato_da: string;

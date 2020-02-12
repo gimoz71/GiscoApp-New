@@ -194,7 +194,9 @@
             </ion-item>
             <ion-item *ngFor="let f of selectedComunicazione.com_files" text-wrap>
                 <ion-thumbnail item-start>
-                    <img src="/assets/imgs/ios-doc-icon.png">
+                    <a href="{{f.cof_url}}">
+                        <img src="/assets/imgs/ios-doc-icon.png">
+                    </a>
                 </ion-thumbnail>
                 <h3>{{f.cof_file}}</h3>
             </ion-item>
@@ -222,14 +224,15 @@
                     <ion-item>
                         <ion-label stacked>Scadenza</ion-label>
                         <ion-note item-end>
-                            <p  *ngIf="!prescrizione.pre_data_scadenza.includes('0001')">{{prescrizione.pre_data_scadenza | date:'dd/MM/yyyy'}}</p>
+                            <p *ngIf="!prescrizione.pre_data_scadenza.includes('0001')">
+                                {{prescrizione.pre_data_scadenza | date:'dd/MM/yyyy'}}</p>
                         </ion-note>
                     </ion-item>
                     <ion-item>
                         <ion-label stacked>Stato</ion-label>
                         <ion-note item-end>
                             <ion-icon [name]="getPreIcon(prescrizione)" [color]="getPreColor(prescrizione)"></ion-icon>
-                            {{prescrizione.pre_stato_desc}} 
+                            {{prescrizione.pre_stato_desc}}
                         </ion-note>
                     </ion-item>
                 </div>

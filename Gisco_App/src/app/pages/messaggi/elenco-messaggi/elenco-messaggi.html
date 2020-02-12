@@ -5,7 +5,7 @@
         </button>
         <ion-title>Messaggi</ion-title>
     </ion-navbar>
-    <ion-searchbar placeholder="Ricerca..." (ionInput)="setMessaggiFiltro($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Ricerca..." (ionBlur)="setMessaggiFiltro($event)"></ion-searchbar>
 </ion-header>
 <ion-content>
 
@@ -27,18 +27,18 @@
                 </button>
             </ion-item-options>
             <ion-item-options side="right">
-                <button ion-button color="secondary" *ngIf="mess.preferito==''" (click)="setStar(mess,'S')">
+                <button ion-button color="secondary" (click)="setStar(mess)">
                     <ion-icon name="star-outline"></ion-icon>
                     Importante
                 </button>
-                <button ion-button color="secondary" *ngIf="mess.preferito=='N'" (click)="setStar(mess,'S')">
+                <!-- <button ion-button color="secondary" *ngIf="mess.preferito=='N'" (click)="setStar(mess,'S')">
                     <ion-icon name="star-outline"></ion-icon>
                     Importante
                 </button>
                 <button ion-button color="secondary" *ngIf="mess.preferito=='S'" (click)="setStar(mess,'N')">
                     <ion-icon name="star"></ion-icon>
                     Importante
-                </button>
+                </button> -->
                 <button ion-button color="primary-lighter" (click)="goToDetails(mess)">
                     <ion-icon name="eye"></ion-icon>
                     Leggi
@@ -75,7 +75,8 @@
         </div>-->
     </ion-list>
 
-    <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Caricamento Messaggi...">
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles"
+        loadingText="Caricamento Messaggi...">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>
 

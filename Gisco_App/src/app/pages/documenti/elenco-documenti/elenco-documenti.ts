@@ -76,7 +76,7 @@ export class ElencoDocumentiPage {
 
   public setDocumentoFiltro(event) {
     if (event != undefined) {
-      this.campoLiberoDocumento = event.srcElement.value;
+      this.campoLiberoDocumento = event.value;
     }
     if (this.campoLiberoDocumento === "") {
       this.campoLiberoDocumento = "A";
@@ -87,7 +87,7 @@ export class ElencoDocumentiPage {
 
   public setSitoFiltro(event) {
     if (event != undefined) {
-      this.campoLiberoSito = event.srcElement.value;
+      this.campoLiberoSito = event.value;
     }
     if (this.campoLiberoSito === "") {
       this.campoLiberoSito = "A";

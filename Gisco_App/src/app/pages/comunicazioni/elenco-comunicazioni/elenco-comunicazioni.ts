@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { Procedimento } from '../../../models/procedimento/procedimento.namespace';
 import { StoreService } from '../../../services/store/store.service';
 import { Login } from '../../../models/login/login.namespace';
@@ -28,7 +28,8 @@ export class ElencoComunicazioniPage {
     public navParams: NavParams,
     public comunicazioniService: ComunicazioniService,
     private storeService: StoreService,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    alertCtrl: AlertController) {
     this.listaComunicazioni = new Array<Array<Comunicazione.Comunicazione>>();
     this.selectedProcedimento = navParams.get('procedimento');
     this.procedimentiTot = 0;
@@ -55,6 +56,9 @@ export class ElencoComunicazioniPage {
           }
         }
         loading.dismiss();
+      }, err => {
+        loading.dismiss();
+        this.presentAlert("", err.statusText);
       })
     });
   }
@@ -68,30 +72,30 @@ export class ElencoComunicazioniPage {
   }
 
   public getPreColor(comunicazione: Comunicazione.Comunicazione): string {
-    
-    if (comunicazione.pr_scadute > 0){
+
+    if (comunicazione.pr_scadute > 0) {
       return 'danger';
     }
-    else{
-      if (comunicazione.pr_in_scadenza > 0){
+    else {
+      if (comunicazione.pr_in_scadenza > 0) {
         return 'alert';
       }
-      else{
+      else {
         return 'done';
       }
     }
   }
 
   public getPreIcon(comunicazione: Comunicazione.Comunicazione): string {
-    
-    if (comunicazione.pr_scadute > 0){
+
+    if (comunicazione.pr_scadute > 0) {
       return 'alert';
     }
-    else{
-      if (comunicazione.pr_in_scadenza > 0){
+    else {
+      if (comunicazione.pr_in_scadenza > 0) {
         return 'time';
       }
-      else{
+      else {
         return 'checkmark-circle';
       }
     }
@@ -99,5 +103,14 @@ export class ElencoComunicazioniPage {
 
   back() {
     this.navCtrl.pop();
+  }
+
+  presentAlert(title: string, mess: string) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: mess,
+      buttons: ['Ok']
+    });
+    alert.present();
   }
 }
