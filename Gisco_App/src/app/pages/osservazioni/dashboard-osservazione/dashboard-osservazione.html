@@ -151,8 +151,9 @@
                         <p><small>responsabile</small> {{(assegnazione.att_dip_scelta==="R" ? "Sì" : "No")}}</p>
                     </ion-item>
                     <ion-item-options side="left" *ngIf="!conclusa">
-                        <button ion-button color="white" (click)="presentAlertConfirm(assegnazione)">
-                            <ion-icon color="danger" name="trash"></ion-icon>
+                        <button ion-button color="danger" (click)="presentAlertConfirm(assegnazione)">
+                            <ion-icon name="trash"></ion-icon>
+                            Cestino
                         </button>
                     </ion-item-options>
                 </ion-item-sliding>

@@ -3,28 +3,28 @@ dashboard-osservazione {
         min-height: 10em !important;
         
     }
+    /*ion-item-options[side=left] { // scardina il funzionamento delle slider option. La lascio nel caso avessimo bisogno di capire il perchè è stata messa
+        right: 0 !important;
+        left: auto !important;
+        -webkit-box-pack: start;
+        -webkit-justify-content: flex-start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+    }
+
+    ion-item-options {
+        position: absolute;
+        z-index: 1;
+        display: block !important;
+        height: 100%;
+        font-size: 14px;
+        visibility: visible !important;
+        top: 0;
+        right: 0;
+        -webkit-box-pack: end;
+        -webkit-justify-content: flex-end;
+        -ms-flex-pack: end;
+        justify-content: flex-end;
+    }*/
 }
 
-ion-item-options[side=left] {
-    right: 0 !important;
-    left: auto !important;
-    -webkit-box-pack: start;
-    -webkit-justify-content: flex-start;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
-}
-
-ion-item-options {
-    position: absolute;
-    z-index: 1;
-    display: block !important;
-    height: 100%;
-    font-size: 14px;
-    visibility: visible !important;
-    top: 0;
-    right: 0;
-    -webkit-box-pack: end;
-    -webkit-justify-content: flex-end;
-    -ms-flex-pack: end;
-    justify-content: flex-end;
-}
