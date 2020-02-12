@@ -113,6 +113,7 @@
                     </ion-item>
 
                     <ion-item *ngIf="pers.ta_tipologia==='S'">
+                        <ion-list-header color="light">{{pers.ta_proprieta}}</ion-list-header>
                         <ion-label stacked>{{pers.ta_proprieta}}</ion-label>
                         <ion-select [(ngModel)]="valoreSKey" disabled="{{conclusa}}"
                             (ionChange)="valoreSChanged(pers.c_valori)">
