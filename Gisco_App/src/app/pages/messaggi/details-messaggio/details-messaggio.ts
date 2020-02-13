@@ -1,4 +1,4 @@
-import { NavController, NavParams, AlertController, Events } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { Messaggio } from '../../../models/messaggio/messaggio.namespace';
 import { StoreService } from '../../../services/store/store.service';

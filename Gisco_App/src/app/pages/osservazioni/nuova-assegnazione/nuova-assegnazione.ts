@@ -34,7 +34,8 @@ export class NuovaAssegnazionePage {
     private storeService: StoreService,
     public loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
-    private navParams: NavParams) {
+    private navParams: NavParams
+    ) {
     this.selectedOsservazione = navParams.get('osservazione');
     this.callbackReload = navParams.get('callbackReload');
     this.idSitoSelected = navParams.get('idSitoSelected');

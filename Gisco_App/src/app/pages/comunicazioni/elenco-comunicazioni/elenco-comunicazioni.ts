@@ -29,7 +29,7 @@ export class ElencoComunicazioniPage {
     public comunicazioniService: ComunicazioniService,
     private storeService: StoreService,
     public loadingCtrl: LoadingController,
-    alertCtrl: AlertController) {
+    public alertCtrl: AlertController) {
     this.listaComunicazioni = new Array<Array<Comunicazione.Comunicazione>>();
     this.selectedProcedimento = navParams.get('procedimento');
     this.procedimentiTot = 0;

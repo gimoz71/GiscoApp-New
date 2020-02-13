@@ -1,17 +1,17 @@
-import { Observable } from 'rxjs/Observable';
+//import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/timeoutWith';
 
-import { Login } from './../../models/login/login.namespace';
-import { Platform, MenuController, Nav, NavController, AlertController, ToastController } from 'ionic-angular';
+//import { Login } from './../../models/login/login.namespace';
+import { NavController, AlertController} from 'ionic-angular'; //Platform, MenuController, Nav, 
 
-import { Injectable, ViewChild } from '@angular/core';
-import { GlobalVariable } from '../../global';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+//import { GlobalVariable } from '../../global';
+//import { HttpClient } from '@angular/common/http';
 
 import { ElencoMessaggiPage } from '../../pages/messaggi/elenco-messaggi/elenco-messaggi';
 
-import { BasePage } from '../../pages/common/base';
+//import { BasePage } from '../../pages/common/base';
 import { ElencoAttivitaPage } from '../../pages/attivita/elenco-attivita/elenco-attivita';
 import { ElencoProcedimentiPage } from '../../pages/procedimenti/elenco-procedimenti/elenco-procedimenti';
 import { StoreService } from '../store/store.service';
@@ -21,7 +21,7 @@ import { LoginService } from '../login/login.service';
 @Injectable()
 export class AlertService {
 
-     constructor(private http: HttpClient,
+     constructor(
         public alertController: AlertController,
         public storeService: StoreService,
         public loginService: LoginService){}

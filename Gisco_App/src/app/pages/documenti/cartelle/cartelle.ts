@@ -4,7 +4,7 @@ import { Documento } from '../../../models/documento/documento.namespace';
 import { DocumentiService } from '../../../services/documenti/documenti.service';
 import { StoreService } from '../../../services/store/store.service';
 import { Login } from '../../../models/login/login.namespace';
-import { ElencoDocumentiPage } from '../elenco-documenti/elenco-documenti';
+//import { ElencoDocumentiPage } from '../elenco-documenti/elenco-documenti';
 import { TipologiePage } from '../elenco-tipologie/elenco-tipologie';
 
 /**

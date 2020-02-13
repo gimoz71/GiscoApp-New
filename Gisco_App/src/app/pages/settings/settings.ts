@@ -1,18 +1,18 @@
-import { Error } from '../../models/shared/error.namespace';
+//import { Error } from '../../models/shared/error.namespace';
 
-import { Component, Inject, forwardRef, ViewChild } from '@angular/core';
-import { Nav, NavController, AlertController } from 'ionic-angular';
+import { Component, Inject, forwardRef} from '@angular/core';
+//import { Nav, NavController, AlertController } from 'ionic-angular';
 import { LoginService } from '../../services/login/login.service';
 import { StoreService } from '../../services/store/store.service';
-import { ErrorService } from '../../services/shared/error.service';
-import { Login } from '../../models/login/login.namespace';
+//import { ErrorService } from '../../services/shared/error.service';
+//import { Login } from '../../models/login/login.namespace';
 
-import { HomePage} from '../home/home';
+//import { HomePage} from '../home/home';
 
-import { FirebaseX } from '@ionic-native/firebase-x/ngx';
+//import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 
 import { AlertService } from '../../services/shared/alert.service';
-import { ElencoMessaggiPage } from '../messaggi/elenco-messaggi/elenco-messaggi';
+//import { ElencoMessaggiPage } from '../messaggi/elenco-messaggi/elenco-messaggi';
 
 /**
  * Generated class for the ComunicazioneComponent component.
@@ -38,7 +38,6 @@ export class SettingsPage {
   }
 
   public saveSettings(): void {
-    var self = this;
     this.loginService.checkServerValidity(this.servername)
       .subscribe(r => {
         if(r.result == 'OK'){

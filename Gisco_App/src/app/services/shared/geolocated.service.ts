@@ -1,4 +1,4 @@
-import { Geolocation, GeolocationOptions, Geoposition } from '@ionic-native/geolocation/ngx';
+import { Geolocation, GeolocationOptions} from '@ionic-native/geolocation/ngx';
 import { Subject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class GeolocatedService {
 
     private options: GeolocationOptions;
-    private currentPos: Geoposition;
+    //private currentPos: Geoposition;
 
     public coordinatesSubject: Subject<boolean> = new Subject<boolean>();
     public coordObservable: Observable<boolean> = this.coordinatesSubject.asObservable();

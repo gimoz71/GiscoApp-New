@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, Platform, ToastController, ActionSheetController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ActionSheetController } from 'ionic-angular';
 
 import { Dipendente } from '../../models/dipendente/dipendente.namespace';
 import { ProfiloService } from '../../services/profilo/profilo.service';
@@ -24,7 +24,6 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 export class DashboardProfiloPage {
     private imageURI: any;
-    private imageFileName: any;
     private profilo: Dipendente.Dipendente;
 
     constructor(public navCtrl: NavController,

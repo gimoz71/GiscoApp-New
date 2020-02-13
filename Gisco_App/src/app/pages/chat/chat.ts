@@ -1,5 +1,5 @@
-import { Nav, NavParams } from "ionic-angular";
-import { StoreService } from "../../services/store/store.service";
+//import { Nav, NavParams } from "ionic-angular";
+//import { StoreService } from "../../services/store/store.service";
 import { Component } from "@angular/core";
 
 declare var CCCometChat: any;
@@ -14,9 +14,8 @@ export class ChatPage {
     licenseKey: string = "Z8AZN-TX6NP-3KETR-LDF4L-SF1LP"; // Replace the value with your CometChat License Key;
     apiKey: string = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxx"; // Replace the value with your CometChat Api Key;
 
-    constructor(public navParams: NavParams,
-        private storeService: StoreService,
-        private nav: Nav ) {
+    constructor() 
+    {
     }
 
     ionViewDidLoad() {

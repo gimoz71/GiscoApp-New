@@ -1,19 +1,19 @@
-import { Error } from './../../models/shared/error.namespace';
+//import { Error } from './../../models/shared/error.namespace';
 
-import { Component, Inject, forwardRef, ViewChild } from '@angular/core';
-import { Nav, NavController, AlertController } from 'ionic-angular';
+import { Component, Inject, forwardRef } from '@angular/core';
+import { NavController, AlertController } from 'ionic-angular';
 import { LoginService } from '../../services/login/login.service';
 import { StoreService } from './../../services/store/store.service';
-import { ErrorService } from './../../services/shared/error.service';
+//import { ErrorService } from './../../services/shared/error.service';
 import { Login } from '../../models/login/login.namespace';
-import { Common } from '../../models/common/common.namespace';
+//import { Common } from '../../models/common/common.namespace';
 
 import { HomePage } from '../../pages/home/home';
 
 // import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 
 import { AlertService } from '../../services/shared/alert.service';
-import { ElencoMessaggiPage } from '../messaggi/elenco-messaggi/elenco-messaggi';
+//import { ElencoMessaggiPage } from '../messaggi/elenco-messaggi/elenco-messaggi';
 import { CommonService } from '../../services/shared/common.service';
 
 /**
@@ -34,14 +34,14 @@ export class LoginPage {
   private username: string = "";
   private password: string = "";
 
-  private firebase_token: string = "";
+  //private firebase_token: string = "";
   private serverUrl: string = "";
 
   constructor(@Inject(forwardRef(() => LoginService)) private loginService: LoginService,
     private alertCtrl: AlertController,
     private navController: NavController,
     @Inject(forwardRef(() => StoreService)) private store: StoreService,
-    private error: ErrorService,
+    // private error: ErrorService,
     // public firebaseNative: FirebaseX,
     public alertService: AlertService,
     public commonService: CommonService) {

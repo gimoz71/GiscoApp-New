@@ -175,7 +175,7 @@ export class NuovoMessaggioPage {
             busta.messaggio = mess;
             busta.token = val.token_value;
             this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
-              var tokenValue = val.token_value;
+              //var tokenValue = val.token_value;
               this.messaggiService.sendMessage(this.storeService.getLocalServerUrl(), busta).subscribe(r => {
                 console.log(r);
                 if (r.ErrorMessage.msg_code == 0) {

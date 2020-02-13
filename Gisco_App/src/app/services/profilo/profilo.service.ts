@@ -6,7 +6,7 @@ import { GlobalVariable } from '../../global';
 import { Http } from '../../models/shared/http.namespace';
 import { Nav } from 'ionic-angular';
 import { Login } from "../../models/login/login.namespace";
-import { HttpClient } from "@angular/common/http";
+//import { HttpClient } from "@angular/common/http";
 
 @Injectable()
 export class ProfiloService {
@@ -14,7 +14,7 @@ export class ProfiloService {
     @ViewChild(Nav) nav;
     sitiService: string[];
 
-    constructor(private httpService: HttpService,private http: HttpClient) {
+    constructor(private httpService: HttpService) {
     }
 
     public getProfilo(serverUrl: string, key: number, token: string): Observable<Http.HttpResponse> {

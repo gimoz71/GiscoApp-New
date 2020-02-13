@@ -1,7 +1,7 @@
 import { ErrorService } from './services/shared/error.service';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicApp, IonicModule} from 'ionic-angular';
 import { GlobalErrorHandler } from '../app/handler/error/globalerror.handler';
 import { HttpClientModule } from '@angular/common/http';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -123,8 +123,8 @@ import { CommonService } from './services/shared/common.service';
 import { FcmProvider } from '../providers/fcm/fcm';
 import { GeolocatedService } from './services/shared/geolocated.service';
 
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { GiscoHttpInterceptor } from './interceptor/http.interceptor';
+//import { HTTP_INTERCEPTORS } from '@angular/common/http';
+//import { GiscoHttpInterceptor } from './interceptor/http.interceptor';
 import { DatePipe } from '@angular/common';
 import { PipesModule } from './pipes/pipes.module';
 

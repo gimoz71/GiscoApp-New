@@ -1,12 +1,12 @@
-import { NavController, NavParams, LoadingController, ActionSheetController, DateTime, AlertController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ActionSheetController, AlertController } from 'ionic-angular';
 
 import { Component } from '@angular/core';
 import { StoreService } from '../../../services/store/store.service';
 import { Login } from '../../../models/login/login.namespace';
 import { Osservazione } from '../../../models/osservazione/osservazione.namespace';
 import { OsservazioniService } from '../../../services/osservazioni/osservazioni.service';
-import { Filtro } from '../../../models/filtro/filtro.namespace';
-import { Sito } from '../../../models/sito/sito.namespace';
+//import { Filtro } from '../../../models/filtro/filtro.namespace';
+//import { Sito } from '../../../models/sito/sito.namespace';
 import { SitiService } from '../../../services/siti/siti.service';
 import { DispositiviService } from '../../../services/dispositivi/dispositivi.service';
 import moment from 'moment';
@@ -34,7 +34,7 @@ export class DashboardChiusuraPage {
   public whichPage: string;
   public commentoTesto: string;
   private rispostaTesto: string;
-  private myUserKey: number;
+  //private myUserKey: number;
   selectedIndexCommento: any;
   selectedCommento: any;
   private listaPersonalizzate: Array<Osservazione.ProprietaPersonalizzataChiusura>;
@@ -87,7 +87,7 @@ export class DashboardChiusuraPage {
     this.conclusa = this.osservazione.att_conclusa === 'S';
     this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
-      this.myUserKey = val.token_dipendente_key;
+      //this.myUserKey = val.token_dipendente_key;
       console.log("setViewOsservazione");
       this.osservazioniService.getCommentiOsservazione(this.storeService.getLocalServerUrl(), tokenValue, this.osservazione.attivita_key).subscribe(r => {
         if (r.ErrorMessage.msg_code === 0) {

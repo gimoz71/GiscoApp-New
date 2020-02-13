@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Messaggio } from '../../../models/messaggio/messaggio.namespace';
-import { NavController, NavParams, AlertController, MenuController, LoadingController } from 'ionic-angular';
+import { NavController, AlertController, MenuController, LoadingController } from 'ionic-angular';
 import { StoreService } from '../../../services/store/store.service';
 import { MessaggiService } from '../../../services/messaggi/messaggi.service';
 import { Login } from '../../../models/login/login.namespace';
@@ -9,7 +9,7 @@ import { UscitaMessaggiPage } from '../uscita-messaggi/uscita-messaggi';
 import { DetailsMessaggioPage } from '../details-messaggio/details-messaggio';
 import { CestinoMessaggiPage } from '../cestino-messaggi/cestino-messaggi';
 import { ImportantiMessaggiPage } from '../importanti-messaggi/importanti-messaggi';
-import { BasePage } from '../../common/base';
+//import { BasePage } from '../../common/base';
 
 
 @Component({
@@ -28,7 +28,7 @@ export class ElencoMessaggiPage {
     public numMessRicevuti: number;
 
     constructor(private navCtrl: NavController,
-        private navParams: NavParams,
+        //private navParams: NavParams,
         public menuCtrl: MenuController,
         private storeService: StoreService,
         private alertCtrl: AlertController,

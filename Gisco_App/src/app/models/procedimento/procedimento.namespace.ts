@@ -1,5 +1,5 @@
-import { Societa } from '../societa/societa.namespace';
-import { DateTime } from 'ionic-angular';
+//import { Societa } from '../societa/societa.namespace';
+//import { DateTime } from 'ionic-angular';
 
 export namespace Procedimento {
 

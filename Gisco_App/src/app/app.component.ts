@@ -40,7 +40,7 @@ export class MyApp {
 
   public rootPage = LoadingPage;//home
   public pages: Array<{ title: string, component: any, icon: any }>;
-  private pagineSenzaMenu: Array<string> = new Array("LoadingPage", "LoginPage");
+  //private pagineSenzaMenu: Array<string> = new Array("LoadingPage", "LoginPage");
 
   private numNotifiche_attivita = 0;
   private numNotifiche_osservazioni = 0;
