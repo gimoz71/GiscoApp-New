@@ -6,6 +6,9 @@ import { NuovoMessaggioPage } from '../nuovo-messaggio/nuovo-messaggio';
 import { Login } from '../../../models/login/login.namespace';
 import { MessaggiService } from '../../../services/messaggi/messaggi.service';
 import { ElencoMessaggiPage } from '../elenco-messaggi/elenco-messaggi';
+import { ImportantiMessaggiPage } from '../importanti-messaggi/importanti-messaggi';
+import { UscitaMessaggiPage } from '../uscita-messaggi/uscita-messaggi';
+import { CestinoMessaggiPage } from '../cestino-messaggi/cestino-messaggi';
 
 
 
@@ -67,7 +70,20 @@ export class DetailsMessaggioPage {
       var tokenValue = val.token_value;
       this.messaggiService.setDeleteMessage(this.storeService.getLocalServerUrl(), mess.messaggi_key, tokenValue).subscribe(r => {
         console.log(r);
-        this.navCtrl.push(ElencoMessaggiPage);
+        if (mess.preferito && mess.preferito === 'S') {
+          this.navCtrl.push(ImportantiMessaggiPage);
+        } else {
+          if (mess.stato_messaggio === 'DEL') {
+            this.navCtrl.push(CestinoMessaggiPage);
+          } else if (mess.stato_messaggio === 'INV') {
+            this.navCtrl.push(UscitaMessaggiPage);
+          } else if (mess.stato_messaggio === 'RIC') {
+            this.navCtrl.push(ElencoMessaggiPage);
+          } else {
+            this.navCtrl.push(ElencoMessaggiPage);
+          }
+        }
+        //this.navCtrl.push(ElencoMessaggiPage);
       },
         (error) => {
           console.log(error);

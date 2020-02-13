@@ -119,7 +119,7 @@ export class ElencoOsservazioniPage {
 
   public setSitoFiltro(event) {
     if (event != undefined) {
-      this.campoLiberoSito = event.srcElement.value;
+      this.campoLiberoSito = event.value;
     }
     if (this.campoLiberoSito === "") {
       this.campoLiberoSito = "A";
@@ -130,7 +130,7 @@ export class ElencoOsservazioniPage {
 
   public setProtocolloFiltro(event) {
     if (event != undefined) {
-      this.campoLiberoProtocollo = event.srcElement.value;
+      this.campoLiberoProtocollo = event.value;
     }
     if (this.campoLiberoProtocollo === "") {
       this.campoLiberoProtocollo = "A";

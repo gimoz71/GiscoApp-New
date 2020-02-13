@@ -133,6 +133,9 @@ export class DashboardOsservazionePage {
                 loading.dismiss();
                 this.content.resize();
 
+                if (this.selectedOsservazione === undefined) {
+                    this.sitoSelezionato = this.listaSiti[0];
+                }
             }, (error) => {
                 loading.dismiss();
                 this.presentAlert("", "errore recupero Lista Siti");
@@ -246,12 +249,10 @@ export class DashboardOsservazionePage {
         this.dispositiviService.getListaTipologieDispositivo(this.storeService.getLocalServerUrl(), this.wsToken.token_value, this.idSitoSelected).subscribe(r2 => {
             this.listaTipologieDisp = r2.l_lista_tipologie;
             this.esiste_dispositivo = false;
-            if (this.listaTipologieDisp.length > 0) 
-            {
+            if (this.listaTipologieDisp.length > 0) {
                 this.esiste_dispositivo = true;
             }
-            else
-            {
+            else {
                 this.tipologiaDispSelezionata = null;
                 this.dispositivoSelezionato = null;
             }
@@ -604,7 +605,32 @@ export class DashboardOsservazionePage {
         });
     }
 
+    async presentAlertEliminaOsservazione() {
+        const alert = await this.alertCtrl.create({
+            title: 'Conferma',
+            message: 'Sicuro che vuoi cancellare questa osservazione?',
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: (blah) => {
+                        console.log('Confirm Cancel: blah');
+                    }
+                }, {
+                    text: 'Si',
+                    handler: () => {
+                        this.goToEliminaOsservazione();
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
+    }
+
     goToEliminaOsservazione() {
+
         this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
             var tokenValue = val.token_value;
             let ws_Oss = new Osservazione.ws_Osservazione();

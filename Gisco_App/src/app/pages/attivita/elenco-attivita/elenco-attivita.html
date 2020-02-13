@@ -5,8 +5,8 @@
         </button>
         <ion-title>Elenco Attivit&agrave;</ion-title>
     </ion-navbar>
-    <ion-searchbar placeholder="Ricerca sito..." (ionInput)="setSitoFiltro($event)"></ion-searchbar>
-    <ion-searchbar placeholder="Ricerca..." (ionInput)="setProtocolloFiltro($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Ricerca sito..." (ionBlur)="setSitoFiltro($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Ricerca..." (ionBlur)="setProtocolloFiltro($event)"></ion-searchbar>
     <ion-item class="ion-filters">
         <ion-label>Categoria</ion-label>
         <ion-select [(ngModel)]="categoriaSelezionata" (ionChange)="setCategoriaFiltro()">

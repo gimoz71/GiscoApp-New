@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController} from 'ionic-angular';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 
 import { StoreService } from '../../../services/store/store.service';
 import { DispositiviService } from '../../../services/dispositivi/dispositivi.service';
@@ -70,7 +70,7 @@ export class MappaDispositiviPage {
                     this.mapModel.centerLat = parseFloat(r.mp_latitude);
                     this.mapModel.centerLon = parseFloat(r.mp_longitude);
                     this.mapModel.initialZoom = parseFloat(r.mp_zoom);
-                    this.mapModel.type = "roadmap"; 
+                    this.mapModel.type = "roadmap";
 
                     for (let dispositivo of this.listaDispositivi) {
                         var marker = new Common.MapMarker();
@@ -118,7 +118,7 @@ export class MappaDispositiviPage {
         });
         loading.present();
         if (event != undefined) {
-            this.campoLibero = event.srcElement.value;
+            this.campoLibero = event.value;
         }
         if (this.campoLibero === "") {
             this.campoLibero = "A";

@@ -14,16 +14,16 @@
 </ion-header>
 
 
-<ion-content >
-  <ion-searchbar placeholder="Ricerca.." (ionInput)="getDispositivi($event)"></ion-searchbar>
-  <ion-item  class="ion-filters">
+<ion-content>
+  <ion-searchbar placeholder="Ricerca.." (ionBlur)="getDispositivi($event)"></ion-searchbar>
+  <ion-item class="ion-filters">
     <ion-label>Tipologia</ion-label>
     <ion-select [(ngModel)]="tipologiaSelezionata" (ionChange)="getDispositivi()">
       <ion-option *ngFor="let tipologia of listaTipologie" [value]="tipologia">{{tipologia.tab_tipo_dispositivo_desc}}
       </ion-option>
     </ion-select>
   </ion-item>
-  <ion-item  class="ion-filters">
+  <ion-item class="ion-filters">
     <ion-label>Provincia</ion-label>
     <ion-select [(ngModel)]="provinciaSelezionata" (ionChange)="getDispositivi()">
       <ion-option *ngFor="let provincia of listaProvince" [value]="provincia">{{provincia.Descrizione}}</ion-option>

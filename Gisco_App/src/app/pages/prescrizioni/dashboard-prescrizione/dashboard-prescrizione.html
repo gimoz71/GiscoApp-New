@@ -139,7 +139,8 @@
                                 <p>Data di scadenza </p>
                             </ion-col>
                             <ion-col col-8 text-right>
-                                <p  *ngIf="!selectedPrescrizione.pre_data_scadenza.includes('0001')">{{selectedPrescrizione.pre_data_scadenza | date:'dd/MM/yyyy'}}</p>
+                                <p *ngIf="!selectedPrescrizione.pre_data_scadenza.includes('0001')">
+                                    {{selectedPrescrizione.pre_data_scadenza | date:'dd/MM/yyyy'}}</p>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
@@ -151,7 +152,8 @@
                                 <p>Data di realizzazione </p>
                             </ion-col>
                             <ion-col col-8 text-right>
-                                <p  *ngIf="!selectedPrescrizione.pre_data_realizzazione.includes('0001')">{{selectedPrescrizione.pre_data_realizzazione | date:'dd/MM/yyyy'}}</p>
+                                <p *ngIf="!selectedPrescrizione.pre_data_realizzazione.includes('0001')">
+                                    {{selectedPrescrizione.pre_data_realizzazione | date:'dd/MM/yyyy'}}</p>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
@@ -176,7 +178,9 @@
             </ion-item>
             <ion-item *ngFor="let f of selectedPrescrizione.pre_files">
                 <ion-thumbnail item-start>
-                    <img src="/assets/imgs/ios-doc-icon.png">
+                    <a href="{{f.prf_url}}">
+                        <img src="/assets/imgs/ios-doc-icon.png">
+                    </a>
                 </ion-thumbnail>
                 <h3>{{f.prf_file}}</h3>
             </ion-item>

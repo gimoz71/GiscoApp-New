@@ -135,7 +135,7 @@ export class DashboardProfiloPage {
             inputs: [
                 {
                     name: 'old',
-                    placeholder: 'password corrente'
+                    placeholder: 'Password corrente'
                 },
                 {
                     name: 'new',
@@ -143,16 +143,16 @@ export class DashboardProfiloPage {
                 },
                 {
                     name: 'repeat',
-                    placeholder: 'reinserisci nuova passoword'
+                    placeholder: 'Reinserisci nuova password'
                 },
             ],
             buttons: [
                 {
-                    text: 'Cancel',
+                    text: 'Cancella',
                     handler: data => { }
                 },
                 {
-                    text: 'Send',
+                    text: 'Conferma',
                     handler: data => {
                         if (this.checkPassword(data.old) == true) {
                             if (data.new.length > 5) {

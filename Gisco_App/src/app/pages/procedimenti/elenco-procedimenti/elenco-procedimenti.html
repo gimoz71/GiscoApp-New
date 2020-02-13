@@ -5,8 +5,8 @@
         </button>
         <ion-title>Elenco Procedimenti</ion-title>
     </ion-navbar>
-    <ion-searchbar placeholder="Ricerca sito..." (ionInput)="setSitoFiltro($event)"></ion-searchbar>
-    <ion-searchbar placeholder="Ricerca..." (ionInput)="setTitoloFiltro($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Ricerca sito..." (ionBlur)="setSitoFiltro($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Ricerca..." (ionBlur)="setTitoloFiltro($event)"></ion-searchbar>
     <ion-item class="ion-filters">
         <ion-label>Tipologia</ion-label>
         <ion-select [(ngModel)]="tipologiaSelezionata" (ionChange)="setTipologiaFiltro()">
@@ -15,9 +15,10 @@
         </ion-select>
     </ion-item>
 </ion-header>
-<ion-content >
+<ion-content>
     <ion-list>
-        <ion-item *ngFor="let procedimento of listaProcedimenti" (click)="goToDetails($event, procedimento)" text-wrap no-padding>
+        <ion-item *ngFor="let procedimento of listaProcedimenti" (click)="goToDetails($event, procedimento)" text-wrap
+            no-padding>
             <button no-lines ion-item no-margin clear>
                 <h2>{{procedimento.pro_titolo}}</h2>
                 <p>{{procedimento.tab_tipo_procedimento_desc}}</p>
@@ -41,7 +42,8 @@
         <ion-item><p>stato</p> <ion-note item-end><p>{{procedimento.pro_chiuso}}</p></ion-note></ion-item>
     </ion-list>-->
 
-    <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles" loadingText="Caricamento Procedimenti...">
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" loadingSpinner="bubbles"
+        loadingText="Caricamento Procedimenti...">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
     </ion-infinite-scroll>
 

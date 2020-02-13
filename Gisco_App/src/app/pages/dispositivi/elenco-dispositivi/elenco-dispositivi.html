@@ -5,7 +5,7 @@
         </button>
         <ion-title>Elenco Dispositivi</ion-title>
     </ion-navbar>
-    <ion-searchbar placeholder="Ricerca..." (ionInput)="getDispositivi($event)" debounce="1000"></ion-searchbar>
+    <ion-searchbar placeholder="Ricerca..." (ionBlur)="getDispositivi($event)" debounce="1000"></ion-searchbar>
     <ion-item class="ion-filters">
         <ion-label>Tipologia</ion-label>
         <ion-select [(ngModel)]="tipologiaSelezionata" (ionChange)="getDispositivi()">
@@ -16,18 +16,22 @@
     <ion-item class="ion-filters">
         <ion-label>Provincia</ion-label>
         <ion-select [(ngModel)]="provinciaSelezionata" (ionChange)="getDispositivi()">
-            <ion-option *ngFor="let provincia of listaProvince" [value]="provincia">{{provincia.Descrizione}}</ion-option>
+            <ion-option *ngFor="let provincia of listaProvince" [value]="provincia">{{provincia.Descrizione}}
+            </ion-option>
         </ion-select>
     </ion-item>
 </ion-header>
 <ion-content>
-   
+
     <ion-list>
-        <ion-item *ngFor="let dispositivo of listaDispositivi" (click)="goToDetails($event, dispositivo)" text-wrap no-padding>
+        <ion-item *ngFor="let dispositivo of listaDispositivi" (click)="goToDetails($event, dispositivo)" text-wrap
+            no-padding>
             <button no-lines ion-item no-margin clear>
                 <h2>{{dispositivo.dis_titolo}}</h2>
                 <p>{{dispositivo.tab_tipo_dispositivo_desc}}</p>
-                <p class="indirizzo_sito">{{dispositivo.az_codice_interno}} - {{dispositivo.az_ragione_sociale}}<!--{{sito.indirizzo_completo}}--></p>
+                <p class="indirizzo_sito">{{dispositivo.az_codice_interno}} - {{dispositivo.az_ragione_sociale}}
+                    <!--{{sito.indirizzo_completo}}-->
+                </p>
             </button>
             <!--<h3>
                
@@ -40,7 +44,7 @@
                 Scadute {{dispositivo.attivita_situazione.att_scadute}}<br>
                 {{dispositivo.attivita_situazione.att_prossime}}<br>
                 {{dispositivo.attivita_situazione.att_future}}<br>-->
-                <!--stato
+            <!--stato
             </p>-->
         </ion-item>
     </ion-list>

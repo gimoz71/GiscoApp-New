@@ -33,6 +33,7 @@ export namespace Http {
         public dispositivo: Dispositivo.Dispositivo;
         public titolarita: Array<Dispositivo.Titolarita>;
         public autorizzazioni: Array<Dispositivo.Autorizzazioni>;
+        public dis_personalizzazioni: Array<Dispositivo.Personalizzazione>;
 
         public l_lista_tipologie: Array<any>;// è usato anche per le categorie di un'attività
         public l_dropdown: Array<Filtro.Provincia>;

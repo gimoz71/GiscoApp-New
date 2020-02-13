@@ -23,6 +23,8 @@ export class NuovoMessaggioPage {
   public destinatarioSelezionato: Dipendente.Dipendente;
   public conoscenzeSelezionate: Array<Dipendente.Dipendente>;
 
+  public rispondi: boolean;
+
   private mess: Messaggio.Messaggio;
   color: string;
   icon: string;
@@ -32,7 +34,7 @@ export class NuovoMessaggioPage {
     private storeService: StoreService,
     private alertCtrl: AlertController,
     private navParams: NavParams) {
-
+    this.rispondi = false;
   }
 
   ionViewDidLoad() {
@@ -41,6 +43,7 @@ export class NuovoMessaggioPage {
     let mess2 = this.navParams.get('inoltro');
 
     if (mess1 != null) {
+      this.rispondi = true;
       this.mess = mess1;
       this.oggetto = "risposta : " + this.mess.soggetto;
       this.messaggio = "-----------------\n" + this.mess.messaggio + "\n-------------------\n";
@@ -56,6 +59,9 @@ export class NuovoMessaggioPage {
       var tokenValue = val.token_value;
       this.messaggiService.getDipendentiAttivi(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
         this.listaDestinatari = r.l_dipendenti;
+        if (this.rispondi) {
+          this.destinatarioSelezionato = this.getDestinatarioByKey(mess1.mittente_key);
+        }
         for (let i = 0; i < this.listaDestinatari.length; i++) {
           this.listaDestinatari[i].nomeCognome = this.listaDestinatari[i].nome + " " + this.listaDestinatari[i].cognome;
         }
@@ -64,6 +70,16 @@ export class NuovoMessaggioPage {
           this.presentAlert("", "errore recupero della risorsa");
         })
     });
+  }
+
+  private getDestinatarioByKey(key: number) {
+    let destinatario = new Dipendente.Dipendente();
+    for (let i = 0; i < this.listaDestinatari.length; i++) {
+      if (this.listaDestinatari[i].dipendenti_key === key) {
+        destinatario = this.listaDestinatari[i];
+      }
+    }
+    return destinatario;
   }
 
   filterPorts(ports: Array<Dipendente.Dipendente>, text: string) {

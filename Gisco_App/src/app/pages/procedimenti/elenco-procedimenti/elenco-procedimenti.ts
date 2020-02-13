@@ -87,7 +87,7 @@ export class ElencoProcedimentiPage {
 
   public setTitoloFiltro(event) {
     if (event != undefined) {
-      this.campoLiberoTitolo = event.srcElement.value;
+      this.campoLiberoTitolo = event.value;
     }
     if (this.campoLiberoTitolo === "") {
       this.campoLiberoTitolo = "A";
@@ -98,7 +98,7 @@ export class ElencoProcedimentiPage {
 
   public setSitoFiltro(event) {
     if (event != undefined) {
-      this.campoLiberoSito = event.srcElement.value;
+      this.campoLiberoSito = event.value;
     }
     if (this.campoLiberoSito === "") {
       this.campoLiberoSito = "A";

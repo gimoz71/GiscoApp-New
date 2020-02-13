@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavParams, NavController } from 'ionic-angular';
+import { NavParams, NavController, AlertController } from 'ionic-angular';
 //import { Dispositivo } from '../../../models/dispositivo/dispositivo.namespace';
 
 //import { DispositiviService } from '../../../services/dispositivi/dispositivi.service';
@@ -31,7 +31,8 @@ export class DashboardComunicazionePage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public comunicazioniService: ComunicazioniService,
-    private storeService: StoreService) {
+    private storeService: StoreService,
+    private alertCtrl: AlertController) {
     this.selectedComunicazione = navParams.get('comunicazione');
     this.procedimento = new Procedimento.Procedimento();
   }
@@ -49,7 +50,11 @@ export class DashboardComunicazionePage {
           this.selectedComunicazione = r.comunicazione;
           this.procedimento = r.procedimento;
         }
+      }, err => {
+        this.presentAlert("", err.statusText);
       })
+    }, err => {
+      this.presentAlert("", err.statusText);
     });
   }
 
@@ -121,14 +126,16 @@ export class DashboardComunicazionePage {
       default:
         return 'checkmark-circle';
     }
+  }
 
-    // <ion-icon name="alert" color="danger" item-start></ion-icon>
-    // <ion-icon name="time" color="alert" item-start></ion-icon>
-    // <ion-icon name="information-circle" color="future" item-start></ion-icon>
-    // <ion-icon name="help-circle" color="no-date" item-start></ion-icon>
-    // <ion-icon name="time" color="vincolate" item-start></ion-icon>
-    // <ion-icon name="checkmark-circle" color="done" item-start></ion-icon>
 
+  presentAlert(title: string, mess: string) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: mess,
+      buttons: ['Ok']
+    });
+    alert.present();
   }
 
 }
