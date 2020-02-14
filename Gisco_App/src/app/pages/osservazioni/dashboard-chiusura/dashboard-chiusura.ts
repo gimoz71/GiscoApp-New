@@ -34,7 +34,7 @@ export class DashboardChiusuraPage {
   public whichPage: string;
   public commentoTesto: string;
   private rispostaTesto: string;
-  //private myUserKey: number;
+  public myUserKey: number;
   selectedIndexCommento: any;
   selectedCommento: any;
   private listaPersonalizzate: Array<Osservazione.ProprietaPersonalizzataChiusura>;

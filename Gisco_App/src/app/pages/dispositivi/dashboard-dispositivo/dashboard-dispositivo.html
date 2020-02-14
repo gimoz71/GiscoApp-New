@@ -125,10 +125,8 @@
                     </ion-row>
                 </ion-grid>
             </ion-item>
-            <ion-item color="primary-lighter" class="ion-section-title">
-                <ion-label>Personalizzazioni</ion-label>
-            </ion-item>
             <div *ngFor="let p of personalizzazioni">
+                
                 <ion-item text-wrap *ngIf="p.dis_tipo_campo==='T'|| p.dis_tipo_campo==='S'">
                     <ion-grid no-padding>
                         <ion-row>
@@ -168,13 +166,22 @@
                     </ion-grid>
                 </ion-item>
 
-                <div *ngIf="p.dis_tipo_campo==='M'">
-                    <ion-list-header color="light"> {{p.dis_scheda_testo}}</ion-list-header>
-                    <ion-item *ngFor="let v of p.dis_valori">
-                        <ion-label><small>{{v.dis_testo}} {{v.dis_valore}}</small></ion-label>
-                        <ion-checkbox slot="end" disabled="true" [checked]="v.dis_valore_scelto!=='N'"></ion-checkbox>
-                    </ion-item>
+                <div *ngIf="p.dis_tipo_campo==='M'" class="item-M">
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>{{p.dis_scheda_testo}}</p>
+                            </ion-col>
+                            <ion-col col-8>
+                                <ion-item *ngFor="let v of p.dis_valori" text-right>
+                                    <ion-label><small>{{v.dis_testo}} {{v.dis_valore}}</small></ion-label>
+                                    <ion-checkbox slot="end" disabled="true" [checked]="v.dis_valore_scelto!=='N'"></ion-checkbox>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
                 </div>
+
             </div>
         </ion-list>
         <ion-list *ngSwitchCase="'Titolarita'">

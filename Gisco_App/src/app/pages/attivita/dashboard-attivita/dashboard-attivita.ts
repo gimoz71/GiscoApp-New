@@ -33,7 +33,7 @@ export class DashboardAttivitaPage {
   public whichPage: string;
   public commentoTesto: string;
   public rispostaTesto: string;
-  //private myUserKey: number;
+  public myUserKey: number;
   selectedIndexCommento: any;
   selectedCommento: any;
   public listaPersonalizzate: Array<Osservazione.ProprietaPersonalizzataChiusura>;
@@ -74,7 +74,7 @@ export class DashboardAttivitaPage {
     this.conclusa = this.selectedAttivita.att_conclusa === 'S';
     this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
-      //this.myUserKey = val.token_dipendente_key;
+      this.myUserKey = val.token_dipendente_key;
       console.log("setViewAttivita");
       this.attivitaService.getCommentiAttivita(this.storeService.getLocalServerUrl(), tokenValue, this.selectedAttivita.attivita_key).subscribe(r => {
         if (r.ErrorMessage.msg_code === 0) {

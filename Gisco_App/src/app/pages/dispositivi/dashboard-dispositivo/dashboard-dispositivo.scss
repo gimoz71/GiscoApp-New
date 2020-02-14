@@ -11,4 +11,14 @@ page-dashboard-dispositivo {
         right: 0;
         z-index: -10
     }
+
+    .item-M p {
+        overflow: inherit;
+        font-size: 1.4rem;
+        line-height: normal;
+        text-overflow: inherit;
+        color: #8e9093;
+        margin-top: 12px;
+        margin-left: 14px;
+    }
 }
