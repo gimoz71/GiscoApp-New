@@ -186,66 +186,6 @@
         </ion-list>
         <ion-list *ngSwitchCase="'Titolarita'">
             <ion-item color="primary-lighter" class="ion-section-title">
-                <ion-label>{{ titolarita.count }}Titolarit&agrave;</ion-label>
-            </ion-item>
-            <div *ngIf="titolarita.length === 0">
-                <ion-item>
-                    <p>Nessuna titolarit&agrave;</p>
-                </ion-item>
-            </div>
-            <div *ngFor="let t of titolarita">
-                <ion-item>
-                    <ion-grid no-padding>
-                        <ion-row>
-                            <ion-col>
-                                <p>Ragione Sociale</p>
-                            </ion-col>
-                            <ion-col col-8 text-right>
-                                {{t.di_ragione_sociale}}
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-item>
-                <ion-item text-wrap>
-                    <ion-grid no-padding>
-                        <ion-row>
-                            <ion-col>
-                                <p>Nominativo</p>
-                            </ion-col>
-                            <ion-col col-8 text-right>
-                                <p>{{t.dp_nominativo}}</p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-item>
-                <ion-item text-wrap *ngIf="!t.dis_da_data.includes('0001')">
-                    <ion-grid no-padding>
-                        <ion-row>
-                            <ion-col>
-                                <p>dal</p>
-                            </ion-col>
-                            <ion-col col-8 text-right>
-                                <p>{{t.dis_da_data | date:'dd/MM/yyyy'}}</p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-item>
-                <ion-item text-wrap *ngIf="!t.dis_a_data.includes('0001')">
-                    <ion-grid no-padding>
-                        <ion-row>
-                            <ion-col>
-                                <p>al</p>
-                            </ion-col>
-                            <ion-col col-8 text-right>
-                                <p>{{t.dis_a_data | date:'dd/MM/yyyy'}}</p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                </ion-item>
-            </div>
-        </ion-list>
-        <ion-list *ngSwitchCase="'Autorizzazioni'">
-            <ion-item color="primary-lighter" class="ion-section-title">
                 <ion-label>Autorizzazioni</ion-label>
             </ion-item>
             <div *ngIf="autorizzazioni.length === 0">
@@ -315,6 +255,84 @@
                     </ion-grid>
                 </ion-item>
             </div>
+            <ion-item color="primary-lighter" class="ion-section-title">
+                <ion-label>{{ titolarita.count }}Titolarit&agrave;</ion-label>
+            </ion-item>
+            <div *ngIf="titolarita.length === 0">
+                <ion-item>
+                    <p>Nessuna titolarit&agrave;</p>
+                </ion-item>
+            </div>
+            <div *ngFor="let t of titolarita">
+                <ion-item>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Ragione Sociale</p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                {{t.di_ragione_sociale}}
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>Nominativo</p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{t.dp_nominativo}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap *ngIf="!t.dis_da_data.includes('0001')">
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>dal</p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{t.dis_da_data | date:'dd/MM/yyyy'}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap *ngIf="!t.dis_a_data.includes('0001')">
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
+                                <p>al</p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{t.dis_a_data | date:'dd/MM/yyyy'}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+            </div>
+        </ion-list>
+        <ion-list *ngSwitchCase="'Autorizzazioni'">
+            <ion-item color="primary-lighter" class="ion-section-title">
+                <ion-label>Attivit&agrave; svolte</ion-label>
+            </ion-item>
+            <div *ngIf="attivita.length === 0">
+                <ion-item>
+                    <p>Nessuna attivita</p>
+                </ion-item>
+            </div>
+            <ion-list>
+                <ion-item *ngFor="let attivita of attivita" (click)="goToDetails(attivita)" text-wrap no-padding>
+                    <button no-lines ion-item no-margin clear>
+                        <h2><img [src]="getDotPath(attivita)"
+                                class="attivita-dot">{{attivita.att_protocollo + ' - ' + attivita.att_titolo}}</h2>
+                        <p>{{attivita.tab_tipo_attivita_desc + ' - ' + attivita.tab_tipo_scadenza_desc}}</p>
+                        <p class="indirizzo_sito">{{attivita.az_codice_interno + ' - ' + attivita.az_ragione_sociale}}</p>
+                    </button>
+                </ion-item>
+            </ion-list>
         </ion-list>
         <ion-list *ngSwitchCase="'Mappa'">
             <ion-item color="primary-lighter" class="ion-section-title">

@@ -107,4 +107,44 @@ export namespace Dispositivo {
         public dis_testo: string;
         public dis_valore: string;
     }
+
+    export class Attivita {
+        public att_nome_sito: string;
+        public attivita_key: number;
+        public att_attivita_key: number;
+        public att_azienda_key: number;
+        public att_titolo: string;
+        public att_descrizione: string;
+        public att_data_inizio_prev: string;
+        public att_data_fine_prev: string;
+        public att_data_scadenza: string;
+        public att_conclusa: string;
+        public att_tipo_attivita_cod: number;
+        public att_tipo_scadenza_cod: number;
+        public att_emergenza: string;
+        public att_firma_richiesta: string;
+        public tab_tipo_attivita_desc: string;
+        public tab_tipo_scadenza_desc: string;
+        public att_frequenza_cod: number;
+        public az_codice_interno: string;
+        public az_ragione_sociale: string;
+        public gruppo_key: number;
+        public gr_ragione_sociale: string;
+        public societa_gestione_key: number;
+        public att_dispositivo_key: number;
+        public dis_titolo: string;
+        public tab_tipo_dispositivo_cod: number;
+        public tab_tipo_dispositivo_desc: string;
+        public att_data_fine_effettiva: string;
+        public att_data_inizio_effettiva: string;
+        public att_stato_attivita_cod: number;
+        public att_attivita_modulo_chiusura_key: number;
+        public commenti_num: number;
+        public assegnata_num: number;
+        public tab_stato_attivita_desc: string;
+        public att_efficacia_azione_key: number;
+        public att_protocollo: string;
+        public att_stato_attivita: string;
+    }
+
 }

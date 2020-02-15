@@ -34,6 +34,7 @@ export namespace Http {
         public titolarita: Array<Dispositivo.Titolarita>;
         public autorizzazioni: Array<Dispositivo.Autorizzazioni>;
         public dis_personalizzazioni: Array<Dispositivo.Personalizzazione>;
+        public dis_attivita: Array<Dispositivo.Attivita>;
 
         public l_lista_tipologie: Array<any>;// è usato anche per le categorie di un'attività
         public l_dropdown: Array<Filtro.Provincia>;

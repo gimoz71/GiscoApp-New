@@ -6,6 +6,7 @@ import { DispositiviService } from '../../../services/dispositivi/dispositivi.se
 import { StoreService } from '../../../services/store/store.service';
 import { Login } from '../../../models/login/login.namespace';
 import { Common } from '../../../models/common/common.namespace';
+import { DashboardAttivitaPage } from '../../attivita/dashboard-attivita/dashboard-attivita';
 /**
  * Generated class for the DashboardDispositivoPage page.
  *
@@ -24,6 +25,7 @@ export class DashboardDispositivoPage {
     public titolarita: Array<Dispositivo.Titolarita>;
     public autorizzazioni: Array<Dispositivo.Autorizzazioni>;
     public personalizzazioni: Array<Dispositivo.Personalizzazione>;
+    public attivita: Array<Dispositivo.Attivita>;
     public whichPage: string;
 
     public mapModel: Common.MapModel;
@@ -56,6 +58,7 @@ export class DashboardDispositivoPage {
                     this.titolarita = r.titolarita;
                     this.autorizzazioni = r.autorizzazioni;
                     this.personalizzazioni = r.dis_personalizzazioni;
+                    this.attivita = r.dis_attivita;
                     console.log('titolarita ' + this.titolarita.length);
 
                     var marker = new Common.MapMarker();
@@ -74,6 +77,38 @@ export class DashboardDispositivoPage {
                     this.showMap = true;
                 }
             })
+        });
+    }
+
+    public getDotPath(osservazione: Dispositivo.Attivita): string {
+        switch (osservazione.att_stato_attivita) {
+          case 'FU':
+            return '/assets/imgs/dot_blu.png';
+          case 'SC':
+            return '/assets/imgs/dot_giallo.png';
+          case 'KO':
+            return '/assets/imgs/dot_rosso.png';
+          case 'OK':
+            return '/assets/imgs/dot_verde.png';
+          default:
+            return '/assets/imgs/dot_giallo.png';
+        }
+    }
+
+    public goToDetails(attivita: Dispositivo.Attivita) {
+        console.log("goToDetails click " + attivita);
+        this.navCtrl.push(DashboardAttivitaPage, { selectedAttivita: attivita, callbackChiusa: this.chiusaCallbackFunction });
+    }
+
+    chiusaCallbackFunction = (attivita_key: number) => {
+        return new Promise((resolve, reject) => {
+          console.log("goToDetails click " + attivita_key);
+          if (attivita_key != undefined) {
+            var p: Dispositivo.Attivita = this.attivita.find(item => item.attivita_key == attivita_key)
+            console.log("goToDetails click " + JSON.stringify(p));
+            p.att_conclusa = "S"
+            resolve();
+          }
         });
     }
 

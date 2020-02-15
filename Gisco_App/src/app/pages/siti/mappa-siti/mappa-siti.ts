@@ -78,6 +78,9 @@ export class MappaSitiPage {
                         //marker.lab = sito.az_ragione_sociale;
                         marker.draggable = false;
                         this.mapModel.markers.push(marker);
+                        //console.log(sito.az_baricentro_n);
+                        //console.log(sito.az_baricentro_e);
+                        //console.log(marker);
                     }
 
                     this.showMap = true;
