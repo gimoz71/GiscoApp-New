@@ -79,6 +79,8 @@ export class DashboardAttivitaPage {
       this.attivitaService.getCommentiAttivita(this.storeService.getLocalServerUrl(), tokenValue, this.selectedAttivita.attivita_key).subscribe(r => {
         if (r.ErrorMessage.msg_code === 0) {
           this.listaCommenti = r.l_lista_commenti;
+          //console.log(this.listaCommenti);
+
           //  if (this.conclusa) {
           this.attivitaService.getAttivitaChiusura(this.storeService.getLocalServerUrl(), this.selectedAttivita.attivita_key, tokenValue).subscribe(r => {
             if (r.ErrorMessage.msg_code === 0) {
@@ -90,9 +92,13 @@ export class DashboardAttivitaPage {
               this.note = r.att_descrizione;
 
               this.listaPersonalizzate = r.c_proprieta_personalizzate;
+
+              //console.log("getListaImmaginiAttivita");
+
               this.attivitaService.getListaImmaginiAttivita(this.storeService.getLocalServerUrl(), this.selectedAttivita.attivita_key, tokenValue).subscribe(r => {
                 if (r.ErrorMessage.msg_code === 0) {
-                  this.listaImmagini = r.l_lista_immagini_attivita;
+                  this.listaImmagini = r.l_lista_immagini;
+                  console.log(this.listaImmagini);
                 }
                 loading.dismiss();
               })

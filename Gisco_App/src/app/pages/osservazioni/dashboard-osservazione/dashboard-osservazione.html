@@ -163,14 +163,17 @@
                 <ion-item color="primary-lighter" class="ion-section-title">
                     <ion-label>Immagini</ion-label>
                 </ion-item>
-
-                <ion-item *ngFor="let imm of listaImmagini">
+                <ion-item-sliding *ngFor="let imm of listaImmagini">
                     <ion-item>
-                        <img src="{{imm.img_url+imm.img_file}}">
-                        <button *ngIf="!conclusa" ion-button clear item-end
-                            (click)="presentAlertEliminaImmagine(imm)">Elimina</button>
+                        <img src="{{imm.img_url+imm.img_file}}" style="height: 200px">
                     </ion-item>
-                </ion-item>
+                    <ion-item-options side="left" *ngIf="!conclusa">
+                        <button ion-button color="danger" (click)="presentAlertEliminaImmagine(imm)">
+                            <ion-icon name="trash"></ion-icon>
+                            Elimina
+                        </button>
+                    </ion-item-options>
+                </ion-item-sliding>
             </ion-list>
         </div>
     </ion-list>

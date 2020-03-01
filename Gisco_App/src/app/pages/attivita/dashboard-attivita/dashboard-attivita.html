@@ -248,10 +248,10 @@
                     <ion-label>Immagini</ion-label>
                 </ion-item>
                 <ion-item-sliding *ngFor="let imm of listaImmagini">
-                    <ion-item *ngFor="let imm of listaImmagini">
+                    <ion-item>
                         <img src="{{imm.img_url+imm.img_file}}" style="height: 200px">
                     </ion-item>
-                    <ion-item-options side="left">
+                    <ion-item-options side="left" *ngIf="!conclusa" >
                         <button ion-button color="danger" (click)="presentAlertEliminaImmagine(imm)">
                             <ion-icon name="trash"></ion-icon>
                             Elimina
@@ -270,7 +270,7 @@
                 <ion-row text-center>
                     <ion-col (click)="chiudiAttivita()">
                         <ion-icon name="done-all" style="font-size: 2em;"></ion-icon><br>
-                        Salva
+                        Chiudi Attivita
                     </ion-col>
                 </ion-row>
             </ion-grid>

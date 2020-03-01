@@ -196,6 +196,9 @@ export class DashboardOsservazionePage {
             this.listaTipologieDisp = r2.l_lista_tipologie;
 
             if (this.selectedOsservazione.att_dispositivo_key > 0) {
+
+                this.esiste_dispositivo = true;
+    
                 this.relativo = true;
                 if (this.listaTipologieDisp) {
                     this.tipologiaDispSelezionata = this.listaTipologieDisp.find(tipo => tipo.tab_tipo_dispositivo_desc === this.selectedOsservazione.tab_tipo_dispositivo_desc);
@@ -354,6 +357,7 @@ export class DashboardOsservazionePage {
                         if (this.relativo) {
                             this.ws_Oss.osservazione.dis_titolo = this.dispositivoSelezionato.dis_titolo;
                             this.ws_Oss.osservazione.att_dispositivo_key = this.dispositivoSelezionato.dispositivi_key;
+                            this.ws_Oss.osservazione.tab_tipo_dispositivo_cod = this.tipologiaDispSelezionata.tab_tipo_dispositivo_cod;
                             this.ws_Oss.osservazione.tab_tipo_dispositivo_desc = this.dispositivoSelezionato.tab_tipo_dispositivo_desc;
                         }
                         console.log("this.ws_Oss.osservazione " + this.tipologiaOssSelezionata.tab_tipo_scadenza_desc);

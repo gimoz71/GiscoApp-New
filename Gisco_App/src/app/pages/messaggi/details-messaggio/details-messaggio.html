@@ -24,7 +24,7 @@
             <hr>
             <p>Destinatario: {{mess.nome_des}} {{mess.cognome_des}}</p>
             <hr>
-            <h2>{{mess.messaggio}}</h2>
+            <h2 [innerHTML]="mess.messaggio"></h2>
         </ion-card-content>
     </ion-card>
 </ion-content>
