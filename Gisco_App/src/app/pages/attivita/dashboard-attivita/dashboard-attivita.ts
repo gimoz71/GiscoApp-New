@@ -40,6 +40,8 @@ export class DashboardAttivitaPage {
   private valoreSKey: number;
   public listaImmagini: Array<Attivita.Immagine>;
   private ws_Oss_Com: Osservazione.ws_Commento;
+  public label_data:string;
+  public value_data:string;
 
   constructor(public navCtrl: NavController,
     public attivitaService: AttivitaService,
@@ -72,6 +74,14 @@ export class DashboardAttivitaPage {
     loading.present();
     console.log("this.ws_Oss.attivita " + this.selectedAttivita.att_conclusa);
     this.conclusa = this.selectedAttivita.att_conclusa === 'S';
+    
+    this.label_data = "Data scadenza";
+    this.value_data = this.selectedAttivita.att_data_scadenza;
+    if (this.selectedAttivita.att_data_scadenza.includes("0001")){
+      this.label_data = "Data termine";
+      this.value_data = this.selectedAttivita.att_data_fine_prev;
+      }
+
     this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.myUserKey = val.token_dipendente_key;
@@ -137,57 +147,64 @@ export class DashboardAttivitaPage {
   public chiudiAttivita() {
     console.log("chiudiAttivita");
     this.ws_Att_Ch.attivita = this.selectedAttivita;
-    console.log("note " + this.note);
-    if (this.dataInizio != undefined) {
+    //console.log("note " + this.note);
+    var verificato:boolean = true;
+    if (this.dataInizio == undefined || this.dataInizio == '') {
+      this.presentAlert("", "la data inizio è obbligatoria");
+    }
+    if (this.dataFine == undefined || this.dataFine == '') {
+      verificato=false;
+      this.presentAlert("", "la data fine è obbligatoria");
+    }
+    if (this.note == undefined || this.note == '') {
+      verificato=false;
+      this.presentAlert("", "Inserire le note di chiusura");
+    }
+    if (!moment(this.dataInizio).isSameOrBefore(moment(this.dataFine))) {
+      this.presentAlert("", "deve essere this.dataInizio < this.dataFine");
+      verificato=false;
+    }
+
+    if (verificato) {
       this.ws_Att_Ch.attivita.att_data_inizio_effettiva = this.dataInizio;
       this.ws_Att_Ch.att_data_inizio_effettiva = this.dataInizio;
-      if (this.dataFine != undefined) {
-        this.ws_Att_Ch.attivita.att_data_fine_effettiva = this.dataFine;
-        this.ws_Att_Ch.att_data_fine_effettiva = this.dataFine;
-        console.log("dataInizio " + this.dataInizio);
-        console.log("dataFine " + this.dataFine);
-        console.log(moment(this.dataInizio, "DD-MM-YYYY HH:mm"));
+      this.ws_Att_Ch.attivita.att_data_fine_effettiva = this.dataFine;
+      this.ws_Att_Ch.att_data_fine_effettiva = this.dataFine;
+      console.log("dataInizio " + this.dataInizio);
+      console.log("dataFine " + this.dataFine);
+      console.log(moment(this.dataInizio, "DD-MM-YYYY HH:mm"));
 
-        if (moment(this.dataInizio).isSameOrBefore(moment(this.dataFine))) {
-          this.ws_Att_Ch.attivita.att_conclusa = "S";
-          this.ws_Att_Ch.att_descrizione = this.note;
-          this.ws_Att_Ch.c_proprieta_personalizzate = this.listaPersonalizzate;
-          let loading = this.loadingCtrl.create({
-            content: 'Caricamento...'
-          });
-          loading.present();
-          console.log("this.ws_Oss.osservazione " + this.selectedAttivita.att_conclusa);
-          this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
-            var tokenValue = val.token_value;
-            this.ws_Att_Ch.token = tokenValue;
-            console.log("this.ws_Att_Ch " + JSON.stringify(this.ws_Att_Ch));
-            this.attivitaService.salvaChiusuraAttivita(this.storeService.getLocalServerUrl(), this.ws_Att_Ch).subscribe(r => {
+      this.ws_Att_Ch.attivita.att_conclusa = "S";
+      this.ws_Att_Ch.att_descrizione = this.note;
+      this.ws_Att_Ch.c_proprieta_personalizzate = this.listaPersonalizzate;
+      let loading = this.loadingCtrl.create({
+        content: 'Caricamento...'
+      });
+      loading.present();
+      console.log("this.ws_Oss.osservazione " + this.selectedAttivita.att_conclusa);
+      this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
+        var tokenValue = val.token_value;
+        this.ws_Att_Ch.token = tokenValue;
+        console.log("this.ws_Att_Ch " + JSON.stringify(this.ws_Att_Ch));
+        this.attivitaService.salvaChiusuraAttivita(this.storeService.getLocalServerUrl(), this.ws_Att_Ch).subscribe(r => {
 
-              if (r.ErrorMessage.msg_code === 0) {
-                this.conclusa = true;
-                loading.dismiss();
-                this.presentAlert("", "attività chiusa correttamente");
-              } else {
-                loading.dismiss();
-                this.presentAlert("", r.ErrorMessage.msg_testo);
-              }
-            }, err => {
-              this.presentAlert("", err.statusText);
-              loading.dismiss();
-            })
-          }, err => {
-            this.presentAlert("", err.statusText);
+          if (r.ErrorMessage.msg_code === 0) {
+            this.conclusa = true;
             loading.dismiss();
-          });
-        } else {
-          this.presentAlert("", "deve essere this.dataInizio < this.dataFine");
+            this.presentAlert("", "attività chiusa correttamente");
+          } else {
+            loading.dismiss();
+            this.presentAlert("", r.ErrorMessage.msg_testo);
+          }
+        }, err => {
+          this.presentAlert("", err.statusText);
+          loading.dismiss();
+        })
+      }, err => {
+        this.presentAlert("", err.statusText);
+        loading.dismiss();
+      });
 
-        }
-      } else {
-        this.presentAlert("", "data fine è obbligatoria");
-      }
-    } else {
-      this.presentAlert("", "data inizio è obbligatoria");
     }
   }
 
@@ -400,6 +417,8 @@ export class DashboardAttivitaPage {
       v.tam_selected = "N";
     else
       v.tam_selected = "S";
+
+      console.log("c_valori " + JSON.stringify(p.c_valori));
   }
 
   valoreTChanged(event: any, key: number) {
@@ -424,15 +443,16 @@ export class DashboardAttivitaPage {
 
   valoreOChanged($event, key: number) {
     var p = this.listaPersonalizzate.find(item => item.tipo_attivita_modulo_proprieta_key == key)
-    console.log("key " + key);
-    console.log('event : ' + $event.value);
-    if ($event == true) {
+    //console.log("key " + key);
+    //console.log('event : ' + $event.value);
+    if ($event.value == true) {
       p.c_valori[0].tam_selected = "S"
       p.c_valori[1].tam_selected = "N"
     } else {
       p.c_valori[1].tam_selected = "S"
       p.c_valori[0].tam_selected = "N"
     }
+    //console.log("c_valori " + JSON.stringify(p.c_valori));
   }
 
   presentImmagineActionSheet() {

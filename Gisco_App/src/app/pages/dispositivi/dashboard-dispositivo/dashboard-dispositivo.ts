@@ -100,7 +100,7 @@ export class DashboardDispositivoPage {
         this.navCtrl.push(DashboardAttivitaPage, { selectedAttivita: attivita, callbackChiusa: this.chiusaCallbackFunction });
     }
 
-    chiusaCallbackFunction = (attivita_key: number) => {
+    public chiusaCallbackFunction = (attivita_key: number) => {
         return new Promise((resolve, reject) => {
           console.log("goToDetails click " + attivita_key);
           if (attivita_key != undefined) {

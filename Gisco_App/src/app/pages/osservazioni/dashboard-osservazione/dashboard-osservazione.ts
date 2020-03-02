@@ -393,7 +393,7 @@ export class DashboardOsservazionePage {
         this.navCtrl.push(DashboardChiusuraPage, { osservazione: this.selectedOsservazione, callbackChiusa: this.chiudiCallbackFunction });
     }
 
-    chiudiCallbackFunction = (chiudi) => {
+    public chiudiCallbackFunction = (chiudi) => {
         return new Promise((resolve, reject) => {
             //  this.test = _params;
             if (chiudi) {

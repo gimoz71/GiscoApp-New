@@ -190,7 +190,7 @@
                     <ion-icon name="archive" style="font-size: 2em;"></ion-icon><br>
                     Chiusura
                 </ion-col>
-                <ion-col *ngIf="selectedOsservazione && !conclusa" (click)="goToEliminaOsservazione()">
+                <ion-col *ngIf="selectedOsservazione && !conclusa" (click)="presentAlertEliminaOsservazione()">
                     <ion-icon name="trash" style="font-size: 2em;"></ion-icon><br>
                     Elimina
                 </ion-col>

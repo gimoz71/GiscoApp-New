@@ -29,6 +29,7 @@
 <ion-content>
     <ion-list>
         <div [ngSwitch]="whichPage">
+
             <ion-list *ngSwitchCase="'Attivita'">
                 <ion-item color="primary-lighter" class="ion-section-title">
                     <ion-label>Dati Attivit&agrave;</ion-label>
@@ -99,6 +100,18 @@
                     <ion-grid no-padding>
                         <ion-row>
                             <ion-col>
+                                <p>{{label_data}}</p>
+                            </ion-col>
+                            <ion-col col-8 text-right>
+                                <p>{{value_data | date:'dd/MM/yyyy'}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-item>
+                <ion-item text-wrap>
+                    <ion-grid no-padding>
+                        <ion-row>
+                            <ion-col>
                                 <p>Descrizione</p>
                             </ion-col>
                             <ion-col col-8 text-right>
@@ -132,7 +145,7 @@
                     <ion-item *ngIf="pers.tam_tipologia==='D'">
                         <ion-label stacked>{{pers.tam_proprieta}} </ion-label>
                         <ion-datetime disabled="{{conclusa}}" [(ngModel)]="pers.attivita_modulo_valori.tac_valore_d"
-                            displayFormat="DD-MM-YYYY HH:mm"
+                            displayFormat="DD/MM/YYYY HH:mm"
                             (ionChange)="valoreDChanged($event, pers.tipo_attivita_modulo_proprieta_key)" doneText="OK"
                             cancelText="CANCELLA">
                         </ion-datetime>
@@ -162,18 +175,17 @@
                     </ion-item>
 
                     <ion-item-group *ngIf="pers.tam_tipologia==='M'">
-                        <ion-label stacked>{{pers.tam_proprieta}}</ion-label>
-                        <ion-list>
-                            <ion-item *ngFor="let valoreM of pers.c_valori">
-                                <ion-label>{{valoreM.tam_testo}}</ion-label>
-                                <ion-checkbox slot="end" disabled="{{conclusa}}" [checked]="valoreM.tam_selected ==='S'"
-                                    (ionChange)="valoreMChanged(valoreM.tipo_attivita_modulo_proprieta_valori_key, pers.tipo_attivita_modulo_proprieta_key)">
-                                </ion-checkbox>
-                            </ion-item>
-                        </ion-list>
+                        <ion-list-header color="light">{{pers.tam_proprieta}}</ion-list-header> <!-- SELEZIONE MULTIPLA -->
+                        <ion-item *ngFor="let valoreM of pers.c_valori">
+                            <ion-label>{{valoreM.tam_testo}}</ion-label>
+                            <ion-checkbox slot="end" disabled="{{conclusa}}" [checked]="valoreM.tam_selected ==='S'"
+                                (ionChange)="valoreMChanged(valoreM.tipo_attivita_modulo_proprieta_valori_key, pers.tipo_attivita_modulo_proprieta_key)">
+                            </ion-checkbox>
+                        </ion-item>
                     </ion-item-group>
                 </ion-item-group>
             </ion-list>
+
             <ion-list *ngSwitchCase="'Commenti'">
                 <ion-item color="primary-lighter" class="ion-section-title">
                     <ion-label>Commenti</ion-label>
