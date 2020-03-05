@@ -178,7 +178,7 @@
             </ion-item>
             <ion-item *ngFor="let f of selectedPrescrizione.pre_files">
                 <ion-thumbnail item-start>
-                    <a href="{{f.prf_url}}">
+                    <a (click)="downloadFile(f)">
                         <img src="/assets/imgs/ios-doc-icon.png">
                     </a>
                 </ion-thumbnail>

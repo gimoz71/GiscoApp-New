@@ -36,6 +36,7 @@ export namespace Documento {
 
     export class UltimaRevisione {
         public doc_userfolder: string;
+        public doc_file: string;
     }
 
 

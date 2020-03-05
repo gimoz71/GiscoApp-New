@@ -58,8 +58,10 @@
     <ion-grid>
       <ion-row text-center>
         <ion-col>
-          <ion-icon name="download" style="font-size: 2em;"></ion-icon><br><a
-            href="{{selectedDocumento.doc_url}}">Scarica File</a>
+          <a (click)="downloadFile()">
+            <ion-icon name="download" style="font-size: 2em;"></ion-icon>
+            <br>Scarica File
+          </a>
         </ion-col>
       </ion-row>
     </ion-grid>

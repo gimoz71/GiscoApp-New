@@ -43,6 +43,7 @@
     <plugin name="cordova-plugin-statusbar" spec="^2.4.3" />
     <preference name="GOOGLE_MAPS_ANDROID_API_KEY" value="AIzaSyC0ZS8b6gni8cmzaP6wANluaN7XWCvNtBc" />
     <preference name="GOOGLE_MAPS_IOS_API_KEY" value="AIzaSyC0ZS8b6gni8cmzaP6wANluaN7XWCvNtBc" />
+    <preference name="iosPersistentFileLocation" value="Library" />
     <platform name="android">
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />

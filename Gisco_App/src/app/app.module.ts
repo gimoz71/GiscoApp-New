@@ -8,6 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { MyApp } from './app.component';
 import { IonicSelectableModule } from 'ionic-selectable';
+import { File } from '@ionic-native/file/ngx';
 
 // #REGION - Modules
 import { LoginModule } from './modules/login/login.module';
@@ -250,6 +251,7 @@ const firebase = {
     AlertService,
     DatePicker,
     FirebaseX,
+    File,
     GeolocatedService,
     CommonService,
     { provide: ErrorHandler, useClass: GlobalErrorHandler },

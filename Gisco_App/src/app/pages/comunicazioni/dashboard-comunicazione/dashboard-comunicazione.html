@@ -194,7 +194,7 @@
             </ion-item>
             <ion-item *ngFor="let f of selectedComunicazione.com_files" text-wrap>
                 <ion-thumbnail item-start>
-                    <a href="{{f.cof_url}}">
+                    <a (click)="downloadFile(f)">
                         <img src="/assets/imgs/ios-doc-icon.png">
                     </a>
                 </ion-thumbnail>
