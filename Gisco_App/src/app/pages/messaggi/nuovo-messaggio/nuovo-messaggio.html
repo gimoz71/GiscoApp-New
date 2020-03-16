@@ -19,7 +19,7 @@
         <ion-label stacked>Destinatario</ion-label>
         <ionic-selectable item-content [(ngModel)]="destinatarioSelezionato" [items]="listaDestinatari"
             itemTextField="nomeCognome" [canSearch]="true" (onSearch)="destinatarioChange($event)"
-            searchPlaceholder="Ricerca..." disabled="{{rispondi}}">
+            searchPlaceholder="Ricerca..." disabled="{{rispondi || invio}}">
         </ionic-selectable>
     </ion-item>
     <ion-item>

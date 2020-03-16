@@ -11,6 +11,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Attivita } from '../../../models/attivita/attivita.namespace';
 import { AttivitaService } from '../../../services/attivita/attivita.service';
 import { DatePipe } from '@angular/common';
+import { Messaggio } from '../../../models/messaggio/messaggio.namespace';
+import { NuovoMessaggioPage } from '../../messaggi/nuovo-messaggio/nuovo-messaggio';
 
 
 @Component({
@@ -26,6 +28,7 @@ export class DashboardAttivitaPage {
   private ws_Att_Ch: Attivita.ws_Attivita_Chiusura;
   //private ws_Att_Com: Osservazione.ws_Commento;
   public listaCommenti: Array<Osservazione.Commento>;
+  public listaAssegnazioni: Array<Attivita.Assegnazione>;
   public dataInizio: string;
   public note: string;
   public dataFine: string;
@@ -74,7 +77,7 @@ export class DashboardAttivitaPage {
     loading.present();
     console.log("this.ws_Oss.attivita " + this.selectedAttivita.att_conclusa);
     this.conclusa = this.selectedAttivita.att_conclusa === 'S';
-    
+
     this.label_data = "Data scadenza";
     this.value_data = this.selectedAttivita.att_data_scadenza;
     if (this.selectedAttivita.att_data_scadenza.includes("0001")){
@@ -86,46 +89,59 @@ export class DashboardAttivitaPage {
       var tokenValue = val.token_value;
       this.myUserKey = val.token_dipendente_key;
       console.log("setViewAttivita");
-      this.attivitaService.getCommentiAttivita(this.storeService.getLocalServerUrl(), tokenValue, this.selectedAttivita.attivita_key).subscribe(r => {
+
+      this.attivitaService.getAttivita(this.storeService.getLocalServerUrl(), this.selectedAttivita.attivita_key, tokenValue).subscribe(r => {
+        console.log('ionViewDidLoad DashboardAttivitaPage getAttivita');
         if (r.ErrorMessage.msg_code === 0) {
-          this.listaCommenti = r.l_lista_commenti;
-          //console.log(this.listaCommenti);
+            this.listaAssegnazioni = r.c_assegnazioni;
 
-          //  if (this.conclusa) {
-          this.attivitaService.getAttivitaChiusura(this.storeService.getLocalServerUrl(), this.selectedAttivita.attivita_key, tokenValue).subscribe(r => {
-            if (r.ErrorMessage.msg_code === 0) {
-              this.selectedAttivita = r.attivita;
-              if (this.conclusa) {
-                this.dataInizio = r.att_data_inizio_effettiva;
-                this.dataFine = r.att_data_fine_effettiva;
-              }
-              this.note = r.att_descrizione;
-
-              this.listaPersonalizzate = r.c_proprieta_personalizzate;
-
-              //console.log("getListaImmaginiAttivita");
-
-              this.attivitaService.getListaImmaginiAttivita(this.storeService.getLocalServerUrl(), this.selectedAttivita.attivita_key, tokenValue).subscribe(r => {
-                if (r.ErrorMessage.msg_code === 0) {
-                  this.listaImmagini = r.l_lista_immagini;
-                  console.log(this.listaImmagini);
-                }
+            this.attivitaService.getCommentiAttivita(this.storeService.getLocalServerUrl(), tokenValue, this.selectedAttivita.attivita_key).subscribe(r => {
+              if (r.ErrorMessage.msg_code === 0) {
+                this.listaCommenti = r.l_lista_commenti;
+                //console.log(this.listaCommenti);
+      
+                //  if (this.conclusa) {
+                this.attivitaService.getAttivitaChiusura(this.storeService.getLocalServerUrl(), this.selectedAttivita.attivita_key, tokenValue).subscribe(r => {
+                  if (r.ErrorMessage.msg_code === 0) {
+                    this.selectedAttivita = r.attivita;
+                    if (this.conclusa) {
+                      this.dataInizio = r.att_data_inizio_effettiva;
+                      this.dataFine = r.att_data_fine_effettiva;
+                    }
+                    this.note = r.att_descrizione;
+      
+                    this.listaPersonalizzate = r.c_proprieta_personalizzate;
+      
+                    //console.log("getListaImmaginiAttivita");
+      
+                    this.attivitaService.getListaImmaginiAttivita(this.storeService.getLocalServerUrl(), this.selectedAttivita.attivita_key, tokenValue).subscribe(r => {
+                      if (r.ErrorMessage.msg_code === 0) {
+                        this.listaImmagini = r.l_lista_immagini;
+                        console.log(this.listaImmagini);
+                      }
+                      loading.dismiss();
+                    })
+                  } else {
+                    loading.dismiss();
+                    this.presentAlert("", "errore recupero attivita Chiusura");
+                  }
+                });
+                /* } else {
+                   loading.dismiss();
+                 }*/
+              } else {
                 loading.dismiss();
-              })
-            } else {
-              loading.dismiss();
-              this.presentAlert("", "errore recupero attivita Chiusura");
-            }
-          });
-          /* } else {
-             loading.dismiss();
-           }*/
-        } else {
-          loading.dismiss();
-          this.presentAlert("", "errore recupero Commenti attivita");
+                this.presentAlert("", "errore recupero Commenti attivita");
+              }
+      
+            });
+      
+          } else {
+            loading.dismiss();
+            this.presentAlert("", "errore recupero Attivita");
         }
+      })
 
-      });
     });
 
     console.log("this.conclusa " + this.conclusa);
@@ -215,6 +231,10 @@ export class DashboardAttivitaPage {
   segmentCommentiClicked(event) {
     console.log('segmentCommentiClicked');
 
+  }
+
+  segmentAssegnazioniClicked(event) {
+    console.log('segmentAssegnazioniClicked');
   }
 
   salvaCommento() {
@@ -601,6 +621,15 @@ export class DashboardAttivitaPage {
     })
   }
 
-
+  openMessage(assegnazione: Attivita.Assegnazione) {
+    var mess: Messaggio.Messaggio  
+    mess = new Messaggio.Messaggio();
+    mess.cognome_des = assegnazione.dp_cognome;
+    mess.nome_des = assegnazione.dp_nome;
+    mess.destinatario_key = assegnazione.dipendenti_key;
+    mess.soggetto = this.selectedAttivita.att_titolo;
+    mess.messaggio = '';
+    this.navCtrl.push(NuovoMessaggioPage, { invio: mess })
+  }
 
 }

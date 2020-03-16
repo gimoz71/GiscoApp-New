@@ -17,6 +17,9 @@
         <ion-segment-button value="Attivita" checked (ionSelect)="segmentAttivitaClicked($event)">
             <ion-icon name="locate"></ion-icon>
         </ion-segment-button>
+        <ion-segment-button value="Assegnazioni" (ionSelect)="segmentAssegnazioniClicked($event)">
+            <ion-icon name="contact"></ion-icon>
+        </ion-segment-button>
         <ion-segment-button value="Commenti" (ionSelect)="segmentCommentiClicked($event)">
             <ion-icon name="chatboxes"></ion-icon>
         </ion-segment-button>
@@ -267,6 +270,32 @@
                         <button ion-button color="danger" (click)="presentAlertEliminaImmagine(imm)">
                             <ion-icon name="trash"></ion-icon>
                             Elimina
+                        </button>
+                    </ion-item-options>
+                </ion-item-sliding>
+            </ion-list>
+
+            <ion-list *ngSwitchCase="'Assegnazioni'">
+                <ion-item color="primary-lighter" class="ion-section-title">
+                    <ion-label>Assegnazioni</ion-label>
+                </ion-item>
+                <ion-item *ngIf="!listaAssegnazioni || listaAssegnazioni.length===0">
+                    <p>Non ancora assegnata</p>
+                </ion-item>
+                <ion-item-sliding *ngFor="let assegnazione of listaAssegnazioni">
+                    <ion-item text-wrap>
+                        <ion-avatar item-start>
+                            <img src="../assets/imgs/thumb-user.png">
+                            <!--<img src="{{mess.url_avatar}}">-->
+                        </ion-avatar>
+                        <h2>{{assegnazione.dp_cognome}} {{assegnazione.dp_nome}}</h2>
+                        <p><small>ruolo aziendale</small> {{assegnazione.tab_ruolo_aziendale_desc}}</p>
+                        <p><small>responsabile</small> {{(assegnazione.att_dip_scelta==="R" ? "Sì" : "No")}}</p>
+                    </ion-item>
+                    <ion-item-options side="right" *ngIf="!conclusa">
+                        <button ion-button color="warning" (click)="openMessage(assegnazione)">
+                            <ion-icon name="send"></ion-icon>
+                            Messaggio
                         </button>
                     </ion-item-options>
                 </ion-item-sliding>

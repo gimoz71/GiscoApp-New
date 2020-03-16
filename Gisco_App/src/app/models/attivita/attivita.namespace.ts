@@ -140,5 +140,22 @@ export namespace Attivita {
         public p_data_ultimo_accesso_for_order: string;
     }
 
-
+    export class Assegnazione {
+        public attivita_permessi_key: number;
+        public attivita_key: number;
+        public att_ditta_key: number;
+        public att_dip_attivo: string;
+        public att_dip_scelta: string;
+        public dipendenti_key: number;
+        public dp_nome: string;
+        public dp_cognome: string;
+        public dp_email: string;
+        public di_ragione_sociale: string;
+        public gruppo_key: number;
+        public gr_ragione_sociale: string;
+        public societa_gestione_key: number;
+        public sg_ragione_sociale: string;
+        public tab_ruolo_aziendale_desc: string;
+    }
+    
 }

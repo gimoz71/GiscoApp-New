@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavParams, NavController, AlertController } from 'ionic-angular';
 //import { Dispositivo } from '../../../models/dispositivo/dispositivo.namespace';
-import { File } from '@ionic-native/file/ngx';
+import { File} from '@ionic-native/file/ngx';
 
 //import { DispositiviService } from '../../../services/dispositivi/dispositivi.service';
 import { StoreService } from '../../../services/store/store.service';
@@ -35,7 +35,7 @@ export class DashboardComunicazionePage {
     public comunicazioniService: ComunicazioniService,
     private storeService: StoreService,
     private alertCtrl: AlertController,
-    private file: File,
+    private file: File
     ) {
     this.selectedComunicazione = navParams.get('comunicazione');
     this.procedimento = new Procedimento.Procedimento();
@@ -137,11 +137,13 @@ export class DashboardComunicazionePage {
   public downloadFileLink(f:Comunicazione.FileCom) {
     var url:string = this.d_url + f.comunicazioni_file_key + "/";
     window.open(url, '_system');
+    
   }
 
   public downloadFile(f:Comunicazione.FileCom, file?, alertCtrl?) {
+
     file = this.file;
-    
+
     let localURLs = [
       this.file.dataDirectory,
       this.file.documentsDirectory,
@@ -151,7 +153,8 @@ export class DashboardComunicazionePage {
       this.file.externalDataDirectory,
       this.file.sharedDirectory,
       this.file.syncedDataDirectory,
-      this.file.cacheDirectory
+      this.file.cacheDirectory,
+      this.file.tempDirectory
     ];
 
     //Android
@@ -165,18 +168,26 @@ export class DashboardComunicazionePage {
     // null]
 
     //IOS
-    // ["file:///var/mobile/Containers/Data/Application/A684B819-792C-4517-ABB3-5D022831F062/Library/NoCloud/",
-    // "file:///var/mobile/Containers/Data/Application/A684B819-792C-4517-ABB3-5D022831F062/Documents/",
+    // ["file:///var/mobile/Containers/Data/Application/8AE35562-CE48-4F07-9207-2FDCC1F13C72/Library/NoCloud/",
+    // "file:///var/mobile/Containers/Data/Application/8AE35562-CE48-4F07-9207-2FDCC1F13C72/Documents/",
     // null,
     // null,
     // null,
     // null,
     // null,
-    // "file:///var/mobile/Containers/Data/Application/A684B819-792C-4517-ABB3-5D022831F062/Library/Cloud/"]
+    // "file:///var/mobile/Containers/Data/Application/8AE35562-CE48-4F07-9207-2FDCC1F13C72/Library/Cloud/",
+    // "file:///var/mobile/Containers/Data/Application/8AE35562-CE48-4F07-9207-2FDCC1F13C72/Library/Caches/",
+    // "file:///private/var/mobile/Containers/Data/Application/8AE35562-CE48-4F07-9207-2FDCC1F13C72/tmp/"]
 
-    console.log(localURLs);
+    //NEL CONFI.XML
+    // <config-file parent="UIFileSharingEnabled" platform="ios" target="*-Info.plist">
+    //     <true />
+    // </config-file>
+    // <config-file parent="LSSupportsOpeningDocumentsInPlace" platform="ios" target="*-Info.plist">
+    //     <true />
+    // </config-file>
 
-
+    //console.log(localURLs);
 
     var url:string = this.d_url + f.comunicazioni_file_key + "/";
     var name:string = f.cof_file;
@@ -207,7 +218,12 @@ export class DashboardComunicazionePage {
         subTitle: name + " è stato scaricato nella cartella download.",
         buttons: ['OK']
       });
-      //SAVE TEMP FILE IN APP FOLDER
+      let i_ok = alertCtrl.create({
+        title: 'Download effettuato',
+        subTitle: name + " è stato scaricato nella cartella file-gisco.",
+        buttons: ['OK']
+      });
+      //SAVE FILE IN ANDROID
       if (file.externalRootDirectory != null)
       {
         file.writeFile(file.externalRootDirectory + 'download/', name, oReq.response, { replace: true }).then(data =>
@@ -219,22 +235,27 @@ export class DashboardComunicazionePage {
             console.log('Errore in scrittura')
           );
       }
+
+      //SAVE FILE IN IOS
       if (file.documentsDirectory != null)
       {
-        file.writeFile(file.documentsDirectory + 'download/', name, oReq.response, { replace: true }).then(data =>
-          {
-            console.log('File scritto');
-            a_ok.present();
-          }
-          ).catch(err =>
-            console.log('Errore in scrittura')
-          );
+
+        file.writeFile(file.documentsDirectory, name, oReq.response, { replace: true }).then(data =>
+        {
+          console.log('File scritto');
+          i_ok.present();
+        }
+        ).catch(err =>
+          console.log('Errore in scrittura')
+        );
       }
+      
     };
 
     oReq.send();//this is useless right?
 
   }
+
 
   presentAlert(title: string, mess: string) {
     let alert = this.alertCtrl.create({

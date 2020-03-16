@@ -15,6 +15,8 @@ import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@io
 import { NuovaAssegnazionePage } from '../nuova-assegnazione/nuova-assegnazione';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { DashboardChiusuraPage } from '../dashboard-chiusura/dashboard-chiusura';
+import { Messaggio } from '../../../models/messaggio/messaggio.namespace';
+import { NuovoMessaggioPage } from '../../messaggi/nuovo-messaggio/nuovo-messaggio';
 
 
 @Component({
@@ -718,4 +720,16 @@ export class DashboardOsservazionePage {
         const date = new Date(dateString);
         return date.getFullYear() === 1;
     }
+
+    openMessage(assegnazione: Osservazione.Assegnazione) {
+        var mess: Messaggio.Messaggio  
+        mess = new Messaggio.Messaggio();
+        mess.cognome_des = assegnazione.dp_cognome;
+        mess.nome_des = assegnazione.dp_nome;
+        mess.destinatario_key = assegnazione.dipendenti_key;
+        mess.soggetto = this.selectedOsservazione.att_titolo;
+        mess.messaggio = '';
+        this.navCtrl.push(NuovoMessaggioPage, { invio: mess })
+      }
+    
 }

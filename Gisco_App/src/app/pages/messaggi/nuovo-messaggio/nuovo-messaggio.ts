@@ -24,6 +24,7 @@ export class NuovoMessaggioPage {
   public conoscenzeSelezionate: Array<Dipendente.Dipendente>;
 
   public rispondi: boolean;
+  public invio: boolean;
 
   private mess: Messaggio.Messaggio;
   color: string;
@@ -35,12 +36,14 @@ export class NuovoMessaggioPage {
     private alertCtrl: AlertController,
     private navParams: NavParams) {
     this.rispondi = false;
+    this.invio = false;
   }
 
   ionViewDidLoad() {
 
     let mess1 = this.navParams.get('reply');
     let mess2 = this.navParams.get('inoltro');
+    let mess3 = this.navParams.get('invio');
 
     if (mess1 != null) {
       this.rispondi = true;
@@ -54,13 +57,23 @@ export class NuovoMessaggioPage {
       this.oggetto = this.mess.soggetto;
       this.messaggio = this.mess.messaggio;
     }
+    else if (mess3 != null) {
+      this.invio = true;
+      this.mess = mess3;
+      this.oggetto = this.mess.soggetto;
+      this.messaggio = this.mess.messaggio;
+    }
     else this.mess = new Messaggio.Messaggio();
+    
     this.storeService.getUserDataPromise(this.storeService.getLocalServerUrl()).then((val: Login.ws_Token) => {
       var tokenValue = val.token_value;
       this.messaggiService.getDipendentiAttivi(this.storeService.getLocalServerUrl(), tokenValue).subscribe(r => {
         this.listaDestinatari = r.l_dipendenti;
         if (this.rispondi) {
           this.destinatarioSelezionato = this.getDestinatarioByKey(mess1.mittente_key);
+        }
+        if (this.invio) {
+          this.destinatarioSelezionato = this.getDestinatarioByKey(mess3.destinatario_key);
         }
         for (let i = 0; i < this.listaDestinatari.length; i++) {
           this.listaDestinatari[i].nomeCognome = this.listaDestinatari[i].nome + " " + this.listaDestinatari[i].cognome;
