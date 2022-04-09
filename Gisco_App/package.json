@@ -58,7 +58,7 @@
     "ionic-angular": "3.9.2",
     "ionic-selectable": "^3.4.2",
     "ionicons": "3.0.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "native-run": "^0.2.8",
     "rxjs": "^6.5.2",
     "rxjs-compat": "^6.5.2",
